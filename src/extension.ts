@@ -2,26 +2,44 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { ParquetContentProvider } from './parquet_content_provider';
+import { execFile } from 'child_process';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  console.log('parquet-viewer activated');
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "parquet-viewer" is now active!');
+  execFile('parquet-tools', ['-h'], err => {
+      vscode.window.showErrorMessage('parquet-tools not in PATH');
+  });
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
+  const scheme = 'parquet';
+  const provider = new ParquetContentProvider();
 
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
+  context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider(scheme, provider));
 
-    context.subscriptions.push(disposable);
+  let onFile = function (document: vscode.TextDocument) {
+    if (document.fileName.endsWith('parquet') && document.uri.scheme !== scheme) {
+      let uri = vscode.Uri.parse(scheme + '://' + document.uri.path);
+      vscode.window.showTextDocument(uri, { preview: true, viewColumn: vscode.window.activeTextEditor!.viewColumn });
+    }
+  };
+
+  context.subscriptions.push(vscode.commands.registerTextEditorCommand('extension.viewParquetAsJson', (textEditor) => {
+    let document = textEditor.document;
+    if (!document.fileName.endsWith('parquet')) {
+      vscode.window.showErrorMessage("Please open a parquet file");
+      return; // no editor
+    }
+    onFile(document);
+  }));
+
+  context.subscriptions.push(vscode.workspace.onDidOpenTextDocument(onFile));
+
+  if (vscode.window.activeTextEditor) {
+    onFile(vscode.window.activeTextEditor.document);
+  }
 }
 
 // this method is called when your extension is deactivated
