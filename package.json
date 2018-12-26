@@ -3,16 +3,36 @@
   "displayName": "parquet-viewer",
   "description": "Views Apache Parquet files as JSON",
   "publisher": "dvirtz",
-  "version": "0.0.1",
+  "icon": "images/ico128.png",
+  "homepage": "https://github.com/dvirtz/vscode-parquet-viewer",
+	"bugs": {
+		"url": "https://github.com/dvirtz/vscode-parquet-viewer/issues",
+		"email": "smcbreen@microsoft.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvirtz/vscode-parquet-viewer.git"
+  },
+  "author": {
+    "name": "Dvir Yitzchaki",
+    "email": "dvirt@gmail.com",
+    "url": "https://github.com/dvirtz"
+  },
+  "license": "SEE LICENSE AT LICENSE.txt",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.30.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "parquet",
+    "spark",
+    "viewer"
+  ],
   "activationEvents": [
-    "onLanguage:parquet",
-    "onFileSystem:file"
+    "onLanguage:parquet"
   ],
   "main": "./out/extension",
   "contributes": {
