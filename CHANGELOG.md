@@ -5,3 +5,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 - Initial release
+
+## [0.1.1] - 2019-04-24
+### Fixed
+'out of buffer' error (https://github.com/dvirtz/vscode-parquet-viewer/issues/1)
