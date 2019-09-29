@@ -19,7 +19,7 @@
     "url": "https://github.com/dvirtz"
   },
   "license": "SEE LICENSE AT LICENSE.txt",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "engines": {
     "vscode": "^1.30.0"
   },
