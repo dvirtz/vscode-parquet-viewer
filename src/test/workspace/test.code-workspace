@@ -4,5 +4,7 @@
 			"path": "."
 		}
   ],
-  "settings": {}
+  "settings": {
+	"parquet-viewer.parquetToolsPath": "parquet-tools-1.12.0-SNAPSHOT.jar"
+  }
 }

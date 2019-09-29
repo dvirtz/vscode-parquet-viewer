@@ -3,16 +3,15 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { ParquetContentProvider } from './parquet_content_provider';
-import { spawn } from 'child_process';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   console.log('parquet-viewer activated');
 
-  spawn('parquet-tools', ['-h']).on('error', (err) => {
-    vscode.window.showErrorMessage('parquet-tools not in PATH');
-  });
+  // ParquetContentProvider.spawnParquetTools(['-h']).then(process => process.on('error', (err: string) => {
+  //   vscode.window.showErrorMessage('parquet-tools not in PATH (' + err + ')');
+  // }));
 
   const scheme = 'parquet';
   const provider = new ParquetContentProvider();
@@ -26,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   };
 
-  context.subscriptions.push(vscode.commands.registerTextEditorCommand('extension.viewParquetAsJson', (textEditor) => {
+  context.subscriptions.push(vscode.commands.registerTextEditorCommand('extension.viewParquetAsJson', (textEditor: { document: any; }) => {
     let document = textEditor.document;
     if (!document.fileName.endsWith('parquet')) {
       vscode.window.showErrorMessage("Please open a parquet file");
@@ -36,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
   }));
 
   context.subscriptions.push(vscode.workspace.onDidOpenTextDocument(onFile));
-  context.subscriptions.push(vscode.workspace.onDidChangeTextDocument((e) => {
+  context.subscriptions.push(vscode.workspace.onDidChangeTextDocument((e: { document: any; }) => {
     onFile(e.document);
   }));
 
