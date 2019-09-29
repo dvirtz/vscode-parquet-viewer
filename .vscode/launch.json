@@ -6,6 +6,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/src/test/runTest.ts",
+      "preLaunchTask": "npm: watch",
+      "outFiles": ["${workspaceFolder}/out/**/*.js"]
+    },
+    {
       "name": "Extension",
       "type": "extensionHost",
       "request": "launch",
@@ -17,10 +25,7 @@
       "outFiles": [
         "${workspaceFolder}/out/**/*.js"
       ],
-      "preLaunchTask": "npm: watch",
-      "env": {
-        "PATH": "bla"
-      }
+      "preLaunchTask": "npm: watch"
     },
     {
       "name": "Extension Tests",
@@ -30,12 +35,9 @@
       "args": [
         "${workspaceFolder}/src/test/workspace/test.code-workspace",
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "--extensionTestsPath=${workspaceFolder}/out/test"
+        "--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
       ],
-      "outFiles": [
-        "${workspaceFolder}/out/test/**/*.js"
-      ],
-      "preLaunchTask": "npm: watch"
-    }
+      "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
+			"preLaunchTask": "npm: watch"    }
   ]
 }
