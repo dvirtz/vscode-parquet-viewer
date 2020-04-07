@@ -14,12 +14,12 @@ import {extensions, workspace} from 'vscode';
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Parquet extension tests", function () {
 
-  test("Should find extension", async () => {
-    const extension = await extensions.getExtension("dvirtz.parquet-viewer");
+  test("Should find extension", () => {
+    const extension = extensions.getExtension("dvirtz.parquet-viewer");
     assert(extension);
   });
 
-  test("Settings", async() => {
+  test("Settings", () => {
     var parquetTools = workspace.getConfiguration('parquet-viewer').get<string>('parquetToolsPath');
     assert.equal(parquetTools, "parquet-tools-1.12.0-SNAPSHOT.jar");
   });
