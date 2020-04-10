@@ -11,7 +11,9 @@
       "name": "Launch Program",
       "program": "${workspaceFolder}/src/test/runTest.ts",
       "preLaunchTask": "npm: watch",
-      "outFiles": ["${workspaceFolder}/out/**/*.js"]
+      "outFiles": [
+        "${workspaceFolder}/out/**/*.js"
+      ]
     },
     {
       "name": "Extension",
@@ -37,7 +39,10 @@
         "--extensionDevelopmentPath=${workspaceFolder}",
         "--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
       ],
-      "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
-			"preLaunchTask": "npm: watch"    }
+      "outFiles": [
+        "${workspaceFolder}/out/test/**/*.js"
+      ],
+      "preLaunchTask": "npm: watch"
+    }
   ]
 }
