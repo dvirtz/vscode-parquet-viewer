@@ -1,0 +1,23 @@
+{
+    "version": "0.1",
+    "language": "en",
+    "words": [
+        "dvirtz",
+        "Yitzchaki"
+    ],
+    "ignorePaths": [
+        "node_modules/**"
+    ],
+    "flagWords": [],
+    "languageSettings": [
+        {
+            "languageId": "markdown",
+            "ignoreRegExpList": [
+                "/`.*?`/", // inline code
+                "/(```+)\\s?[\\s\\S]+?\\1/g", // code block
+                "/'s\\b/", // trailing 's
+                "<!--.*?-->" // comments
+            ]
+        }
+    ]
+}

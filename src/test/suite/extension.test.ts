@@ -1,16 +1,20 @@
 import { expect } from 'chai';
-import {extensions, workspace} from 'vscode';
+import * as assert from 'assert';
+import { commands, extensions } from 'vscode';
+import { getUri } from './utils';
 
-// Defines a Mocha test suite to group tests of similar kind together
 suite("Parquet extension tests", function () {
-
   test("Should find extension", function () {
     const extension = extensions.getExtension("dvirtz.parquet-viewer");
-    expect(extension).to.be.ok;
+    assert(extension);
+    expect(extension.id).to.be.equal("dvirtz.parquet-viewer");
+    expect(extension.isActive).to.be.equal(false);
   });
 
-  test("Settings", function () {
-    const parquetTools = workspace.getConfiguration('parquet-viewer').get<string>('parquetToolsPath');
-    expect(parquetTools).to.equal("parquet-tools-1.12.0-SNAPSHOT.jar");
+  test("Activation point", async function () {
+    await commands.executeCommand('vscode.open', await getUri('small.parquet'));
+    const extension = extensions.getExtension("dvirtz.parquet-viewer");
+    assert(extension);
+    expect(extension.isActive).to.be.equal(true);
   });
 });
