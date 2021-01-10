@@ -9,14 +9,9 @@ jobs:
       image: node:10-jessie
     steps:
       - uses: actions/checkout@v2
-      - name: Install and build
-        run: |
-          yarn --frozen-lockfile
-          yarn compile
+      - run: npm install
+      - uses: lannonbr/vsce-action@master
+        with:
+          args: "publish -p $VSCE_TOKEN"
         env:
-          CI: true
-      - name: Publish with vsce
-        run: |
-          yarn deploy -p $VSCE_PAT
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          VSCE_TOKEN: ${{ secrets.VSCE_PAT }}
