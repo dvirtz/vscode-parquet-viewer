@@ -8,17 +8,20 @@ Requires [parquet-tools](https://github.com/apache/parquet-mr/tree/master/parque
 
 ## Features
 
-When opening a Parquet file and choosing to "open it anyway" a JSON presentation of the file is displayed:
+When opening a Parquet file, a JSON presentation of the file will open automatically:
 
 ![automatic](images/automatic.gif)
 
-There's also a command to open the JSON presentation:
+After closing the JSON view, it is possible to reopen it by clicking on the link in the parquet view.
 
-![command](images/command.gif)
+![command](images/reopen.gif)
 
 ## Requirements
 
-[parquet-tools](https://github.com/apache/parquet-mr/tree/master/parquet-tools) should be in your PATH.
+The extension requires [parquet-tools](https://github.com/apache/parquet-mr/tree/master/parquet-tools).
+It should be in your PATH, or a path can be set in settings.
+
+![settings](images/settings.png)
 
 ### What's new
 

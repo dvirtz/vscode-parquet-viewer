@@ -19,7 +19,7 @@
     "url": "https://github.com/dvirtz"
   },
   "license": "MIT",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.30.0"
   },
