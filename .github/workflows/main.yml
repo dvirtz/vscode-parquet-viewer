@@ -25,3 +25,4 @@ jobs:
           run: npm test
       - name: Spellcheck
         run: npm run spellcheck
+        if: matrix.os == 'ubuntu-latest'
