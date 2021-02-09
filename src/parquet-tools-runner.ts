@@ -48,8 +48,8 @@ export class ParquetToolsRunner {
       parquet_tools.on('close', resolve);
     });
 
-    if (exitCode) {
-      const message = `error when running parquet-tools ${exitCode}:\n${stderr}`;
+    if (exitCode && !token?.isCancellationRequested) {
+      const message = `parquet-tools exited with code ${exitCode}:\n${stderr}`;
       throw Error(message);
     }
   }
