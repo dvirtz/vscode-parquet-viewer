@@ -37,12 +37,12 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
       async (progress, token) => {
         try {
           const json = await toArray(ParquetToolsRunner.toJson(this.path, token));
-          ParquetTextDocumentContentProvider.add(this.path, json.join(''));
-          this.open();
-        } catch (err) {
           if (!token.isCancellationRequested) {
-            vscode.window.showErrorMessage(err);
+            ParquetTextDocumentContentProvider.add(this.path, json.join(''));
+            this.open();
           }
+        } catch (err) {
+          vscode.window.showErrorMessage(err.message);
         }
       });
   }
