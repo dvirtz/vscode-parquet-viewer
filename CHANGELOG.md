@@ -1,3 +1,16 @@
+## [1.0.2] - 2021-03-22
+
+### Changed
+
+- Added diagnostic logging support
+- CI: use eslint
+
+## [1.0.1] - 2021-02-09
+
+### Fixed
+
+- fix error message box
+
 ## [1.0.0] - 2021-01-09
 
 ### Changed
