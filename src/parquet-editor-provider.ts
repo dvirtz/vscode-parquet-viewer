@@ -5,7 +5,7 @@ import { Disposable } from "./dispose";
 import { ParquetTextDocumentContentProvider } from "./parquet-document-provider";
 import { ParquetToolsRunner } from "./parquet-tools-runner";
 import toArray from '@async-generators/to-array';
-
+import { getLogger } from './logger';
 
 class DummyDocument extends Disposable implements vscode.CustomDocument {
   uri: vscode.Uri;
@@ -18,12 +18,14 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
   }
 
   private open() {
+    getLogger().info(`opening ${this.path}.as.json`);
     vscode.window.showTextDocument(
       this.uri.with({ scheme: 'parquet', path: this.path + '.as.json' })
     );
   }
 
   public async show() {
+    getLogger().info(`showing ${this.path}.as.json`);
     if (ParquetTextDocumentContentProvider.has(this.path)) {
       this.open();
       return;
@@ -42,6 +44,7 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
             this.open();
           }
         } catch (err) {
+          getLogger().error(err.message);
           vscode.window.showErrorMessage(err.message);
         }
       });
@@ -57,6 +60,7 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
   private static readonly viewType = 'parquetViewer.parquetViewer';
 
   public static register(context: vscode.ExtensionContext): vscode.Disposable {
+    getLogger().info('registering ParquetEditorProvider as parquet document viewer');
     const provider = new ParquetEditorProvider;
     const providerRegistration = vscode.window.registerCustomEditorProvider(ParquetEditorProvider.viewType, provider);
 

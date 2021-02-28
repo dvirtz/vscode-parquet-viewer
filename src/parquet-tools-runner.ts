@@ -2,54 +2,57 @@ import * as vscode from 'vscode';
 import { spawn, ChildProcess } from "child_process";
 import * as path from 'path';
 import * as assert from 'assert';
-
+import { getLogger } from './logger';
+import { parquetTools as getParquetTools } from './settings';
 
 export class ParquetToolsRunner {
   public static async spawnParquetTools(params: string[]): Promise<ChildProcess> {
-    var parquetTools = vscode.workspace.getConfiguration('parquet-viewer').get<string>('parquetToolsPath')!;
-
+    let parquetTools = getParquetTools();
     if (parquetTools.endsWith('.jar')) {
       if (!path.isAbsolute(parquetTools)) {
-        const files = await vscode.workspace.findFiles(parquetTools);
-        assert(files.length === 1);
-        return spawn('java', ['-jar', files[0].fsPath].concat(params));
+          const files = await vscode.workspace.findFiles(parquetTools);
+          assert(files.length === 1);
+          parquetTools = files[0].fsPath;
       }
-      else {
-        return spawn('java', ['-jar', parquetTools].concat(params));
-      }
+      getLogger().debug(`spawning java ${['-jar', parquetTools].concat(params).join(' ')}`);
+      return spawn('java', ['-jar', parquetTools].concat(params));
     }
-    else {
-      return spawn(parquetTools, params);
-    }
+
+    getLogger().debug(`spawning ${parquetTools} ${params.join(' ')}`);
+    return spawn(parquetTools, params);
   }
 
   public static async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
+    const cancelledMessage = `parsing ${parquetPath} was cancelled by user`;
     if (token?.isCancellationRequested) {
+      getLogger().info(cancelledMessage);
       return;
     }
 
-    const parquet_tools = await ParquetToolsRunner.spawnParquetTools(['cat', '-j', parquetPath]);
+    const parquetTools = await ParquetToolsRunner.spawnParquetTools(['cat', '-j', parquetPath]);
 
     token?.onCancellationRequested(_ => {
-      parquet_tools.kill();
+      getLogger().info(cancelledMessage);
+      parquetTools.kill();
     });
 
-    assert(parquet_tools.stdout);
-    for await (const chunk of parquet_tools.stdout) {
+    assert(parquetTools.stdout);
+    for await (const chunk of parquetTools.stdout) {
       yield chunk;
     }
     var stderr: string = "";
-    assert(parquet_tools.stderr);
-    for await (const chunk of parquet_tools.stderr) {
+    assert(parquetTools.stderr);
+    for await (const chunk of parquetTools.stderr) {
       stderr += chunk;
     }
 
     const exitCode = await new Promise((resolve, reject) => {
-      parquet_tools.on('close', resolve);
+      parquetTools.on('close', resolve);
     });
 
     if (exitCode && !token?.isCancellationRequested) {
       const message = `parquet-tools exited with code ${exitCode}:\n${stderr}`;
+      getLogger().error(message);
       throw Error(message);
     }
   }

@@ -4,15 +4,23 @@
 import * as vscode from 'vscode';
 import { ParquetEditorProvider } from './parquet-editor-provider';
 import { ParquetToolsRunner } from './parquet-tools-runner';
+import { getLogger, initLogger } from './logger';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-  console.log('parquet-viewer activated');
+export async function activate(context: vscode.ExtensionContext) {
+  initLogger(context);
+  getLogger().info('parquet-viewer activated');
 
-  ParquetToolsRunner.spawnParquetTools(['-h']).then(process => process.on('error', (err: string) => {
-    vscode.window.showErrorMessage('parquet-tools not in PATH (' + err + ')');
-  }));
+  // restart logger on configuration change
+  vscode.workspace.onDidChangeConfiguration(() => initLogger(context));
+
+  const parquetTools = await ParquetToolsRunner.spawnParquetTools(['-h']);
+  parquetTools.on('error', (err: string) => {
+    const message = `parquet-tools not in PATH ('${err}')`;
+    getLogger().error(message);
+    vscode.window.showErrorMessage(message);
+  });
 
   context.subscriptions.push(ParquetEditorProvider.register(context));
 }

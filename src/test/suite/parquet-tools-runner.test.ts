@@ -1,16 +1,8 @@
 
-import { getUri, fileRead } from './utils';
+import { getUri, fileRead, gen2array } from './utils';
 import { expect, use } from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 import { ParquetToolsRunner } from "../../parquet-tools-runner";
-
-async function gen2array<T>(gen: AsyncGenerator<T>): Promise<T[]> {
-  const out: T[] = [];
-  for await (const x of gen) {
-    out.push(x);
-  }
-  return out;
-}
 
 use(chaiAsPromised);
 
@@ -36,7 +28,11 @@ suite("ParquetToolsRunner tests", () => {
     );
   });
 
-  test("-h works", function () {
-    expect(ParquetToolsRunner.spawnParquetTools(['-h'])).to.eventually.equal(0);
+  test("-h works", async function () {
+    const parquetTools = await ParquetToolsRunner.spawnParquetTools(['-h']);
+    const exitCode = await new Promise( (resolve, reject) => {
+        parquetTools.on('close', resolve);
+    });
+    expect(exitCode).to.equal(0);
   });
 });
