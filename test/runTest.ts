@@ -12,7 +12,7 @@ async function main() {
     // Passed to --extensionTestsPath
     const extensionTestsPath = path.resolve(__dirname, './suite/index');
 
-    const launchArgs = [path.resolve(extensionDevelopmentPath, './src/test/workspace')];
+    const launchArgs = [path.resolve(extensionDevelopmentPath, './test/workspace')];
 
     // Download VS Code, unzip it and run the integration test
     await runTests({ extensionDevelopmentPath, extensionTestsPath, launchArgs});
@@ -23,4 +23,5 @@ async function main() {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 main();

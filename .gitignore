@@ -4,4 +4,4 @@ node_modules
 *.vsix
 .history/
 .vscode/
-!src/test/workspace/.vscode
+!test/workspace/.vscode

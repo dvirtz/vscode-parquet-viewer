@@ -19,10 +19,14 @@ jobs:
         with:
           node-version: 10.x
       - run: npm install
+      - name: Static checks
+        run: |
+          npm run spellcheck
+          npm run lint
+        if: matrix.os == 'ubuntu-latest'
       - name: Run tests
         uses: GabrielBB/xvfb-action@v1.0
         with:
           run: npm test
-      - name: Spellcheck
-        run: npm run spellcheck
-        if: matrix.os == 'ubuntu-latest'
+        env:
+          DEBUG: mocha:*

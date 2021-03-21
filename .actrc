@@ -1,1 +1,1 @@
--P ubuntu-latest=catthehacker/ubuntu:act-latest
+-P ubuntu-latest=dvirtz/parquet-viewer:latest

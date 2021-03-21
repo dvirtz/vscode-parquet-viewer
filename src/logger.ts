@@ -1,12 +1,12 @@
 /**
  * This file manages the logger's state.
  */
-import { resolve } from "path";
 import { ExtensionContext, OutputChannel, window } from "vscode";
 import { IChildLogger, IVSCodeExtLogger } from "@vscode-logging/types";
 import { NOOP_LOGGER } from "@vscode-logging/wrapper";
 import { logFolder, logPanel, logLevel } from './settings';
 import { getExtensionLogger } from '@vscode-logging/logger';
+import * as meta from '../package.json';
 
 // On file load we initialize our logger to `NOOP_LOGGER`
 // this is done because the "real" logger cannot be initialized during file load.
@@ -31,8 +31,6 @@ function getPanel(name: string): OutputChannel {
 }
 
 export function initLogger(context: ExtensionContext): void {
-  const meta = require(resolve(__dirname, "..", "package.json"));
-
   setLogger(getExtensionLogger({
     extName: meta.name,
     level: logLevel(),

@@ -8,6 +8,10 @@ import { parquetTools as getParquetTools } from './settings';
 export class ParquetToolsRunner {
   public static async spawnParquetTools(params: string[]): Promise<ChildProcess> {
     let parquetTools = getParquetTools();
+    if (!parquetTools) {
+      throw Error(`illegal value for parquet-viewer.parquetToolsPath setting: ${parquetTools}`);
+    }
+
     if (parquetTools.endsWith('.jar')) {
       if (!path.isAbsolute(parquetTools)) {
           const files = await vscode.workspace.findFiles(parquetTools);
@@ -40,13 +44,13 @@ export class ParquetToolsRunner {
     for await (const chunk of parquetTools.stdout) {
       yield chunk;
     }
-    var stderr: string = "";
+    let stderr = "";
     assert(parquetTools.stderr);
     for await (const chunk of parquetTools.stderr) {
       stderr += chunk;
     }
 
-    const exitCode = await new Promise((resolve, reject) => {
+    const exitCode = await new Promise((resolve) => {
       parquetTools.on('close', resolve);
     });
 
