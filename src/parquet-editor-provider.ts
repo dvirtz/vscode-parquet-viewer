@@ -17,9 +17,9 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
     this.path = uri.fsPath;
   }
 
-  private open() {
+  private async open() {
     getLogger().info(`opening ${this.path}.as.json`);
-    vscode.window.showTextDocument(
+    await vscode.window.showTextDocument(
       this.uri.with({ scheme: 'parquet', path: this.path + '.as.json' })
     );
   }
@@ -27,8 +27,7 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
   public async show() {
     getLogger().info(`showing ${this.path}.as.json`);
     if (ParquetTextDocumentContentProvider.has(this.path)) {
-      this.open();
-      return;
+      return await this.open();
     }
 
     return await vscode.window.withProgress({
@@ -41,11 +40,11 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
           const json = await toArray(ParquetToolsRunner.toJson(this.path, token));
           if (!token.isCancellationRequested) {
             ParquetTextDocumentContentProvider.add(this.path, json.join(''));
-            this.open();
+            await this.open();
           }
         } catch (err) {
           getLogger().error(err.message);
-          vscode.window.showErrorMessage(err.message);
+          await vscode.window.showErrorMessage(err.message);
         }
       });
   }
@@ -89,7 +88,7 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
 
     webviewPanel.webview.onDidReceiveMessage(_ => document.show());
 
-    document.show();
+    await document.show();
   }
 
   private getHtmlForWebview(webview: vscode.Webview, document: DummyDocument): string {

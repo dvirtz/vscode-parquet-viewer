@@ -8,7 +8,7 @@ export class ParquetTextDocumentContentProvider implements vscode.TextDocumentCo
     return ParquetTextDocumentContentProvider.jsonMap.has(path);
   }
 
-  public static add(path:string, content: string) {
+  public static add(path:string, content: string): void {
     ParquetTextDocumentContentProvider.jsonMap.set(path, content);
   }
 

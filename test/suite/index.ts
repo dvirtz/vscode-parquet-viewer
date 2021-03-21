@@ -1,13 +1,20 @@
 import * as path from 'path';
 import * as Mocha from 'mocha';
 import * as glob from 'glob';
+import { env } from 'process';
 
 export function run(): Promise<void> {
   // Create the mocha test
-  const mocha = new Mocha({
+  const options: Mocha.MochaOptions = {
     ui: 'tdd',
     color: true
-  });
+  };
+  if (env.MOCHA_DISABLE_TIMEOUTS) {
+    options.timeout = 0;
+  } else {
+    options.timeout = 20000;
+  }
+  const mocha = new Mocha(options);
 
   const testsRoot = path.resolve(__dirname, '..');
 

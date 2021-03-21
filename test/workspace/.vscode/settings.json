@@ -1,4 +1,4 @@
 {
   "parquet-viewer.parquetToolsPath": "parquet-tools-1.12.0-SNAPSHOT.jar",
-  "parquet-viewer.logPanel": true
+  "parquet-viewer.logLevel": "debug"
 }
