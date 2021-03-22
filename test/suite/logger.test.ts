@@ -28,6 +28,6 @@ suite('logger tests', function () {
     const logContents = await promises.readFile(logPath, 'utf-8');
 
     expect(contents).to.have.lengthOf(2, `contents are ${contents}`);
-    expect(logContents).to.match(/\{\s+"label": "parquet-viewer",\s+"level": "debug",\s+"message": "spawning java -jar .*\/workspace\/parquet-tools-1.12.0-SNAPSHOT.jar cat -j .*\/workspace\/small.parquet",\s+"time": "\S+"\s+\}/);
+    expect(logContents).to.match(/\{\s+"label": "parquet-viewer",\s+"level": "debug",\s+"message": "spawning java -jar .*parquet-tools-1.12.0-SNAPSHOT.jar cat -j .*small.parquet",\s+"time": "\S+"\s+\}/);
   });
 });
