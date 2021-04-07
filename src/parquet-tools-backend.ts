@@ -5,7 +5,7 @@ import * as assert from 'assert';
 import { getLogger } from './logger';
 import { parquetTools as getParquetTools } from './settings';
 
-export class ParquetToolsRunner {
+export class ParquetToolsBackend {
   public static async spawnParquetTools(params: string[]): Promise<ChildProcess> {
     let parquetTools = getParquetTools();
     if (!parquetTools) {
@@ -33,7 +33,7 @@ export class ParquetToolsRunner {
       return;
     }
 
-    const parquetTools = await ParquetToolsRunner.spawnParquetTools(['cat', '-j', parquetPath]);
+    const parquetTools = await ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath]);
 
     token?.onCancellationRequested(_ => {
       getLogger().info(cancelledMessage);
