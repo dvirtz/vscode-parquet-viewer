@@ -1,12 +1,12 @@
 import { logLevel, logFolder, setLogFolder } from "../../src/settings";
-import { ParquetToolsRunner } from "../../src/parquet-tools-runner";
 import { getUri } from "./utils";
 import { promises } from "fs";
 import { expect } from "chai";
 import path = require("path");
 import toArray from '@async-generators/to-array';
+import { ParquetsBackend } from "../../src/parquets-backend";
 
-suite('logger tests', function () {
+suite('Logger tests', function () {
   const folder = path.resolve(__dirname);
   const logPath = path.join(folder, 'parquet-viewer.log');
 
@@ -24,10 +24,10 @@ suite('logger tests', function () {
     expect(logFolder()).to.equal(folder);
 
     const parquet = await getUri('small.parquet');
-    const contents = await toArray(ParquetToolsRunner.toJson(parquet.fsPath));
+    const contents = await toArray(ParquetsBackend.toJson(parquet.fsPath));
     const logContents = await promises.readFile(logPath, 'utf-8');
 
     expect(contents).to.have.lengthOf(2, `contents are ${contents}`);
-    expect(logContents).to.match(/\{\s+"label": "parquet-viewer",\s+"level": "debug",\s+"message": "spawning java -jar .*parquet-tools-1.12.0-SNAPSHOT.jar cat -j .*small.parquet",\s+"time": "\S+"\s+\}/);
+    expect(logContents).to.match(/\{\s+"label": "parquet-viewer",\s+"level": "info",\s+"message": "opening .*small.parquet",\s+"time": "\S+"\s+\}/);
   });
 });

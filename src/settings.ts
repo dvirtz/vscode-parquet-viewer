@@ -36,3 +36,7 @@ export function logLevel() : LogLevel {
 export async function setLogLevel(logLevel : LogLevel | undefined): Promise<void> {
   await settings().update('logLevel', logLevel);
 }
+
+export function useParquetTools(): boolean {
+  return settings().get('useParquetTools', false);
+}

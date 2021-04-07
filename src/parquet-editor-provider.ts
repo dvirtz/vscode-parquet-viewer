@@ -2,10 +2,12 @@ import * as vscode from "vscode";
 import * as path from 'path';
 import { getNonce } from './util';
 import { Disposable } from "./dispose";
-import { ParquetTextDocumentContentProvider } from "./parquet-document-provider";
-import { ParquetToolsRunner } from "./parquet-tools-runner";
+import { ParquetTextDocumentContentProvider } from './parquet-document-provider';
+import { ParquetToolsBackend } from './parquet-tools-backend';
+import { ParquetsBackend } from './parquets-backend';
 import toArray from '@async-generators/to-array';
 import { getLogger } from './logger';
+import { useParquetTools } from "./settings";
 
 class DummyDocument extends Disposable implements vscode.CustomDocument {
   uri: vscode.Uri;
@@ -24,29 +26,36 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
     );
   }
 
+  private async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
+    if (useParquetTools()) {
+      yield* ParquetToolsBackend.toJson(parquetPath, token);
+    }
+
+    yield* ParquetsBackend.toJson(parquetPath, token);
+  }
+
   public async show() {
     getLogger().info(`showing ${this.path}.as.json`);
     if (ParquetTextDocumentContentProvider.has(this.path)) {
       return await this.open();
     }
 
-    return await vscode.window.withProgress({
-      location: vscode.ProgressLocation.Notification,
-      title: `opening ${path.basename(this.path)}`,
-      cancellable: true
-    },
-      async (progress, token) => {
-        try {
-          const json = await toArray(ParquetToolsRunner.toJson(this.path, token));
+    try {
+      return await vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: `opening ${path.basename(this.path)}`,
+        cancellable: true
+      },
+        async (progress, token) => {
+          const json = await toArray(this.toJson(this.path, token));
           if (!token.isCancellationRequested) {
             ParquetTextDocumentContentProvider.add(this.path, json.join(''));
             await this.open();
           }
-        } catch (err) {
-          getLogger().error(err.message);
-          await vscode.window.showErrorMessage(err.message);
-        }
-      });
+        });
+    } catch (err) {
+      await vscode.window.showErrorMessage(err);
+    }
   }
 
   dispose(): void {
@@ -86,9 +95,17 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
 
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview, document);
 
-    webviewPanel.webview.onDidReceiveMessage(_ => document.show());
+    webviewPanel.webview.onDidReceiveMessage(e => this.onMessage(document, e));
 
     await document.show();
+  }
+
+  private async onMessage(document: DummyDocument, message: string) {
+    switch (message) {
+      case 'clicked':
+        await document.show();
+        break;
+    }
   }
 
   private getHtmlForWebview(webview: vscode.Webview, document: DummyDocument): string {
@@ -109,7 +126,7 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
       //# sourceURL=to-json.js
       const vscode = acquireVsCodeApi();
       document.getElementById('here').addEventListener('click', _ => {
-        vscode.postMessage();
+        vscode.postMessage('clicked');
       });
     </script>
   </body>
