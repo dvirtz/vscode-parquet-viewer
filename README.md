@@ -4,7 +4,7 @@
 
 Views [Apache Parquet](https://parquet.apache.org/) files as JSON.
 
-Requires [parquet-tools](https://github.com/apache/parquet-mr/tree/master/parquet-tools).
+Requires [parquet-tools](https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools).
 
 ## Features
 
