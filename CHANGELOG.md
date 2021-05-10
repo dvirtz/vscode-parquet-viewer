@@ -1,3 +1,9 @@
+## [2.0.0] - 2021-05-11
+
+### Changed
+
+- Remove the dependency in `parquet-tools`
+
 ## [1.0.2] - 2021-03-22
 
 ### Changed
