@@ -1,3 +1,10 @@
+## [2.1.0] - 2021-05-15
+
+### Changed
+
+- Support Workspace Trust [#24](https://github.com/dvirtz/vscode-parquet-viewer/issues/24)
+- Upgrade dependencies
+
 ## [2.0.0] - 2021-05-11
 
 ### Changed
