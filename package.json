@@ -127,7 +127,7 @@
   },
   "dependencies": {
     "@async-generators/to-array": "^0.1.0",
-    "@dvirtz/parquets": "^0.11.2-develop.1",
+    "@dvirtz/parquets": "^0.11.3",
     "@vscode-logging/logger": "^1.2.3",
     "@vscode-logging/wrapper": "^1.0.1"
   }
