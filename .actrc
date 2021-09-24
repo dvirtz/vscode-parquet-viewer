@@ -1,1 +1,2 @@
--P ubuntu-latest=dvirtz/parquet-viewer:latest
+--rm
+--platform ubuntu-latest=dvirtz/parquet-viewer:latest
