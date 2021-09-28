@@ -5,10 +5,12 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    container:
-      image: node:10-jessie
     steps:
       - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
       - run: npm install
       - uses: lannonbr/vsce-action@master
         with:
