@@ -1,3 +1,9 @@
+## [2.1.2] - 2021-12-06
+
+### Fixed
+
+- [#35](https://github.com/dvirtz/vscode-parquet-viewer/issues/35)
+
 ## [2.1.1] - 2021-07-05
 
 ### Fixed
