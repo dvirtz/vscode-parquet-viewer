@@ -21,8 +21,8 @@ export async function setLogPanel(logPanel: boolean | undefined): Promise<void> 
   await settings().update('logPanel', logPanel);
 }
 
-export function logFolder() : string | undefined {
-  return settings().get('logFolder');
+export function logFolder() : string {
+  return settings().get('logFolder', '');
 }
 
 export async function setLogFolder(logFolder: string | undefined): Promise<void> {

@@ -1,4 +1,9 @@
 {
+    "include": [
+        "jest.config.*",
+        "src/**/*",
+        "test/**/*"
+    ],
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
@@ -10,16 +15,11 @@
         "sourceMap": true,
         "resolveJsonModule": true,
         /* Strict Type-Checking Option */
-        "strict": true,   /* enable all strict type-checking options */
+        "strict": true, /* enable all strict type-checking options */
         /* Additional Checks */
         "noUnusedLocals": true, /* Report errors on unused locals. */
         "typeRoots": [
-            "src/@types",
             "node_modules/@types"
-        ],
-    },
-    "exclude": [
-        "node_modules",
-        ".vscode-test"
-    ]
+        ]
+    }
 }
