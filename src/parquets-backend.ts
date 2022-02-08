@@ -2,9 +2,10 @@ import * as vscode from 'vscode';
 import { getLogger } from './logger';
 import { ParquetReader } from '@dvirtz/parquets';
 import * as os from 'os';
+import { ParquetBackend } from './parquet-backend';
 
-export class ParquetsBackend {
-  public static async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
+export class ParquetsBackend implements ParquetBackend {
+  public async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
     const cancelledMessage = `parsing ${parquetPath} was cancelled by user`;
     if (token?.isCancellationRequested) {
       getLogger().info(cancelledMessage);
@@ -24,9 +25,9 @@ export class ParquetsBackend {
 
       await reader.close();
     } catch (error) {
-      const message = `error while reading ${parquetPath}: ${error}`;
+      const message = `while reading ${parquetPath}: ${error}`;
       getLogger().error(message);
-      throw message;
+      throw Error(message);
     }
   }
 }

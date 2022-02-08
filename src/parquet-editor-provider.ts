@@ -8,15 +8,18 @@ import { ParquetsBackend } from './parquets-backend';
 import toArray from '@async-generators/to-array';
 import { getLogger } from './logger';
 import { useParquetTools } from "./settings";
+import { ParquetBackend } from "./parquet-backend";
 
-class DummyDocument extends Disposable implements vscode.CustomDocument {
+class ParquetDocument extends Disposable implements vscode.CustomDocument {
   uri: vscode.Uri;
   path: string;
+  backend: ParquetBackend;
 
   constructor(uri: vscode.Uri) {
     super();
     this.uri = uri;
     this.path = uri.fsPath;
+    this.backend = useParquetTools() ? new ParquetToolsBackend() : new ParquetsBackend();
   }
 
   private async open() {
@@ -26,12 +29,8 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
     );
   }
 
-  private async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
-    if (useParquetTools()) {
-      yield* ParquetToolsBackend.toJson(parquetPath, token);
-    }
-
-    yield* ParquetsBackend.toJson(parquetPath, token);
+  private async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string, void, undefined> {
+    yield* this.backend.toJson(parquetPath, token);
   }
 
   public async show() {
@@ -54,7 +53,7 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
           }
         });
     } catch (err) {
-      await vscode.window.showErrorMessage(err);
+      await vscode.window.showErrorMessage(`${err}`);
     }
   }
 
@@ -63,7 +62,7 @@ class DummyDocument extends Disposable implements vscode.CustomDocument {
   }
 }
 
-export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvider<DummyDocument> {
+export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvider<ParquetDocument> {
 
   private static readonly viewType = 'parquetViewer.parquetViewer';
 
@@ -79,12 +78,12 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
     return providerRegistration;
   }
 
-  async openCustomDocument(uri: vscode.Uri): Promise<DummyDocument> {
-    return new DummyDocument(uri);
+  async openCustomDocument(uri: vscode.Uri): Promise<ParquetDocument> {
+    return new ParquetDocument(uri);
   }
 
   async resolveCustomEditor(
-    document: DummyDocument,
+    document: ParquetDocument,
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
@@ -100,7 +99,7 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
     await document.show();
   }
 
-  private async onMessage(document: DummyDocument, message: string) {
+  private async onMessage(document: ParquetDocument, message: string) {
     switch (message) {
       case 'clicked':
         await document.show();
@@ -108,7 +107,7 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
     }
   }
 
-  private getHtmlForWebview(webview: vscode.Webview, document: DummyDocument): string {
+  private getHtmlForWebview(webview: vscode.Webview, document: ParquetDocument): string {
     // Use a nonce to whitelist which scripts can be run
     const nonce = getNonce();
 

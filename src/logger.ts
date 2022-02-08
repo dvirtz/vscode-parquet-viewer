@@ -30,11 +30,11 @@ function getPanel(name: string): OutputChannel {
   return loggerPanel;
 }
 
-export function initLogger(context: ExtensionContext): void {
+export function initLogger(context?: ExtensionContext): void {
   setLogger(getExtensionLogger({
     extName: meta.name,
     level: logLevel(),
-    logPath: logFolder() ?? context.logUri.fsPath,
+    logPath: logFolder() || context?.logUri.fsPath,
     logOutputChannel: logPanel() ? getPanel(meta.displayName) : undefined
   }));
 }
