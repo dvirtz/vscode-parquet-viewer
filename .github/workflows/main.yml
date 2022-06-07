@@ -28,3 +28,44 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
       - run: npm test
         if: matrix.os != 'ubuntu-latest'
+
+  release:
+    needs: build
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm install
+      - name: Publish
+        uses: lannonbr/vsce-action@master
+        with:
+          args: "publish -p $VSCE_TOKEN"
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_PAT }}
+
+  package:
+    needs: build
+    if: ${{ github.ref != 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm install
+      - name: Package
+        uses: lannonbr/vsce-action@master
+        with:
+          args: "package"
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_PAT }}
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: vscode-package
+          path: parquet-viewer-*.vsix
