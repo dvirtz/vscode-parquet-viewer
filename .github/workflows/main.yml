@@ -17,7 +17,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - name: Get npm cache directory
         id: npm-cache-dir
         run: |
@@ -46,43 +46,19 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
       - run: npm test
         if: matrix.os != 'ubuntu-latest'
-
-  release:
-    needs: build
-    if: ${{ github.ref == 'refs/heads/master' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - run: npm install
-      - name: Publish
-        uses: lannonbr/vsce-action@master
-        with:
-          args: "publish -p $VSCE_TOKEN"
+      - name: Release
+        if: matrix.os == 'ubuntu-latest'
         env:
-          VSCE_TOKEN: ${{ secrets.VSCE_PAT }}
-
-  package:
-    needs: build
-    if: ${{ github.ref != 'refs/heads/master' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - run: npm install
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx semantic-release
       - name: Package
+        if: github.ref != 'refs/heads/master' && matrix.os == 'ubuntu-latest'
         uses: lannonbr/vsce-action@master
         with:
           args: "package"
-        env:
-          VSCE_TOKEN: ${{ secrets.VSCE_PAT }}
       - name: Upload
+        if: github.ref != 'refs/heads/master' && matrix.os == 'ubuntu-latest' && !env.ACT
         uses: actions/upload-artifact@v3
         with:
           name: vscode-package

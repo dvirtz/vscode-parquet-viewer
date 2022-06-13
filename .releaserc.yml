@@ -1,0 +1,59 @@
+_types: &types
+  - type: feat
+    section: "Features"
+  - type: fix
+    section: "Bug Fixes"
+  - type: docs
+    section: "Documentation"
+  - type: perf
+    section: "Performance improvements"
+  - type: revert
+    section: "Bug Fixes"
+  - type: test
+    section: "Tests"
+  - type: ci
+    section: "Build and continuous integration"
+  - type: build
+    section: "Build and continuous integration"
+  - type: chore
+    section: "General maintenance"
+  - type: style
+    section: "Style improvements"
+  - type: refactor
+    section: "Refactoring"
+
+_rules: &rules
+  - type: chore
+    release: patch
+  - type: docs
+    release: patch
+  - type: revert
+    release: patch
+  - type: test
+    release: patch
+
+branches:
+ - master
+plugins:
+  -
+    - "@semantic-release/commit-analyzer"
+    - preset: conventionalCommits
+      presetConfig:
+        types: *types
+      releaseRules: *rules
+  -
+    - "@semantic-release/release-notes-generator"
+    - preset: conventionalCommits
+      presetConfig:
+        types: *types
+  - "@semantic-release/changelog"
+  - "@semantic-release/git"
+  -
+    - "semantic-release-vsce":
+    - packageVsix": true
+  -
+    - "@semantic-release/github"
+    - assets:
+      -
+        - path: "*.vsix"
+        - label": "Extension File"
