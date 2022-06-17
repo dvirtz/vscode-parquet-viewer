@@ -95,6 +95,17 @@
               "trace"
             ],
             "default": "info"
+          },
+          "parquet-viewer.jsonSpace": {
+            "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Only applies when `#parquet-viewer.useParquetTools#` is `false`.",
+            "type": [
+              "string",
+              "number"
+            ],
+            "default": 0,
+            "minimum": 0,
+            "maximum": 10,
+            "maxLength": 10
           }
         }
       }
