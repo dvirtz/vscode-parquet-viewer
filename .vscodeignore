@@ -1,12 +1,12 @@
-.vscode/**
-.vscode-test/**
-out/test/**
+# hidden files and folder in root
+.*
+.*/
+# typescript files
 src/**
-.gitignore
-vsc-extension-quickstart.md
+test/**
 **/tsconfig.json
 **/tslint.json
 **/*.map
 **/*.ts
-.history/**
-.gitattributes
+# test outputs
+out/test/**
