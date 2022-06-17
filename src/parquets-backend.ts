@@ -3,6 +3,7 @@ import { getLogger } from './logger';
 import { ParquetReader } from '@dvirtz/parquets';
 import * as os from 'os';
 import { ParquetBackend } from './parquet-backend';
+import { jsonSpace } from './settings';
 
 export class ParquetsBackend implements ParquetBackend {
   public async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
@@ -20,7 +21,7 @@ export class ParquetsBackend implements ParquetBackend {
       // read all records from the file and print them
       let record = null;
       while (!token?.isCancellationRequested && (record = await cursor.next())) {
-        yield `${JSON.stringify(record)}${os.EOL}`;
+        yield `${JSON.stringify(record, null, jsonSpace())}${os.EOL}`;
       }
 
       await reader.close();

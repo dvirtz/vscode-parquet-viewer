@@ -40,3 +40,7 @@ export async function setLogLevel(logLevel: LogLevel | undefined): Promise<void>
 export function useParquetTools(): boolean {
   return settings().get('useParquetTools', false);
 }
+
+export function jsonSpace(): number | string | undefined {
+  return settings().get('jsonSpace');
+}
