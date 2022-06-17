@@ -13,28 +13,28 @@ export async function setParquetTools(parquetTools: string | undefined): Promise
   await settings().update('parquetToolsPath', parquetTools);
 }
 
-export function logPanel() : boolean {
-  return settings().get('logPanel', false);
+export function logPanel(): boolean {
+  return settings().get('logging.panel', settings().get('logPanel', false));
 }
 
 export async function setLogPanel(logPanel: boolean | undefined): Promise<void> {
-  await settings().update('logPanel', logPanel);
+  await settings().update('logging.panel', logPanel);
 }
 
-export function logFolder() : string {
-  return settings().get('logFolder', '');
+export function logFolder(): string {
+  return settings().get('logging.folder', settings().get('logFolder', ''));
 }
 
 export async function setLogFolder(logFolder: string | undefined): Promise<void> {
-  await settings().update('logFolder', logFolder);
+  await settings().update('logging.folder', logFolder);
 }
 
-export function logLevel() : LogLevel {
-  return settings().get('logLevel', 'info');
+export function logLevel(): LogLevel {
+  return settings().get('logging.level', settings().get('logLevel', 'info'));
 }
 
-export async function setLogLevel(logLevel : LogLevel | undefined): Promise<void> {
-  await settings().update('logLevel', logLevel);
+export async function setLogLevel(logLevel: LogLevel | undefined): Promise<void> {
+  await settings().update('logging.level', logLevel);
 }
 
 export function useParquetTools(): boolean {

@@ -47,11 +47,13 @@
           },
           "parquet-viewer.logPanel": {
             "description": "Write diagnostic logs to an output panel",
-            "type": "boolean"
+            "type": "boolean",
+            "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.panel#` instead."
           },
           "parquet-viewer.logFolder": {
             "description": "Write diagnostic logs under the given directory",
-            "type": "string"
+            "type": "string",
+            "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.folder#` instead."
           },
           "parquet-viewer.logLevel": {
             "description": "Log level",
@@ -65,11 +67,34 @@
               "debug",
               "trace"
             ],
-            "default": "info"
+            "default": "info",
+            "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.level#` instead."
           },
           "parquet-viewer.useParquetTools": {
             "description": "use legacy parquet-tools application for reading parquet files",
             "type": "boolean"
+          },
+          "parquet-viewer.logging.panel": {
+            "description": "Write diagnostic logs to an output panel",
+            "type": "boolean"
+          },
+          "parquet-viewer.logging.folder": {
+            "description": "Write diagnostic logs under the given directory",
+            "type": "string"
+          },
+          "parquet-viewer.logging.level": {
+            "description": "Log level",
+            "type": "string",
+            "enum": [
+              "off",
+              "fatal",
+              "error",
+              "warn",
+              "info",
+              "debug",
+              "trace"
+            ],
+            "default": "info"
           }
         }
       }
