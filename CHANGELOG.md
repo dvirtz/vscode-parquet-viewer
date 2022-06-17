@@ -1,3 +1,18 @@
+## [2.1.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.1.4...v2.1.5) (2022-06-17)
+
+
+### General maintenance
+
+* fix version ([36017e4](https://github.com/dvirtz/vscode-parquet-viewer/commit/36017e4e1838d7594082d948b14109bba74cdc79))
+* increase commit max body line length ([054a4c2](https://github.com/dvirtz/vscode-parquet-viewer/commit/054a4c20fe845642cf53a91c8f2713f6bd83f36f))
+* package less files ([cfcb7fe](https://github.com/dvirtz/vscode-parquet-viewer/commit/cfcb7fe75a09815726e9039ecbfa3de46c95dd0e))
+
+
+### Build and continuous integration
+
+* fix pushing to protected branch ([4ec31f6](https://github.com/dvirtz/vscode-parquet-viewer/commit/4ec31f6df454a7a3cf98e9ad3640b802287e460c))
+* fix semantic-release config ([eef8646](https://github.com/dvirtz/vscode-parquet-viewer/commit/eef86462e006a4783dad27c288c9bf3f399e41d3))
+
 ## [2.1.3] - 2022-06-07
 
 ### Fixed
