@@ -50,6 +50,5 @@ plugins:
     - packageVsix": true
   - - "@semantic-release/github"
     - assets:
-      -
-        - path: "*.vsix"
-        - label": "Extension File"
+      - path: "*.vsix"
+        label": "Extension File"
