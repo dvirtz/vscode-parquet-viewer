@@ -35,24 +35,20 @@ _rules: &rules
 branches:
  - master
 plugins:
-  -
-    - "@semantic-release/commit-analyzer"
+  - - "@semantic-release/commit-analyzer"
     - preset: conventionalCommits
       presetConfig:
         types: *types
       releaseRules: *rules
-  -
-    - "@semantic-release/release-notes-generator"
+  - - "@semantic-release/release-notes-generator"
     - preset: conventionalCommits
       presetConfig:
         types: *types
   - "@semantic-release/changelog"
   - "@semantic-release/git"
-  -
-    - "semantic-release-vsce":
+  - - "semantic-release-vsce":
     - packageVsix": true
-  -
-    - "@semantic-release/github"
+  - - "@semantic-release/github"
     - assets:
       -
         - path: "*.vsix"
