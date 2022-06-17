@@ -11,8 +11,15 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   initLogger(context);
   getLogger().info('parquet-viewer activated');
 
-  // restart logger on configuration change
-  context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(() => initLogger(context)));
+  context.subscriptions.push(vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
+    if (e.affectsConfiguration('logging')
+      || e.affectsConfiguration('logLevel')
+      || e.affectsConfiguration('logPanel')
+      || e.affectsConfiguration('logFolder')) {
+        // restart logger on log configuration change
+      initLogger(context);
+    }
+  }));
 
   context.subscriptions.push(ParquetEditorProvider.register(context));
 }
