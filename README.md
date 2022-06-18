@@ -30,10 +30,10 @@ The following setting options are available:
 |name|default|description|
 |----|-------|-----------|
 |`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
-|`parquet-viewer.logPanel`|`false`|Whether to write diagnostic logs to an output panel|
-|`parquet-viewer.logFolder`|empty|Write diagnostic logs under the given directory|
-|`parquet-viewer.logLevel`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
 |`parquet-viewer.useParquetTools`|`false`|Use the legacy `parquet-tools` application for reading the files|
+|`parquet-viewer.logging.panel`|`false`|Whether to write diagnostic logs to an output panel|
+|`parquet-viewer.logging.folder`|empty|Write diagnostic logs under the given directory|
+|`parquet-viewer.logging.level`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
 
 ### What's new
 
