@@ -9,3 +9,24 @@ export async function getUri(fileName: string): Promise<Uri> {
 }
 
 export const extensionId = `${meta.publisher}.${meta.name}`;
+
+export async function readFile(fileName: string): Promise<string> {
+  const uri = await getUri(fileName);
+  const contents = await workspace.fs.readFile(uri);
+  return (new TextDecoder()).decode(contents);
+}
+
+export const deferred = <T>() => {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+
+  return {
+    promise,
+    resolve,
+    reject,
+  };
+};

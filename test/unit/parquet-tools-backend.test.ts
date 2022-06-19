@@ -34,7 +34,7 @@ describe("ParquetToolsBackend tests", () => {
     ["small", "large"]
   )('Converts %s parquet to JSON', async function (name) {
     const workspace = path.join(rootDir, 'test', 'workspace');
-    const json = (await toArray(backend.toJson(path.join(workspace, `${name}.parquet`)))).map(line => line.trim());
+    const json = (await toArray(backend.toJson(path.join(workspace, `${name}.parquet`))));
     const expected = await toArray(createInterface({input: createReadStream(path.join(workspace, `${name}.json`))}));
 
     expect(json).toEqual(expected);

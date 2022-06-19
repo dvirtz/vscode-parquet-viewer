@@ -5,12 +5,11 @@ import * as assert from 'assert';
 import { getLogger } from './logger';
 import { parquetTools as getParquetTools } from './settings';
 import { createInterface } from 'readline';
-import * as os from 'os';
 import { ParquetBackend } from './parquet-backend';
 
 export class ParquetToolsBackend implements ParquetBackend {
 
-  public static async* spawnParquetTools(params: string[], token?: vscode.CancellationToken): AsyncGenerator<string, string, undefined> {
+  public static async* spawnParquetTools(params: string[], token?: vscode.CancellationToken): AsyncGenerator<string> {
     let parquetTools = getParquetTools();
     if (!parquetTools) {
       throw Error(`illegal value for parquet-viewer.parquetToolsPath setting: ${parquetTools}`);
@@ -36,7 +35,9 @@ export class ParquetToolsBackend implements ParquetBackend {
     });
 
     childProcess.stdout.setEncoding('utf-8');
-    yield* createInterface({input: childProcess.stdout});
+    for await (const line of createInterface({input: childProcess.stdout})) {
+      yield line;
+    }
     let stderr = '';
     childProcess.stderr.on('data', data => stderr += data);
     const code = await new Promise((resolve, reject) => {
@@ -65,9 +66,7 @@ export class ParquetToolsBackend implements ParquetBackend {
     });
 
     try {
-      for await (const line of ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token)) {
-        yield `${line}${os.EOL}`
-      }
+      yield* ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token);
     } catch (e) {
       let message = `while reading ${parquetPath}: `;
       message += (_ => {

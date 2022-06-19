@@ -1,23 +1,33 @@
 import * as vscode from "vscode";
-import * as assert from 'assert';
+import ParquetDocument from './parquet-document';
 
 export class ParquetTextDocumentContentProvider implements vscode.TextDocumentContentProvider {
-  private static jsonMap: Map<string, string> = new Map();
+  private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
+  private _documents = new Map<vscode.Uri, ParquetDocument>();
+  private _subscriptions: vscode.Disposable;
 
-  public static has(path: string): boolean {
-    return ParquetTextDocumentContentProvider.jsonMap.has(path);
+  constructor() {
+    this._subscriptions = vscode.workspace.onDidCloseTextDocument(doc => this._documents.delete(doc.uri));
   }
 
-  public static add(path:string, content: string): void {
-    ParquetTextDocumentContentProvider.jsonMap.set(path, content);
+  dispose() {
+    this._subscriptions.dispose();
+    this._documents.clear();
+    this._onDidChange.dispose();
   }
 
-  onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
-  onDidChange = this.onDidChangeEmitter.event;
+  get onDidChange() {
+    return this._onDidChange.event;
+  }
 
   async provideTextDocumentContent(uri: vscode.Uri): Promise<string | undefined> {
-    const parquetPath = uri.fsPath.replace(/\.as\.json$/, '');
-    assert(ParquetTextDocumentContentProvider.has(parquetPath));
-    return ParquetTextDocumentContentProvider.jsonMap.get(parquetPath);
+    // already loaded?
+    const document = this._documents.get(uri) || (await (async _ => {
+      const document = await ParquetDocument.create(uri, this._onDidChange);
+      this._documents.set(uri, document);
+      return document;
+    })());
+
+    return document.value;
   }
 }
