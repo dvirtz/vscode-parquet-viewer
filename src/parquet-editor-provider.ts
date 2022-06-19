@@ -3,66 +3,26 @@ import * as path from 'path';
 import { getNonce } from './util';
 import { Disposable } from "./dispose";
 import { ParquetTextDocumentContentProvider } from './parquet-document-provider';
-import { ParquetToolsBackend } from './parquet-tools-backend';
-import { ParquetsBackend } from './parquets-backend';
-import toArray from '@async-generators/to-array';
 import { getLogger } from './logger';
-import { useParquetTools } from "./settings";
-import { ParquetBackend } from "./parquet-backend";
-
-class ParquetDocument extends Disposable implements vscode.CustomDocument {
+class CustomParquetDocument extends Disposable implements vscode.CustomDocument {
   uri: vscode.Uri;
   path: string;
-  backend: ParquetBackend;
 
   constructor(uri: vscode.Uri) {
     super();
     this.uri = uri;
     this.path = uri.fsPath;
-    this.backend = useParquetTools() ? new ParquetToolsBackend() : new ParquetsBackend();
   }
 
-  private async open() {
+  public async open() {
     getLogger().info(`opening ${this.path}.as.json`);
     await vscode.window.showTextDocument(
       this.uri.with({ scheme: 'parquet', path: this.path + '.as.json' })
     );
   }
-
-  private async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string, void, undefined> {
-    yield* this.backend.toJson(parquetPath, token);
-  }
-
-  public async show() {
-    getLogger().info(`showing ${this.path}.as.json`);
-    if (ParquetTextDocumentContentProvider.has(this.path)) {
-      return await this.open();
-    }
-
-    try {
-      return await vscode.window.withProgress({
-        location: vscode.ProgressLocation.Notification,
-        title: `opening ${path.basename(this.path)}`,
-        cancellable: true
-      },
-        async (progress, token) => {
-          const json = await toArray(this.toJson(this.path, token));
-          if (!token.isCancellationRequested) {
-            ParquetTextDocumentContentProvider.add(this.path, json.join(''));
-            await this.open();
-          }
-        });
-    } catch (err) {
-      await vscode.window.showErrorMessage(`${err}`);
-    }
-  }
-
-  dispose(): void {
-    super.dispose();
-  }
 }
 
-export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvider<ParquetDocument> {
+export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvider<CustomParquetDocument> {
 
   private static readonly viewType = 'parquetViewer.parquetViewer';
 
@@ -78,12 +38,12 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
     return providerRegistration;
   }
 
-  async openCustomDocument(uri: vscode.Uri): Promise<ParquetDocument> {
-    return new ParquetDocument(uri);
+  async openCustomDocument(uri: vscode.Uri): Promise<CustomParquetDocument> {
+    return new CustomParquetDocument(uri);
   }
 
   async resolveCustomEditor(
-    document: ParquetDocument,
+    document: CustomParquetDocument,
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
@@ -96,18 +56,18 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
 
     webviewPanel.webview.onDidReceiveMessage(e => this.onMessage(document, e));
 
-    await document.show();
+    await document.open();
   }
 
-  private async onMessage(document: ParquetDocument, message: string) {
+  private async onMessage(document: CustomParquetDocument, message: string) {
     switch (message) {
       case 'clicked':
-        await document.show();
+        await document.open();
         break;
     }
   }
 
-  private getHtmlForWebview(webview: vscode.Webview, document: ParquetDocument): string {
+  private getHtmlForWebview(webview: vscode.Webview, document: CustomParquetDocument): string {
     // Use a nonce to whitelist which scripts can be run
     const nonce = getNonce();
 
