@@ -191,11 +191,11 @@
         2,
         "always",
         200
+      ],
+      "footer-max-line-length": [
+        0,
+        "always"
       ]
-    },
-    "footer-max-line-length": [
-      0,
-      "always"
-    ]
+    }
   }
 }
