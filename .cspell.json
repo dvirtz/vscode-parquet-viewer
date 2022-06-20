@@ -4,7 +4,8 @@
     "words": [
         "dvirtz",
         "tempy",
-        "Yitzchaki"
+        "Yitzchaki",
+        "commitlint"
     ],
     "ignorePaths": [
         "node_modules/**"
