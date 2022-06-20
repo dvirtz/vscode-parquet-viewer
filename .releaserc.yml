@@ -33,22 +33,23 @@ _rules: &rules
     release: patch
 
 branches:
- - master
+  - master
 plugins:
-  - - "@semantic-release/commit-analyzer"
-    - preset: conventionalCommits
-      presetConfig:
-        types: *types
-      releaseRules: *rules
-  - - "@semantic-release/release-notes-generator"
-    - preset: conventionalCommits
-      presetConfig:
-        types: *types
+  - [
+      "@semantic-release/commit-analyzer",
+      {
+        preset: conventionalCommits,
+        presetConfig: { types: *types, releaseRules: *rules },
+      },
+    ]
+  - [
+      "@semantic-release/release-notes-generator",
+      { preset: conventionalCommits, presetConfig: { types: *types } },
+    ]
   - "@semantic-release/changelog"
   - "@semantic-release/git"
-  - - "semantic-release-vsce":
-    - packageVsix: true
-  - - "@semantic-release/github"
-    - assets:
-      - path: "*.vsix"
-        label": "Extension File"
+  - ["semantic-release-vsce", { packageVsix: true }]
+  - [
+      "@semantic-release/github",
+      { assets: [{ path: "*.vsix", label: "Extension File" }] },
+    ]
