@@ -9,7 +9,12 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [
+            # disable mac due to https://github.com/nodejs/node/issues/42154
+            # macos-latest,
+            ubuntu-latest,
+            windows-latest,
+          ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
