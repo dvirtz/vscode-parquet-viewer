@@ -47,6 +47,7 @@ plugins:
       { preset: conventionalCommits, presetConfig: { types: *types } },
     ]
   - "@semantic-release/changelog"
+  - ["@semantic-release/npm", { npmPublish: false }]
   - "@semantic-release/git"
   - ["semantic-release-vsce", { packageVsix: true }]
   - [
