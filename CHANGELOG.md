@@ -1,3 +1,30 @@
+## [2.2.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.1.5...v2.2.0) (2022-06-20)
+
+
+### Features
+
+* formatting JSON output ([5a61a8e](https://github.com/dvirtz/vscode-parquet-viewer/commit/5a61a8e52494718e469243e0d34923a9727ad59a)), closes [#43](https://github.com/dvirtz/vscode-parquet-viewer/issues/43)
+* watch for file changes ([a38e633](https://github.com/dvirtz/vscode-parquet-viewer/commit/a38e63307e3c3ca12e7f72a96d02a4958d584f50)), closes [#38](https://github.com/dvirtz/vscode-parquet-viewer/issues/38)
+
+
+### Documentation
+
+* update readme with grouped logging options ([2ecf274](https://github.com/dvirtz/vscode-parquet-viewer/commit/2ecf2742f89192af9753cd20e44944eebdceb140))
+
+
+### General maintenance
+
+* allow longer footers ([e30ba3c](https://github.com/dvirtz/vscode-parquet-viewer/commit/e30ba3c8fe8e335e491209b07aa467d310f9783d))
+* fix commitlint ([bfd5ddc](https://github.com/dvirtz/vscode-parquet-viewer/commit/bfd5ddc6d0ee3423f001e3bb68f338acc8be5807))
+* group logging settings ([a2ad7e1](https://github.com/dvirtz/vscode-parquet-viewer/commit/a2ad7e129cc9d58e4da2c1a36b77239d3d20b969))
+
+
+### Build and continuous integration
+
+* disable mac builds ([e45ed4e](https://github.com/dvirtz/vscode-parquet-viewer/commit/e45ed4e162b52e263b4faebba57e89e3782ffa59))
+* fix spelling ([45fdc11](https://github.com/dvirtz/vscode-parquet-viewer/commit/45fdc11322b9058e26562f066e78e32cbd312750))
+* fix vsce step ([cd6e5a6](https://github.com/dvirtz/vscode-parquet-viewer/commit/cd6e5a6c2339999bb40400b6d0e970b05275dbd4))
+
 ## [2.1.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.1.4...v2.1.5) (2022-06-17)
 
 
