@@ -39,7 +39,8 @@ plugins:
       "@semantic-release/commit-analyzer",
       {
         preset: conventionalCommits,
-        presetConfig: { types: *types, releaseRules: *rules },
+        presetConfig: { types: *types },
+        releaseRules: *rules
       },
     ]
   - [
