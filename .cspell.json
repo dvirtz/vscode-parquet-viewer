@@ -20,6 +20,12 @@
                 "/'s\\b/", // trailing 's
                 "<!--.*?-->" // comments
             ]
+        },
+        {
+            "languageId": "git",
+            "ignoreRegExpList": [
+                "/# .*/" // comments
+            ]
         }
     ]
 }
