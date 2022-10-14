@@ -1,3 +1,19 @@
+## [2.2.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.2.0...v2.2.1) (2022-10-14)
+
+
+### Build and continuous integration
+
+* fix vsce release ([f9dffb4](https://github.com/dvirtz/vscode-parquet-viewer/commit/f9dffb4773afa1e93f7417d01f4d1397fd8c28f2))
+* move custom release rules to correct place ([1c726f4](https://github.com/dvirtz/vscode-parquet-viewer/commit/1c726f4efdc90c10ab3058ea78545210afbaa883))
+* publish to OpenVSX ([12d80a3](https://github.com/dvirtz/vscode-parquet-viewer/commit/12d80a3e802fbb9cd1ffd3ee419ae2af2c75cea3)), closes [#56](https://github.com/dvirtz/vscode-parquet-viewer/issues/56)
+* use npm plugin to update package.json ([689c3de](https://github.com/dvirtz/vscode-parquet-viewer/commit/689c3de0262d2dd6114aa40034a9e07660684eb9))
+
+
+### General maintenance
+
+* ignore comments when linting commits ([654d229](https://github.com/dvirtz/vscode-parquet-viewer/commit/654d229024eec4955b2ce01260813e7d53895e17))
+* upgrade node action ([5990657](https://github.com/dvirtz/vscode-parquet-viewer/commit/59906579c1fd3b333af7beb339d905b8c0faf2c3))
+
 ## [2.2.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.1.5...v2.2.0) (2022-06-20)
 
 
