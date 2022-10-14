@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cat "$1" | npx cspell stdin
+cat "$1" | npx cspell lint --language-id git stdin
 npx --no-install commitlint --edit "$1"
