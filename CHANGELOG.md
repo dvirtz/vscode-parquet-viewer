@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.2.1...v2.2.2) (2022-10-15)
+
+
+### General maintenance
+
+* bump version ([#62](https://github.com/dvirtz/vscode-parquet-viewer/issues/62)) ([889ce1d](https://github.com/dvirtz/vscode-parquet-viewer/commit/889ce1da01c2175acbaac75319e48c77b763abe8))
+
 ## [2.2.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.2.0...v2.2.1) (2022-10-14)
 
 
