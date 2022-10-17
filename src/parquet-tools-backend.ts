@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import { spawn } from "child_process";
 import * as path from 'path';
-import * as assert from 'assert';
 import { getLogger } from './logger';
 import { parquetTools as getParquetTools } from './settings';
 import { createInterface } from 'readline';
@@ -19,7 +18,9 @@ export class ParquetToolsBackend implements ParquetBackend {
       if (parquetTools.endsWith('.jar')) {
         if (!path.isAbsolute(parquetTools)) {
           const files = await vscode.workspace.findFiles(parquetTools);
-          assert(files.length === 1);
+          if (files.length != 1) {
+            getLogger().error(`parquetToolsPath setting should point to a single jar (currently: ${parquetTools})`)
+          }
           parquetTools = files[0].fsPath;
         }
         getLogger().debug(`spawning java ${['-jar', parquetTools].concat(params).join(' ')}`);

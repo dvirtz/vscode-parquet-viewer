@@ -1,12 +1,13 @@
 # hidden files and folder in root
 .*
 .*/
-# typescript files
+# typescript files and outputs
 src/**
 test/**
-**/tsconfig.json
+out/**
+node_modules
+# config files
+**/*config.*
 **/tslint.json
-**/*.map
-**/*.ts
-# test outputs
-out/test/**
+# misc
+Dockerfile

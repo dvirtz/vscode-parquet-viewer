@@ -34,7 +34,7 @@
   "activationEvents": [
     "onCustomEditor:parquetViewer.parquetViewer"
   ],
-  "main": "./out/src/extension",
+  "main": "./dist/extension",
   "contributes": {
     "configuration": [
       {
@@ -132,16 +132,18 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run package",
     "compile": "tsc -p tsconfig.json",
-    "watch": "tsc -watch -p .",
     "preintegration": "npm run compile",
     "integration": "node ./out/test/integration/runTests.js",
     "unit": "jest --verbose test/unit",
     "test": "npm run unit && npm run integration",
     "spellcheck": "cspell '**/*.ts' '**/*.md'",
     "lint": "eslint --max-warnings=0 '**/*.ts'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "package": "webpack --mode production --devtool hidden-source-map"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
@@ -164,8 +166,11 @@
     "semantic-release-vsce": "^5.0.17",
     "tempy": "^1.0.1",
     "ts-jest": "^28.0.4",
+    "ts-loader": "^9.4.1",
     "ts-node": "^10.8.1",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "dependencies": {
     "@async-generators/to-array": "^0.1.0",

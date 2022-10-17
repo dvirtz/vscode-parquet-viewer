@@ -24,7 +24,7 @@
         {
             "languageId": "git",
             "ignoreRegExpList": [
-                "/# .*/" // comments
+                "/#.*/" // comments
             ]
         }
     ]
