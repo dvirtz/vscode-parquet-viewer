@@ -3,7 +3,5 @@ node_modules
 .vscode-test/
 *.vsix
 .history/
-.vscode/
-!test/workspace/.vscode
 .secrets
 dist
