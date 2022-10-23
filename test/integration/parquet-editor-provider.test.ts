@@ -38,7 +38,7 @@ describe('ParquetEditorProvider', function () {
   test.each([
     ['small', true],
     ['large', false]
-  ])('shows parquet using parquet tools %p', async function (name, useParquetTools) {
+  ])('shows %p parquet with useParquetTools=%p', async function (name, useParquetTools) {
     const parquet = await getUri(`${name}.parquet`);
     const checkChanged = jest.fn(async function (document: vscode.TextDocument) {
       expect(document.fileName).toBe(`${parquet.fsPath}.as.json`);

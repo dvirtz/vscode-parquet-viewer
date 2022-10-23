@@ -1,0 +1,3 @@
+{
+  "jest.jestCommandLine": "npx jest -c test/unit/jest.config.ts"
+}

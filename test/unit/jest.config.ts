@@ -4,9 +4,8 @@ import {default as common} from '../../jest.config';
 
 const config: Config.InitialOptions = {
   ...common,
-  roots: [path.join(__dirname, 'test', 'unit')],
   moduleNameMapper: {
-    '^vscode$': '<rootDir>/node_modules/@types/vscode/index.d.ts'
+    '^vscode$': `${path.join(__dirname, '..', '..')}/node_modules/@types/vscode/index.d.ts`
   }
 };
 
