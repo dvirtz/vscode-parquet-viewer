@@ -1,10 +1,9 @@
 # vscode
 .vscode-test/
-.vscode/
-!test/workspace/.vscode
+/.vscode
 
 # npm
-out
+dist/
 node_modules
 
 # output
@@ -12,3 +11,7 @@ node_modules
 
 # act
 .secrets
+
+# addon
+build/
+prebuilds/

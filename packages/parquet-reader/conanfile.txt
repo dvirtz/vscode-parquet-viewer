@@ -1,0 +1,10 @@
+[requires]
+arrow/10.0.0
+fmt/9.1.0
+
+[generators]
+CMakeDeps
+
+[options]
+arrow:parquet=True
+arrow:with_snappy=True

@@ -14,12 +14,25 @@ After closing the JSON view, it is possible to reopen it by clicking on the link
 
 ![command](images/reopen.gif)
 
-## Requirements
+## Backends
 
-The extension used to require [parquet-tools](https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools).
-Now the extension uses the [parquets](https://github.com/dvirtz/parquets) TypeScript library to do parse the files.
+The extension supports three different backends for parsing the files:
 
-If you still want to use `parquet-tools`, you should set `parquet-viewer.useParquetTools` to `true` and `paruqet-tools` should be in your `PATH`, or pointed by the `parquet-viewer.parquetToolsPath` setting.
+### parquets
+
+This is the default backend. It uses the [parquets](https://github.com/dvirtz/parquets) TypeScript library, which is a fork of the unmaintained [kbajalc/parquets](https://github.com/kbajalc/parquets) library with some bug fixes.
+
+It only supports parquet version 1.0.0.
+
+### arrow
+
+This backend is a thin wrapper around the [Apache Arrow C++](https://github.com/apache/arrow/tree/main/cpp) implementation and so should support latest and greatest parquet features.
+
+It is currently in an experimental state. To use, set `parquet-viewer.backend` setting to `arrow`.
+
+### parquet-tools
+
+This is a legacy Java backend, using [parquet-tools](https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools). To use that, you should set `parquet-viewer.backend` to `parquet-tools` and `paruqet-tools` should be in your `PATH`, or pointed by the `parquet-viewer.parquetToolsPath` setting.
 
 ![settings](images/settings.png)
 
@@ -29,11 +42,12 @@ The following setting options are available:
 
 |name|default|description|
 |----|-------|-----------|
-|`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
-|`parquet-viewer.useParquetTools`|`false`|Use the legacy `parquet-tools` application for reading the files|
+|`parquet-viewer.backend`|`parquets`|Which backend to use for reading the files|
 |`parquet-viewer.logging.panel`|`false`|Whether to write diagnostic logs to an output panel|
 |`parquet-viewer.logging.folder`|empty|Write diagnostic logs under the given directory|
 |`parquet-viewer.logging.level`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
+|`parquet-viewer.jsonSpace`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `parquet-viewer.backend` is `parquet-tools`.|
+|`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
 
 ### What's new
 

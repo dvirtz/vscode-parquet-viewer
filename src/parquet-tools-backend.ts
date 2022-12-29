@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { spawn } from "child_process";
 import * as path from 'path';
-import * as assert from 'assert';
+import { strict as assert } from 'assert';
 import { getLogger } from './logger';
 import { parquetTools as getParquetTools } from './settings';
 import { createInterface } from 'readline';
@@ -10,25 +10,9 @@ import { ParquetBackend } from './parquet-backend';
 export class ParquetToolsBackend implements ParquetBackend {
 
   public static async* spawnParquetTools(params: string[], token?: vscode.CancellationToken): AsyncGenerator<string> {
-    let parquetTools = getParquetTools();
-    if (!parquetTools) {
-      throw Error(`illegal value for parquet-viewer.parquetToolsPath setting: ${parquetTools}`);
-    }
-
-    const childProcess = await (async function () {
-      if (parquetTools.endsWith('.jar')) {
-        if (!path.isAbsolute(parquetTools)) {
-          const files = await vscode.workspace.findFiles(parquetTools);
-          assert(files.length === 1);
-          parquetTools = files[0].fsPath;
-        }
-        getLogger().debug(`spawning java ${['-jar', parquetTools].concat(params).join(' ')}`);
-        return spawn('java', ['-jar', parquetTools].concat(params));
-      }
-
-      getLogger().debug(`spawning ${parquetTools} ${params.join(' ')}`);
-      return spawn(parquetTools, params);
-    })();
+    const [command, ...args] = await ParquetToolsBackend.parquetToolsPath();
+    getLogger().debug(`spawning ${command} ${args.concat(params).join(' ')}`);
+    const childProcess = spawn(command, args.concat(params));
 
     token?.onCancellationRequested(_ => {
       childProcess.kill();
@@ -52,6 +36,22 @@ export class ParquetToolsBackend implements ParquetBackend {
       }
     }
     return stderr;
+  }
+
+  private static async parquetToolsPath(): Promise<Array<string>> {
+    let parquetTools = getParquetTools();
+    if (!parquetTools) {
+      throw Error(`illegal value for parquet-viewer.parquetToolsPath setting: ${parquetTools}`);
+    }
+    if (parquetTools.endsWith('.jar')) {
+      if (!path.isAbsolute(parquetTools)) {
+        const files = await vscode.workspace.findFiles(parquetTools);
+        assert.equal(files.length, 1);
+        parquetTools = files[0].fsPath;
+      }
+      return [`java`, '-jar', parquetTools];
+    }
+    return [parquetTools];
   }
 
   public async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
