@@ -139,8 +139,8 @@
     "integration": "node ./out/test/integration/runTests.js",
     "unit": "jest --verbose test/unit",
     "test": "npm run unit && npm run integration",
-    "spellcheck": "cspell '**/*.ts' '**/*.md'",
-    "lint": "eslint --max-warnings=0 '**/*.ts'",
+    "spellcheck": "cspell **/*.ts **/*.md",
+    "lint": "eslint --max-warnings=0 **/*.ts",
     "prepare": "husky install"
   },
   "devDependencies": {
