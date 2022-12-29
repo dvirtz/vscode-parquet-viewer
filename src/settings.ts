@@ -48,3 +48,9 @@ export function jsonSpace(): number | string | undefined {
 }
 
 export const loggingSettings = ['logging', 'logLevel', 'logPanel', 'logFolder'].map(s => `${basename}.${s}`);
+
+type Backend = 'parquet-tools' | 'parquets' | 'arrow';
+
+export function backend(): Backend {
+  return useParquetTools() ? 'parquet-tools' : settings().get('backend', 'arrow');
+}

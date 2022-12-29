@@ -4,6 +4,9 @@
         "src/**/*",
         "test/**/*"
     ],
+    "exclude": [
+        "src/arrow-parquet-reader/**"
+    ],
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",

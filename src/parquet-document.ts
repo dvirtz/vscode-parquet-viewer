@@ -1,10 +1,10 @@
 import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { ParquetBackend } from "./parquet-backend";
+import { ArrowBackend } from './arrow-backend';
 import { ParquetToolsBackend } from './parquet-tools-backend';
 import { ParquetsBackend } from './parquets-backend';
-import { useParquetTools } from "./settings";
+import { backend } from './settings';
 
 export default class ParquetDocument implements vscode.Disposable {
   private readonly _uri: vscode.Uri;
@@ -13,7 +13,16 @@ export default class ParquetDocument implements vscode.Disposable {
   private _lines: string[] = [];
   private readonly _disposables: vscode.Disposable[] = [];
   private readonly _parquetPath: string;
-  private readonly _backend: ParquetBackend = useParquetTools() ? new ParquetToolsBackend() : new ParquetsBackend();
+  private readonly _backend = (() => {
+    switch (backend()) {
+      case 'parquet-tools':
+        return new ParquetToolsBackend;
+      case 'parquets':
+        return new ParquetsBackend;
+      default:
+        return new ArrowBackend;
+    }
+  })();
 
 
   private constructor(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>) {

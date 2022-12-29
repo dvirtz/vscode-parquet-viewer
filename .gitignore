@@ -12,3 +12,8 @@ node_modules
 
 # act
 .secrets
+build/
+
+# addon
+build/
+.venv/

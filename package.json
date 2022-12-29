@@ -71,8 +71,9 @@
             "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.level#` instead."
           },
           "parquet-viewer.useParquetTools": {
-            "description": "use legacy parquet-tools application for reading parquet files",
-            "type": "boolean"
+            "description": "Use legacy parquet-tools application for reading parquet files",
+            "type": "boolean",
+            "markdownDeprecationMessage": "Use `#parquet-viewer.backend#` configuration instead"
           },
           "parquet-viewer.logging.panel": {
             "description": "Write diagnostic logs to an output panel",
@@ -106,6 +107,16 @@
             "minimum": 0,
             "maximum": 10,
             "maxLength": 10
+          },
+          "parquet-viewer.backend": {
+            "markdownDescription": "Which backend to use for reading the files",
+            "type": "string",
+            "enum": [
+              "parquet-tools",
+              "parquets",
+              "arrow"
+            ],
+            "default": "arrow"
           }
         }
       }
@@ -141,13 +152,16 @@
     "test": "npm run unit && npm run integration",
     "spellcheck": "cspell **/*.ts **/*.md",
     "lint": "eslint --max-warnings=0 **/*.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "addon:build": "cmake-js build -d src/arrow-parquet-reader && copyfiles src/arrow-parquet-reader/build/Release/arrow-parquet-reader.node out",
+    "addon:build:debug": "cmake-js build -d src/arrow-parquet-reader -D && copyfiles src/arrow-parquet-reader/build/Debug/arrow-parquet-reader.node out"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
+    "@types/bindings": "^1.5.1",
     "@types/glob": "^7.1.3",
     "@types/jest": "^28.1.1",
     "@types/node": "^12.20.11",
@@ -155,6 +169,8 @@
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "@vscode/test-electron": "^2.1.3",
+    "cmake-js": "^7.1.1",
+    "copyfiles": "^2.4.1",
     "cspell": "^5.11.0",
     "eslint": "^8.17.0",
     "glob-promise": "^4.2.0",
@@ -172,7 +188,11 @@
     "@dvirtz/parquets": "^0.11.6",
     "@vscode-logging/logger": "^1.2.3",
     "@vscode-logging/wrapper": "^1.0.1",
-    "color-string": "^1.6.0"
+    "apache-arrow": "^9.0.0",
+    "bindings": "^1.5.0",
+    "color-string": "^1.6.0",
+    "memory-streams": "^0.1.3",
+    "node-addon-api": "^5.0.0"
   },
   "__metadata": {
     "id": "b0d61cc0-c99f-47d2-88eb-6b26dc2a5b1e",
