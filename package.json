@@ -20,6 +20,9 @@
   },
   "license": "MIT",
   "version": "2.2.2",
+  "workspaces": [
+    "./packages/*"
+  ],
   "engines": {
     "vscode": "^1.63.0"
   },
@@ -34,7 +37,7 @@
   "activationEvents": [
     "onCustomEditor:parquetViewer.parquetViewer"
   ],
-  "main": "./out/src/extension",
+  "main": "./dist/src/extension",
   "contributes": {
     "configuration": [
       {
@@ -71,8 +74,9 @@
             "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.level#` instead."
           },
           "parquet-viewer.useParquetTools": {
-            "description": "use legacy parquet-tools application for reading parquet files",
-            "type": "boolean"
+            "description": "Use legacy parquet-tools application for reading parquet files",
+            "type": "boolean",
+            "markdownDeprecationMessage": "Use `#parquet-viewer.backend#` configuration instead"
           },
           "parquet-viewer.logging.panel": {
             "description": "Write diagnostic logs to an output panel",
@@ -97,7 +101,7 @@
             "default": "info"
           },
           "parquet-viewer.jsonSpace": {
-            "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Only applies when `#parquet-viewer.useParquetTools#` is `false`.",
+            "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `#parquet-viewer.backend#` is `parquet-tools`.",
             "type": [
               "string",
               "number"
@@ -106,6 +110,16 @@
             "minimum": 0,
             "maximum": 10,
             "maxLength": 10
+          },
+          "parquet-viewer.backend": {
+            "markdownDescription": "Which backend to use for reading the files",
+            "type": "string",
+            "enum": [
+              "parquet-tools",
+              "parquets",
+              "arrow"
+            ],
+            "default": "parquets"
           }
         }
       }
@@ -131,17 +145,23 @@
       ]
     }
   },
+  "__metadata": {
+    "id": "b0d61cc0-c99f-47d2-88eb-6b26dc2a5b1e",
+    "publisherDisplayName": "Dvir Yitzchaki",
+    "publisherId": "5c0bfd53-c85a-4ae0-9171-da96c2ed64f3",
+    "isPreReleaseVersion": false
+  },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p tsconfig.json",
-    "watch": "tsc -watch -p .",
-    "preintegration": "npm run compile",
-    "integration": "node ./out/test/integration/runTests.js",
-    "unit": "jest --verbose test/unit",
+    "vscode:prepublish": "npm run build",
+    "build": "tsc --build",
     "test": "npm run unit && npm run integration",
+    "preintegration": "npm run build",
+    "integration": "node --enable-source-maps ./dist/test/integration/runTests.js",
+    "unit": "jest --config test/unit/jest.config.ts",
     "spellcheck": "cspell **/*.ts **/*.md",
     "lint": "eslint --max-warnings=0 **/*.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "rimraf dist .vscode-test"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
@@ -149,21 +169,26 @@
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@types/glob": "^7.1.3",
-    "@types/jest": "^28.1.1",
+    "@types/jest": "^27.5.1",
     "@types/node": "^12.20.11",
     "@types/vscode": "^1.46.0",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "@vscode/test-electron": "^2.1.3",
+    "cli-wd": "^0.6.0",
+    "cmake-js": "^7.1.1",
+    "copyfiles": "^2.4.1",
     "cspell": "^5.11.0",
     "eslint": "^8.17.0",
     "glob-promise": "^4.2.0",
     "husky": "^8.0.1",
-    "jest": "^28.1.1",
+    "jest": "^27.5.1",
+    "jest-haste-map": "^27.5.1",
+    "rimraf": "^5.0.1",
     "semantic-release": "^19.0.3",
     "semantic-release-vsce": "^5.0.17",
     "tempy": "^1.0.1",
-    "ts-jest": "^28.0.4",
+    "ts-jest": "^27.1.5",
     "ts-node": "^10.8.1",
     "typescript": "^4.0.5"
   },
@@ -172,13 +197,9 @@
     "@dvirtz/parquets": "^0.11.6",
     "@vscode-logging/logger": "^1.2.3",
     "@vscode-logging/wrapper": "^1.0.1",
-    "color-string": "^1.6.0"
-  },
-  "__metadata": {
-    "id": "b0d61cc0-c99f-47d2-88eb-6b26dc2a5b1e",
-    "publisherDisplayName": "Dvir Yitzchaki",
-    "publisherId": "5c0bfd53-c85a-4ae0-9171-da96c2ed64f3",
-    "isPreReleaseVersion": false
+    "apache-arrow": "^9.0.0",
+    "color-string": "^1.6.0",
+    "parquet-reader": "file:packages/parquet-reader"
   },
   "commitlint": {
     "extends": [

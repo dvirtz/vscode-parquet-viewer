@@ -1,4 +1,4 @@
-FROM catthehacker/ubuntu:act-latest
+FROM catthehacker/ubuntu:runner-latest
 
 SHELL [ "/bin/bash", "-c" ]
 
@@ -10,3 +10,9 @@ RUN sudo apt-get update \
   libgbm1 \
   libasound2 \
   default-jre
+
+# install pipenv
+USER runneradmin
+ADD --chown=runneradmin https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py /tmp/
+RUN python /tmp/get-pipenv.py \
+  && rm /tmp/get-pipenv.py

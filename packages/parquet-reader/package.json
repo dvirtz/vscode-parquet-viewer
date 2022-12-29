@@ -1,0 +1,19 @@
+{
+  "name": "parquet-reader",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "pkg-prebuilds-verify dist/binding-options.js || pipenv run cmake-js build",
+    "build:debug": "pipenv run cmake-js build -D",
+    "preinstall": "pipenv install && tsc --build",
+    "install": "npm run build",
+    "clean": "rimraf dist build prebuilds"
+  },
+  "dependencies": {
+    "node-addon-api": "^5.0.0"
+  },
+  "devDependencies": {
+    "pkg-prebuilds": "^0.2.1"
+  }
+}

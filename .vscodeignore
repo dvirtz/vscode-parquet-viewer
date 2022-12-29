@@ -1,6 +1,6 @@
 # hidden files and folder in root
-.*
-.*/
+**/.*
+**/.*/
 # typescript files
 src/**
 test/**
@@ -8,5 +8,12 @@ test/**
 **/tslint.json
 **/*.map
 **/*.ts
+**/*.tsbuildinfo
 # test outputs
-out/test/**
+dist/test/**
+# cmake output
+packages/*/build/**
+Dockerfile
+packages/parquet-reader/*
+!packages/parquet-reader/dist/*.js
+!packages/parquet-reader/prebuilds

@@ -35,6 +35,7 @@ export function initLogger(context?: ExtensionContext): void {
     extName: meta.name,
     level: logLevel(),
     logPath: logFolder() || context?.logUri.fsPath,
-    logOutputChannel: logPanel() ? getPanel(meta.displayName) : undefined
+    logOutputChannel: logPanel() ? getPanel(meta.displayName) : undefined,
+    logConsole: context == undefined
   }));
 }

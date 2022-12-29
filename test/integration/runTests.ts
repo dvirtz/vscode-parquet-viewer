@@ -14,7 +14,7 @@ export async function run(): Promise<void> {
 
   try {
     // Run the mocha test
-    const { results } = await runCLI({runInBand: true} as Config.Argv, [path.join(__dirname, '..', '..', '..', 'test', 'integration')]);
+    const { results } = await runCLI({ runInBand: true } as Config.Argv, [path.join(__dirname, '..', '..', '..', 'test', 'integration')]);
     for (const suite of results.testResults) {
       for (const test of suite.testResults) {
         if (test.status == 'passed') {
@@ -48,8 +48,11 @@ async function main() {
       extensionDevelopmentPath: projectPath,
       extensionTestsPath: __filename,
       launchArgs: [
-        path.resolve(projectPath, './test/workspace')
-      ]
+        path.resolve(projectPath, './test/workspace'),
+				"--disable-extensions"
+      ],
+      version: '1.73.1',
+      platform: process.platform == 'win32' ? 'win32-x64-archive' : undefined
     });
   } catch (err) {
     console.error(err);
