@@ -1,8 +1,10 @@
 import * as vscode from 'vscode';
 import { LogLevel } from '@vscode-logging/logger';
 
+const basename = 'parquet-viewer';
+
 function settings() {
-  return vscode.workspace.getConfiguration('parquet-viewer');
+  return vscode.workspace.getConfiguration(basename);
 }
 
 export function parquetTools(): string | undefined {
@@ -44,3 +46,5 @@ export function useParquetTools(): boolean {
 export function jsonSpace(): number | string | undefined {
   return settings().get('jsonSpace');
 }
+
+export const loggingSettings = ['logging', 'logLevel', 'logPanel', 'logFolder'].map(s => `${basename}.${s}`);
