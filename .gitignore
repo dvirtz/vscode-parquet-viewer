@@ -1,8 +1,14 @@
-out
-node_modules
+# vscode
 .vscode-test/
-*.vsix
-.history/
 .vscode/
 !test/workspace/.vscode
+
+# npm
+out
+node_modules
+
+# output
+*.vsix
+
+# act
 .secrets
