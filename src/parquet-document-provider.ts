@@ -7,11 +7,15 @@ export class ParquetTextDocumentContentProvider implements vscode.TextDocumentCo
   private _subscriptions: vscode.Disposable;
 
   constructor() {
-    this._subscriptions = vscode.workspace.onDidCloseTextDocument(doc => this._documents.delete(doc.uri));
+    this._subscriptions = vscode.workspace.onDidCloseTextDocument(doc => {
+      this._documents.get(doc.uri)?.dispose();
+      this._documents.delete(doc.uri)
+    });
   }
 
   dispose() {
     this._subscriptions.dispose();
+    this._documents.forEach(doc => doc.dispose());
     this._documents.clear();
     this._onDidChange.dispose();
   }
