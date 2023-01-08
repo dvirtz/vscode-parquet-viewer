@@ -143,18 +143,26 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run build",
+    "build": "npm run compile && npm run addon:build",
     "compile": "tsc -p tsconfig.json",
     "watch": "tsc -watch -p .",
-    "preintegration": "npm run compile",
+    "preintegration": "npm run build",
     "integration": "node ./out/test/integration/runTests.js",
     "unit": "jest --verbose test/unit",
     "test": "npm run unit && npm run integration",
     "spellcheck": "cspell **/*.ts **/*.md",
     "lint": "eslint --max-warnings=0 **/*.ts",
     "prepare": "husky install",
-    "addon:build": "cmake-js build -d src/arrow-parquet-reader && copyfiles src/arrow-parquet-reader/build/Release/arrow-parquet-reader.node out",
-    "addon:build:debug": "cmake-js build -d src/arrow-parquet-reader -D && copyfiles src/arrow-parquet-reader/build/Debug/arrow-parquet-reader.node out"
+    "addon:build": "cross-os cmake-js -- build -d src/arrow-parquet-reader && copyfiles src/arrow-parquet-reader/build/Release/arrow-parquet-reader.node out",
+    "addon:build:debug": "cross-os cmake-js -- build -d src/arrow-parquet-reader -D && copyfiles src/arrow-parquet-reader/build/Debug/arrow-parquet-reader.node out"
+  },
+  "cross-os": {
+    "cmake-js": {
+      "darwin": "source .venv/bin/activate && cmake-js ",
+      "win32": ".venv\\Scripts\\activate.bat && cmake-js ",
+      "linux": "source .venv/bin/activate && cmake-js "
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
@@ -171,6 +179,7 @@
     "@vscode/test-electron": "^2.1.3",
     "cmake-js": "^7.1.1",
     "copyfiles": "^2.4.1",
+    "cross-os": "^1.5.0",
     "cspell": "^5.11.0",
     "eslint": "^8.17.0",
     "glob-promise": "^4.2.0",
