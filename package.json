@@ -155,15 +155,8 @@
     "lint": "eslint --max-warnings=0 **/*.ts",
     "prepare": "husky install",
     "install": "pkg-prebuilds-verify ./src/binding-options.js || npm run addon:build",
-    "addon:build": "cross-os cmake-js",
-    "addon:build:debug": "cross-os cmake-js -- -D"
-  },
-  "cross-os": {
-    "cmake-js": {
-      "darwin": "source .venv/bin/activate && cmake-js build -d src/arrow-parquet-reader ",
-      "win32": ".venv\\Scripts\\activate.bat && cmake-js build -d src/arrow-parquet-reader ",
-      "linux": "source .venv/bin/activate && cmake-js build -d src/arrow-parquet-reader "
-    }
+    "addon:build": "pipenv run cmake-js build -d src/arrow-parquet-reader",
+    "addon:build:debug": "pipenv run cmake-js build -d src/arrow-parquet-reader -D"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
@@ -180,7 +173,6 @@
     "@vscode/test-electron": "^2.1.3",
     "cmake-js": "^7.1.1",
     "copyfiles": "^2.4.1",
-    "cross-os": "^1.5.0",
     "cspell": "^5.11.0",
     "eslint": "^8.17.0",
     "glob-promise": "^4.2.0",

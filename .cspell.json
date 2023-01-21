@@ -25,7 +25,8 @@
         {
             "languageId": "git",
             "ignoreRegExpList": [
-                "/#\\s.*/" // comments
+                "/#\\s.*/", // comments
+                "/`.*?`/" // inline code
             ]
         }
     ]

@@ -26,6 +26,14 @@ jobs:
         with:
           node-version: 16
           cache: npm
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pipenv'
+      - name: Install pipenv
+        run: |
+          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+          pipenv install
       - name: Cache .vscode-test
         uses: actions/cache@v3
         with:
