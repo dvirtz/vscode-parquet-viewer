@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.24)
 cmake_policy(SET CMP0042 NEW)
-set(CMAKE_CXX_STANDARD 17)
 
 project(arrow-parquet-reader)
 
@@ -20,6 +19,12 @@ set_directory_properties(PROPERTIES CMAKE_CONFIGURE_DEPENDS conanfile.txt)
 include(${CMAKE_BINARY_DIR}/conan-${CONAN_CMAKE_VERSION}.cmake)
 
 conan_cmake_autodetect(settings)
+if(CMAOE_BUILD_TYPE STREQUAL Debug)
+  set(COMPILER_RUNTIME MTD)
+else()
+  set(COMPILER_RUNTIME MT)
+endif()
+list(TRANSFORM settings REPLACE "compiler.runtime=.*" "compiler.runtime=${COMPILER_RUNTIME}")
 
 conan_cmake_install(
   PATH_OR_REFERENCE
@@ -43,9 +48,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE ${CMAKE_JS_LIB}
-          arrow::libarrow
-          arrow::libparquet
-          re2::re2
+          arrow::arrow
           fmt::fmt)
 
 # Include Node-API wrappers
@@ -61,6 +64,11 @@ string(
           ${NODE_ADDON_API_DIR})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_JS_INC} ${NODE_ADDON_API_DIR})
-
-# define NAPI_VERSION
 target_compile_definitions(${PROJECT_NAME} PRIVATE NAPI_VERSION=${NAPI_VERSION})
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+
+set(PACKAGE_ROOT ${CMAKE_SOURCE_DIR}/../..)
+add_custom_target(prebuild ALL
+                  COMMAND npx pkg-prebuilds-copy --baseDir ${PACKAGE_ROOT}
+                          --source $<PATH:RELATIVE_PATH,$<TARGET_FILE:${PROJECT_NAME}>,$<PATH:NORMAL_PATH,${PACKAGE_ROOT}>>
+                          --name ${PROJECT_NAME} --napi_version ${NAPI_VERSION})

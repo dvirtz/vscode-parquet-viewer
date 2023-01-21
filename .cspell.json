@@ -1,11 +1,12 @@
 {
-    "version": "0.1",
+    "version": "0.2",
     "language": "en",
     "words": [
         "dvirtz",
         "tempy",
         "Yitzchaki",
-        "commitlint"
+        "commitlint",
+        "prebuilds"
     ],
     "ignorePaths": [
         "node_modules/**"

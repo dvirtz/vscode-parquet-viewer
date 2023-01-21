@@ -26,9 +26,6 @@ public:
   ~Writer()
   {
     end_.Call(stream_, {});
-    // const auto status = Close();
-    // assert(status.ok());
-    // assert(closed());
   }
 
   arrow::Status Write(const void *data, std::int64_t nbytes) override

@@ -1,14 +1,15 @@
 import { AsyncRecordBatchStreamReader } from 'apache-arrow/Arrow';
-import * as bindings from 'bindings';
 import * as path from 'path';
+import bindings from 'pkg-prebuilds';
 import { PassThrough } from 'stream';
 import { CancellationToken } from 'vscode';
+import bindingOptions from './binding-options';
 import { getLogger } from './logger';
 import { ParquetBackend } from './parquet-backend';
 import { jsonSpace } from './settings';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const { readParquet } = bindings({ bindings: 'arrow-parquet-reader', module_root: path.join(__dirname, 'arrow-parquet-reader') } as any);
+const { readParquet } = bindings(path.join(__dirname, 'arrow-parquet-reader'), bindingOptions);
 
 function bigIntToJson(value: bigint) {
   // serialize as a number if it's in bounds, otherwise as a string

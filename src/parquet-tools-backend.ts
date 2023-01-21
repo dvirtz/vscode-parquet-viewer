@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { spawn } from "child_process";
 import * as path from 'path';
-import * as assert from 'assert';
+import { strict as assert } from 'assert';
 import { getLogger } from './logger';
 import { parquetTools as getParquetTools } from './settings';
 import { createInterface } from 'readline';
@@ -19,7 +19,7 @@ export class ParquetToolsBackend implements ParquetBackend {
       if (parquetTools.endsWith('.jar')) {
         if (!path.isAbsolute(parquetTools)) {
           const files = await vscode.workspace.findFiles(parquetTools);
-          assert(files.length === 1);
+          assert.equal(files.length, 1);
           parquetTools = files[0].fsPath;
         }
         getLogger().debug(`spawning java ${['-jar', parquetTools].concat(params).join(' ')}`);

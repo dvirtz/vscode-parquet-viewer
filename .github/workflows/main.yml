@@ -10,8 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [
-            # disable mac due to https://github.com/nodejs/node/issues/42154
-            # macos-latest,
+            macos-latest,
             ubuntu-latest,
             windows-latest,
           ]
@@ -44,20 +43,45 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
       - run: npm test
         if: matrix.os != 'ubuntu-latest'
+      - name: Upload prebuilds
+        if: '!env.ACT'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }}-${{ matrix.arch }}-prebuilds
+          path: prebuilds
+          retention-days: 1
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # for commit linting and semantic-release
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v3
+        with:
+          path: prebuilds
       - name: Release
-        if: matrix.os == 'ubuntu-latest'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
         run: npx semantic-release
       - name: Package
-        if: github.ref != 'refs/heads/master' && matrix.os == 'ubuntu-latest'
+        if: github.ref != 'refs/heads/master'
         uses: lannonbr/vsce-action@master
         with:
           args: "package"
       - name: Upload
-        if: github.ref != 'refs/heads/master' && matrix.os == 'ubuntu-latest' && !env.ACT
+        if: github.ref != 'refs/heads/master' && !env.ACT
         uses: actions/upload-artifact@v3
         with:
           name: vscode-package
