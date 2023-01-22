@@ -48,8 +48,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE ${CMAKE_JS_LIB}
-          arrow::arrow
-          fmt::fmt)
+          fmt::fmt
+          arrow::libparquet
+          re2::re2)
 
 # Include Node-API wrappers
 execute_process(
