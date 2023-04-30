@@ -161,7 +161,7 @@
     "husky": "^8.0.1",
     "jest": "^28.1.1",
     "semantic-release": "^19.0.3",
-    "semantic-release-vsce": "^5.0.17",
+    "semantic-release-vsce": "^5.5.8",
     "tempy": "^1.0.1",
     "ts-jest": "^28.0.4",
     "ts-node": "^10.8.1",
