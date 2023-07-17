@@ -1,3 +1,21 @@
+## [2.3.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.2.2...v2.3.0) (2023-07-17)
+
+
+### Features
+
+* add arrow backend ([078103d](https://github.com/dvirtz/vscode-parquet-viewer/commit/078103df72d399a003b9981c5a198eedca875a39))
+
+
+### Bug Fixes
+
+* reconfigure logger on settings change ([fbd6bcc](https://github.com/dvirtz/vscode-parquet-viewer/commit/fbd6bcce4ec063da53fffb874264ce944d195373))
+
+
+### General maintenance
+
+* fix commit message spellcheck ([cfa14f2](https://github.com/dvirtz/vscode-parquet-viewer/commit/cfa14f263af243f13c1096a5b03a4c4b469c76d0))
+* organize gitignore ([9fa945b](https://github.com/dvirtz/vscode-parquet-viewer/commit/9fa945b7aab28ee3265bb199a816656e21de6847))
+
 ## [2.2.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.2.1...v2.2.2) (2022-10-15)
 
 
