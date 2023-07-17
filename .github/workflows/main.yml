@@ -102,7 +102,7 @@ jobs:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
-        run: npx semantic-release
+        run: npx --no-workspaces semantic-release
       - name: Package
         if: github.ref != 'refs/heads/master'
         uses: lannonbr/vsce-action@master
