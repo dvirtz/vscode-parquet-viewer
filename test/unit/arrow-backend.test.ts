@@ -37,9 +37,9 @@ describe("ArrowBackend tests", () => {
   });
 
   test("Error on not existing file", async function () {
-    await expect(toArray(backend.toJson("no-such-file"))).rejects.toMatchObject({
-      'message': expect.stringMatching(/while reading no-such-file: Error: Failed to open no-such-file: Failed to open local file 'no-such-file'/)
-    });
+    await expect(toArray(backend.toJson("no-such-file"))).rejects.toThrow(
+      "Failed to open no-such-file: Failed to open local file 'no-such-file'"
+    );
   });
 
   test.each([0, 2, 10, "\t", "###"])('Test space %s', async function (space) {
@@ -50,5 +50,17 @@ describe("ArrowBackend tests", () => {
     const expected = records.map(record => JSON.stringify(JSON.parse(record), null, space));
 
     expect(json).toEqual(expected);
+  });
+
+  test("cancellation", async function () {
+    const token = {
+      get isCancellationRequested() {
+        return this.isCancellationRequestedMock();
+      },
+      isCancellationRequestedMock: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
+      onCancellationRequested: jest.fn()
+    };
+    expect(await toArray(backend.toJson(path.join(workspace, `small.parquet`), token))).toHaveLength(1);
+    expect(token.isCancellationRequestedMock).toBeCalledTimes(2);
   });
 });
