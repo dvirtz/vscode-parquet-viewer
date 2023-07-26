@@ -1,33 +1,19 @@
-import * as vscode from 'vscode';
-import { getLogger } from './logger';
+import { CancellationToken } from 'vscode';
 import { ParquetReader } from '@dvirtz/parquets';
 import { ParquetBackend } from './parquet-backend';
 import { jsonSpace } from './settings';
 
-export class ParquetsBackend implements ParquetBackend {
-  public async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
-    const cancelledMessage = `parsing ${parquetPath} was cancelled by user`;
-    if (token?.isCancellationRequested) {
-      getLogger().info(cancelledMessage);
-      return;
+export class ParquetsBackend extends ParquetBackend {
+  public async * toJsonImpl(parquetPath: string, _token?: CancellationToken): AsyncGenerator<string> {
+    const reader = await ParquetReader.openFile(parquetPath);
+    const cursor = reader.getCursor();
+
+    // read all records from the file and print them
+    let record = null;
+    while ((record = await cursor.next())) {
+      yield JSON.stringify(record, null, jsonSpace());
     }
 
-    getLogger().info(`opening ${parquetPath}`)
-    try {
-      const reader = await ParquetReader.openFile(parquetPath);
-      const cursor = reader.getCursor();
-
-      // read all records from the file and print them
-      let record = null;
-      while (!token?.isCancellationRequested && (record = await cursor.next())) {
-        yield JSON.stringify(record, null, jsonSpace());
-      }
-
-      await reader.close();
-    } catch (error) {
-      const message = `while reading ${parquetPath}: ${error}`;
-      getLogger().error(message);
-      throw Error(message);
-    }
+    await reader.close();
   }
 }

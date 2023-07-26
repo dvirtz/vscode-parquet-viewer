@@ -31,24 +31,34 @@ describe("ParquetsBackend tests", () => {
     ["small", "large"]
   )('Converts %s parquet to JSON', async function (name) {
     const json = (await toArray(backend.toJson(path.join(workspace, `${name}.parquet`)))).map(line => line.trim());
-    const expected = await toArray(createInterface({input: createReadStream(path.join(workspace, `${name}.json`))}));
+    const expected = await toArray(createInterface({ input: createReadStream(path.join(workspace, `${name}.json`)) }));
 
     expect(json).toEqual(expected);
   });
 
   test("Error on not existing file", async function () {
-    await expect(toArray(backend.toJson("no-such-file"))).rejects.toMatchObject({
-      'message': expect.stringMatching(/while reading no-such-file: Error: ENOENT: no such file or directory, stat '.*no-such-file'/)
-    });
+    await expect(toArray(backend.toJson("no-such-file"))).rejects.toThrow(/ENOENT: no such file or directory, stat '.*no-such-file'/);
   });
 
   test.each([0, 2, 10, "\t", "###"])('Test space %s', async function (space) {
     jest.mocked(jsonSpace).mockReturnValue(space);
 
     const json = (await toArray(backend.toJson(path.join(workspace, `small.parquet`)))).map(line => line.trim());
-    const records = await toArray(createInterface({input: createReadStream(path.join(workspace, `small.json`))}));
+    const records = await toArray(createInterface({ input: createReadStream(path.join(workspace, `small.json`)) }));
     const expected = records.map(record => JSON.stringify(JSON.parse(record), null, space));
 
     expect(json).toEqual(expected);
+  });
+
+  test("cancellation", async function () {
+    const token = {
+      get isCancellationRequested() {
+        return this.isCancellationRequestedMock();
+      },
+      isCancellationRequestedMock: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
+      onCancellationRequested: jest.fn()
+    };
+    expect(await toArray(backend.toJson(path.join(workspace, `small.parquet`), token))).toHaveLength(1);
+    expect(token.isCancellationRequestedMock).toBeCalledTimes(2);
   });
 });

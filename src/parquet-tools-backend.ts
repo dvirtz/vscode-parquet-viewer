@@ -7,7 +7,7 @@ import { parquetTools as getParquetTools } from './settings';
 import { createInterface } from 'readline';
 import { ParquetBackend } from './parquet-backend';
 
-export class ParquetToolsBackend implements ParquetBackend {
+export class ParquetToolsBackend extends ParquetBackend {
 
   public static async* spawnParquetTools(params: string[], token?: vscode.CancellationToken): AsyncGenerator<string> {
     const [command, ...args] = await ParquetToolsBackend.parquetToolsPath();
@@ -54,29 +54,7 @@ export class ParquetToolsBackend implements ParquetBackend {
     return [parquetTools];
   }
 
-  public async * toJson(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
-    const cancelledMessage = `parsing ${parquetPath} was cancelled by user`;
-    if (token?.isCancellationRequested) {
-      getLogger().info(cancelledMessage);
-      return;
-    }
-
-    token?.onCancellationRequested(_ => {
-      getLogger().info(cancelledMessage);
-    });
-
-    try {
-      yield* ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token);
-    } catch (e) {
-      let message = `while reading ${parquetPath}: `;
-      message += (_ => {
-        if (e instanceof Error) {
-          return e.message;
-        }
-        return `${e}`;
-      })();
-      getLogger().error(message);
-      throw Error(message);
-    }
+  public async * toJsonImpl(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
+    yield* ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token);
   }
 }

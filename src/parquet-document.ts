@@ -35,14 +35,8 @@ export default class ParquetDocument implements vscode.Disposable {
     this._parquetPath = this._uri.fsPath.replace(/\.as\.json$/, '');
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(this._parquetPath, "*"));
     this._disposables.push(watcher);
-    this._disposables.push(watcher.onDidChange(async uri => {
-      assert(uri.fsPath == this._parquetPath);
-      return await this.populate();
-    }));
-    this._disposables.push(watcher.onDidCreate(async uri => {
-      assert(uri.fsPath == this._parquetPath);
-      return await this.populate();
-    }));
+    this._disposables.push(watcher.onDidChange(this.tryPopulate.bind(this)));
+    this._disposables.push(watcher.onDidCreate(this.tryPopulate.bind(this)));
   }
 
   dispose() {
@@ -52,44 +46,49 @@ export default class ParquetDocument implements vscode.Disposable {
   }
 
   public static async create(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>): Promise<ParquetDocument> {
-    const parquet = new ParquetDocument(uri, emitter);
-    await parquet.populate();
-    return parquet;
+    try {
+      const parquet = new ParquetDocument(uri, emitter);
+      await parquet.populate();
+      return parquet;
+    } catch (error) {
+      const message = `while reading ${uri}: ${error}`;
+      getLogger().error(message);
+      await vscode.window.showErrorMessage(`${error}`);
+      throw Error(message);
+    }
   }
 
   get value() {
     return this._lines.join(os.EOL) + os.EOL;
   }
 
+  private tryPopulate(uri: vscode.Uri) {
+    assert(uri.fsPath == this._parquetPath);
+    this.populate().catch(error => getLogger().warn(`failed to populate ${this._parquetPath}: ${error}`))
+  }
+
   private async populate() {
     // protect against onCreate firing right after create
-    try {
-      const {mtimeMs} = await promises.stat(this._parquetPath);
-      if (mtimeMs == this._lastMod) {
-        getLogger().debug("skipping populate() as modification timestamp hasn't changed");
-        return;
-      }
-      this._lastMod = mtimeMs;
-    } catch (err) {
-      getLogger().warn(`failed populating ${this._parquetPath}: ${err}`);
+    const { mtimeMs } = await promises.stat(this._parquetPath);
+    if (mtimeMs == this._lastMod) {
+      getLogger().debug("skipping populate() as modification timestamp hasn't changed");
+      return;
     }
+    this._lastMod = mtimeMs;
 
     const lines: string[] = [];
 
-    try {
-      await vscode.window.withProgress({
-        location: vscode.ProgressLocation.Notification,
-        title: `opening ${path.basename(this._parquetPath)}`,
-        cancellable: true
-      },
-        async (progress, token) => {
-          for await (const line of this._backend.toJson(this._parquetPath, token)) {
-            lines.push(line);
-          }
-        });
-    } catch (err) {
-      await vscode.window.showErrorMessage(`${err}`);
-    }
+    await vscode.window.withProgress({
+      location: vscode.ProgressLocation.Notification,
+      title: `opening ${path.basename(this._parquetPath)}`,
+      cancellable: true
+    },
+      async (progress, token) => {
+        for await (const line of this._backend.toJson(this._parquetPath, token)) {
+          lines.push(line);
+        }
+      }
+    );
     if (lines != this._lines) {
       this._lines = lines;
       this._emitter.fire(this._uri);
