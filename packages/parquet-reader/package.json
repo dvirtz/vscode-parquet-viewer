@@ -11,9 +11,7 @@
     "clean": "rimraf dist build prebuilds"
   },
   "dependencies": {
-    "node-addon-api": "^5.0.0"
-  },
-  "devDependencies": {
+    "node-addon-api": "^5.0.0",
     "pkg-prebuilds": "^0.2.1"
   }
 }
