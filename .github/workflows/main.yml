@@ -94,11 +94,11 @@ jobs:
       - name: Install pipenv
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-      - run: npm ci
       - uses: actions/download-artifact@v3
         with:
           name: prebuilds
           path: packages/parquet-reader/prebuilds
+      - run: npm ci
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
