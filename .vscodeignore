@@ -12,7 +12,7 @@ test/**
 # test outputs
 dist/test/**
 # cmake output
-packages/*/build/**
+**/parquet-reader/build/**
 Dockerfile
 packages/parquet-reader/*
 !packages/parquet-reader/dist/*.js
