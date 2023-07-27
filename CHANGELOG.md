@@ -1,3 +1,23 @@
+## [2.3.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.0...v2.3.1) (2023-07-27)
+
+
+### Bug Fixes
+
+* move pkg-prebuilds should be a runtime dep ([58c15af](https://github.com/dvirtz/vscode-parquet-viewer/commit/58c15af53fda75006a487cff93cd8b5bfcdb021a)), closes [#81](https://github.com/dvirtz/vscode-parquet-viewer/issues/81)
+
+
+### General maintenance
+
+* **deps-dev:** bump word-wrap from 1.2.3 to 1.2.4 ([3c743be](https://github.com/dvirtz/vscode-parquet-viewer/commit/3c743bea14aee8fa697dec8642f1af981801e104))
+
+
+### Build and continuous integration
+
+* build only typescript when packaging ([4acc829](https://github.com/dvirtz/vscode-parquet-viewer/commit/4acc829cf85d2a010971992e3c045b4142551dca))
+* disable hooks in CI ([947f61b](https://github.com/dvirtz/vscode-parquet-viewer/commit/947f61b7ac6a3bfbcefde0ea30f93a9369da34d6))
+* download prebuilds before install ([43c03d9](https://github.com/dvirtz/vscode-parquet-viewer/commit/43c03d9147c786a1278f2d38adb3e298d592db1a))
+* ignore workspaces on release ([164abbe](https://github.com/dvirtz/vscode-parquet-viewer/commit/164abbeda0547b54c463bf6eee2a1e46417a5a25)), closes [#76](https://github.com/dvirtz/vscode-parquet-viewer/issues/76)
+
 ## [2.3.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.2.2...v2.3.0) (2023-07-17)
 
 
