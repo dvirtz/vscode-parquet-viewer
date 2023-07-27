@@ -152,7 +152,7 @@
     "isPreReleaseVersion": false
   },
   "scripts": {
-    "vscode:prepublish": "npm run build",
+    "vscode:prepublish": "tsc --build",
     "build": "tsc --build",
     "test": "npm run unit && npm run integration",
     "preintegration": "npm run build",
