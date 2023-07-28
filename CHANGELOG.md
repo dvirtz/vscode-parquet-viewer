@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.1...v2.3.2) (2023-07-28)
+
+
+### General maintenance
+
+* **deps:** bump certifi in /packages/parquet-reader ([6e23e1d](https://github.com/dvirtz/vscode-parquet-viewer/commit/6e23e1dc05ae1efed830f3c31f57f77cd7247fb5))
+
 ## [2.3.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.0...v2.3.1) (2023-07-27)
 
 
