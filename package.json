@@ -158,7 +158,7 @@
     "preintegration": "npm run build",
     "integration": "node --enable-source-maps ./dist/test/integration/runTests.js",
     "unit": "jest --config test/unit/jest.config.ts",
-    "spellcheck": "cspell **/*.ts **/*.md",
+    "spellcheck": "cspell **/*.ts README.md",
     "lint": "eslint --max-warnings=0 **/*.ts",
     "prepare": "husky install",
     "clean": "rimraf dist .vscode-test"
