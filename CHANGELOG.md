@@ -1,3 +1,20 @@
+## [2.3.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.2...v2.3.3) (2023-07-30)
+
+
+### Bug Fixes
+
+* import arrow dynamically to avoid failed loading ([2774fe1](https://github.com/dvirtz/vscode-parquet-viewer/commit/2774fe1c78415b0277180a74678e99c49291e542)), closes [#83](https://github.com/dvirtz/vscode-parquet-viewer/issues/83)
+
+
+### General maintenance
+
+* don't spellcheck changelog ([198367b](https://github.com/dvirtz/vscode-parquet-viewer/commit/198367bb30e83b93c6f4017fafc7e03827c7a1d9))
+
+
+### Refactoring
+
+* factor cancellation to base class ([1e5a261](https://github.com/dvirtz/vscode-parquet-viewer/commit/1e5a2618c2c612f8ac8ab5eb10874903d39d4cd2))
+
 ## [2.3.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.1...v2.3.2) (2023-07-28)
 
 
