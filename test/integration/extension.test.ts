@@ -1,3 +1,4 @@
+import {describe, expect, test} from '@jest/globals';
 import { commands, extensions } from 'vscode';
 import { getUri, extensionId } from './utils';
 
