@@ -1,8 +1,10 @@
+import {describe, expect, test, jest} from '@jest/globals';
 import toArray from '@async-generators/to-array';
 import { createReadStream } from 'fs';
 import * as path from 'path';
 import { createInterface } from "readline";
 import { ParquetToolsBackend } from "../../src/parquet-tools-backend";
+import { CancellationToken } from 'vscode';
 
 const rootDir = path.join(__dirname, '..', '..');
 
@@ -33,7 +35,7 @@ describe("ParquetToolsBackend tests", () => {
 
   test.each(
     ["small", "large"]
-  )('Converts %s parquet to JSON', async function (name) {
+  )('Converts %s parquet to JSON', async function (name: string) {
     const json = (await toArray(backend.toJson(path.join(workspace, `${name}.parquet`))));
     const expected = await toArray(createInterface({ input: createReadStream(path.join(workspace, `${name}.json`)) }));
 
@@ -58,7 +60,7 @@ describe("ParquetToolsBackend tests", () => {
       isCancellationRequestedMock: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
       onCancellationRequested: jest.fn()
     };
-    expect(await toArray(backend.toJson(path.join(workspace, `small.parquet`), token))).toHaveLength(1);
+    expect(await toArray(backend.toJson(path.join(workspace, `small.parquet`), token as CancellationToken))).toHaveLength(1);
     expect(token.isCancellationRequestedMock).toBeCalledTimes(2);
   });
 });

@@ -1,3 +1,4 @@
+import {describe, expect, test, jest, beforeEach, afterEach} from '@jest/globals';
 import * as vscode from 'vscode';
 import { ParquetTextDocumentContentProvider } from "../../src/parquet-document-provider";
 import { ParquetEditorProvider } from "../../src/parquet-editor-provider";
@@ -9,7 +10,7 @@ import { initLogger } from '../../src/logger';
 jest.setTimeout(60000);
 
 jest.mock('../../src/settings', () => {
-  const originalModule = jest.requireActual('../../src/settings');
+  const originalModule = jest.requireActual<typeof import('../../src/settings')>('../../src/settings');
 
   //Mock the default export and named export 'foo'
   return {
@@ -57,7 +58,7 @@ describe('ParquetEditorProvider', function () {
     ['small', 'parquets'],
     ['small', 'arrow'],
     ['large', 'parquets']
-  ])('shows %p using %p', async function (name, backend) {
+  ])('shows %p using %p', async function (name: string, backend: settings.Backend) {
     const parquet = await getUri(`${name}.parquet`);
     testFile = await copyTo(`${name}-${backend}.parquet`, parquet);
     const checkChanged = new Promise(resolve => {

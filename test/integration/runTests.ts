@@ -51,7 +51,6 @@ async function main() {
         path.resolve(projectPath, './test/workspace'),
 				"--disable-extensions"
       ],
-      version: '1.73.1',
       platform: process.platform == 'win32' ? 'win32-x64-archive' : undefined
     });
   } catch (err) {

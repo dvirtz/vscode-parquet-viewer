@@ -1,3 +1,4 @@
+import {describe, expect, test, afterEach} from '@jest/globals';
 import { logLevel, logFolder, setLogFolder, setLogLevel } from '../../src/settings';
 import { getUri } from './utils';
 import { promises } from 'fs';
