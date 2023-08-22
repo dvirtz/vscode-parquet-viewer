@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { LogLevel } from '@vscode-logging/logger';
+import { BackendName } from './backend-name';
 
 const basename = 'parquet-viewer';
 
@@ -49,8 +50,6 @@ export function jsonSpace(): number | string | undefined {
 
 export const loggingSettings = ['logging', 'logLevel', 'logPanel', 'logFolder'].map(s => `${basename}.${s}`);
 
-export type Backend = 'parquet-tools' | 'parquets' | 'arrow';
-
-export function backend(): Backend {
+export function backend(): BackendName {
   return useParquetTools() ? 'parquet-tools' : settings().get('backend', 'parquets');
 }

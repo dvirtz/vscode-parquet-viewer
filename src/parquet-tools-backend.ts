@@ -3,7 +3,7 @@ import { spawn } from "child_process";
 import * as path from 'path';
 import { strict as assert } from 'assert';
 import { getLogger } from './logger';
-import { parquetTools as getParquetTools } from './settings';
+import { parquetTools as getParquetTools, jsonSpace } from './settings';
 import { createInterface } from 'readline';
 import { ParquetBackend } from './parquet-backend';
 
@@ -55,6 +55,8 @@ export class ParquetToolsBackend extends ParquetBackend {
   }
 
   public async * toJsonImpl(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<string> {
-    yield* ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token);
+    for await (const line of ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token)) {
+      yield JSON.stringify(JSON.parse(line), null, jsonSpace());
+    }
   }
 }

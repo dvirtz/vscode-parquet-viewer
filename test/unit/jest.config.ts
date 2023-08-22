@@ -5,7 +5,8 @@ const config: Config.InitialOptions = {
   ...common,
   moduleNameMapper: {
     '^vscode$': '<rootDir>/../../node_modules/@types/vscode/index.d.ts'
-  }
+  },
+  modulePathIgnorePatterns: []
 };
 
 export default config;
