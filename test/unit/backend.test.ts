@@ -7,19 +7,18 @@ import { CancellationToken } from 'vscode';
 import { BackendNames } from '../../src/backend-name';
 import { createParquetBackend } from '../../src/parquet-backend-factory';
 import * as vscode from 'vscode';
+import { workspace } from './workspace';
 
 jest.setTimeout(60000);
 
-const rootDir = path.join(__dirname, '..', '..');
-
 describe.each(BackendNames)("%s backend tests", (backendName) => {
   const backend = createParquetBackend(backendName);
-  const workspace = path.join(rootDir, 'test', 'workspace');
 
   const testFiles = {
     'parquet-tools': [
       ['small', 'small'],
       ['large', 'large'],
+      ['version_2', 'version_2']
     ],
     'parquets': [
       ['small', 'small'],
@@ -28,6 +27,7 @@ describe.each(BackendNames)("%s backend tests", (backendName) => {
     'arrow': [
       ['small', 'small'],
       ['large', 'large.arrow'],
+      ['version_2', 'version_2']
     ]
   };
 

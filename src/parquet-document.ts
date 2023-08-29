@@ -1,7 +1,6 @@
 import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { assert } from 'console';
 import { promises } from 'fs';
 import { getLogger } from './logger';
 import { createParquetBackend } from './parquet-backend-factory';
@@ -34,26 +33,25 @@ export default class ParquetDocument implements vscode.Disposable {
     }
   }
 
-  public static async create(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>): Promise<ParquetDocument> {
-    try {
-      const parquet = new ParquetDocument(uri, emitter);
-      await parquet.populate();
-      return parquet;
-    } catch (error) {
-      const message = `while reading ${uri}: ${error}`;
-      getLogger().error(message);
-      await vscode.window.showErrorMessage(`${error}`);
-      throw Error(message);
-    }
+  public static async create(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>) {
+    const parquet = new ParquetDocument(uri, emitter);
+    await parquet.tryPopulate();
+    return parquet;
   }
 
   get value() {
     return this._lines.join(os.EOL) + os.EOL;
   }
 
-  private tryPopulate(uri: vscode.Uri) {
-    assert(uri.fsPath == this._parquetPath);
-    this.populate().catch(error => getLogger().warn(`failed to populate ${this._parquetPath}: ${error}`))
+  private async tryPopulate() {
+    try {
+      await this.populate();
+    } catch (error) {
+      const message = `while reading ${this._parquetPath}: ${error}`;
+      getLogger().error(message);
+      void vscode.window.showErrorMessage(message);
+      this._lines.push(JSON.stringify({error: message}));
+    }
   }
 
   private async populate() {

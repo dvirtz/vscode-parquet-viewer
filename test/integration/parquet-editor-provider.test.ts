@@ -58,18 +58,18 @@ describe('ParquetEditorProvider', function () {
     ['small', 'parquet-tools'],
     ['small', 'parquets'],
     ['small', 'arrow'],
-    ['large', 'parquets']
+    ['large', 'parquets'],
+    ['version_2', 'arrow']
   ])('shows %p using %p', async function (name, backend) {
     const parquet = await getUri(`${name}.parquet`);
     testFile = await copyTo(`${name}-${backend}.parquet`, parquet);
-    const checkChanged = new Promise(resolve => {
+    const checkChanged = new Promise((resolve, reject) => {
       const callback = jest.fn(async function (editor?: vscode.TextEditor) {
         expect(editor?.document.fileName).toBe(`${testFile.fsPath}.as.json`);
         const expected = await readFile(`${name}.json`);
         expect(editor?.document.getText()).toEqual(expected);
-        resolve(callback);
       });
-      disposables.push(vscode.window.onDidChangeActiveTextEditor(callback));
+      disposables.push(vscode.window.onDidChangeActiveTextEditor(editor => callback(editor).then(_ => resolve(callback)).catch(reject)));
     });
     jest.mocked(settings.backend).mockReturnValue(backend);
     const document = await editorProvider.openCustomDocument(testFile);
@@ -89,23 +89,40 @@ describe('ParquetEditorProvider', function () {
       expect(document.getText()).toEqual(expected);
     });
 
-    const checkSmall = new Promise(resolve =>
-      disposables.push(workspace.onDidOpenTextDocument(async document => {
-        await checkChanged(document, 'small');
-        resolve(checkChanged);
-      })));
+    const checkSmall = new Promise((resolve, reject) =>
+      disposables.push(workspace.onDidOpenTextDocument(document =>
+        checkChanged(document, 'small').then(_ => resolve(checkChanged)).catch(reject)
+      ))
+    );
     await (await editorProvider.openCustomDocument(testFile)).open();
     await expect(checkSmall).resolves.toBeCalledWith(expect.anything(), 'small');
 
     // make sure checkSmall is not called again
     disposables.pop()?.dispose();
 
-    const checkLarge = new Promise(resolve => disposables.push(workspace.onDidChangeTextDocument(async event => {
-      await checkChanged(event.document, 'large');
-      resolve(checkChanged);
-    })));
+    const checkLarge = new Promise((resolve, reject) =>
+      disposables.push(workspace.onDidChangeTextDocument(event =>
+        checkChanged(event.document, 'large').then(_ => resolve(checkChanged)).catch(reject)
+      ))
+    );
     await fs.copy(await getUri('large.parquet'), testFile, { overwrite: true });
 
     await expect(checkLarge).resolves.toHaveBeenLastCalledWith(expect.anything(), 'large');
+  });
+
+  test('handles error', async function () {
+    const parquet = await getUri(`version_2.parquet`);
+    testFile = await copyTo(`version_2-parquets.parquet`, parquet);
+    const checkChanged = new Promise((resolve, reject) => {
+      const callback = jest.fn(async function (editor?: vscode.TextEditor) {
+        expect(editor?.document.fileName).toBe(`${testFile.fsPath}.as.json`);
+        expect(editor?.document.getText()).toMatch(new RegExp(`{\\"error\\":\\"while reading ${testFile.fsPath.replace(/\\/g, '\\\\\\\\')}: .*\\"}`));
+      });
+      disposables.push(vscode.window.onDidChangeActiveTextEditor(editor => callback(editor).then(_ => resolve(callback)).catch(reject)));
+    });
+    jest.mocked(settings.backend).mockReturnValue('parquets');
+    const document = await editorProvider.openCustomDocument(testFile);
+    await document.open();
+    await expect(checkChanged).resolves.toBeCalled();
   });
 });
