@@ -26,12 +26,11 @@ export class ParquetTextDocumentContentProvider implements vscode.TextDocumentCo
 
   async provideTextDocumentContent(uri: vscode.Uri): Promise<string | undefined> {
     // already loaded?
-    const document = this._documents.get(uri) || (await (async _ => {
+    if (!this._documents.has(uri)) {
       const document = await ParquetDocument.create(uri, this._onDidChange);
       this._documents.set(uri, document);
-      return document;
-    })());
+    }
 
-    return document.value;
+    return this._documents.get(uri)?.value;
   }
 }
