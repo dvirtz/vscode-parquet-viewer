@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "vscode:prepublish": "tsc --build",
-    "build": "pipenv run cmake-js build",
-    "build:debug": "pipenv run cmake-js build -D",
+    "build": "pipenv run cmake-js build --CDCMAKE_PROJECT_TOP_LEVEL_INCLUDES=cmake/conan_provider.cmake",
+    "build:checked": "npm run build || rimraf build",
+    "build:debug": "npm run build -- -D",
     "preinstall": "pipenv install && tsc --build",
     "install": "pkg-prebuilds-verify dist/binding-options.js || npm run build",
     "clean": "rimraf dist build prebuilds"
