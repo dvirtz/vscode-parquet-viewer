@@ -15,8 +15,7 @@ jobs:
             windows-latest,
           ]
     env:
-      CONAN_USER_HOME: "${{ github.workspace }}/conan-cache"
-      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan-cache/short"
+      CONAN_HOME: "${{ github.workspace }}/conan-cache"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -51,7 +50,7 @@ jobs:
       - name: Cache .conan
         uses: actions/cache@v3
         with:
-          path: ${{ env.CONAN_USER_HOME }}
+          path: ${{ env.CONAN_HOME }}
           key: ${{ runner.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
       - run: npm ci
       - name: Static checks
