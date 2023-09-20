@@ -1,3 +1,27 @@
+## [2.3.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.3...v2.3.4) (2023-09-20)
+
+
+### Bug Fixes
+
+* fix infinite load on error ([f5967fa](https://github.com/dvirtz/vscode-parquet-viewer/commit/f5967fa0ad0474de550f778519a2d862a49b1284)), closes [#85](https://github.com/dvirtz/vscode-parquet-viewer/issues/85)
+
+
+### Refactoring
+
+* deduplicate backend unit tests ([ad14d07](https://github.com/dvirtz/vscode-parquet-viewer/commit/ad14d079d3002c58c49887637bb156207f410e83))
+
+
+### General maintenance
+
+* add python extension to devcontainer ([32857de](https://github.com/dvirtz/vscode-parquet-viewer/commit/32857ded425f35a3a54915a90e370665087e235e))
+* update dependencies ([6b6c7d3](https://github.com/dvirtz/vscode-parquet-viewer/commit/6b6c7d3c5a0ca014648b8c6a36e3c179ae3c6ae7))
+
+
+### Build and continuous integration
+
+* update to node 18 ([407504a](https://github.com/dvirtz/vscode-parquet-viewer/commit/407504a9d8fa15f6f035d0837578f567939b4d7e))
+* upgrade to conan 2.x ([655dab3](https://github.com/dvirtz/vscode-parquet-viewer/commit/655dab3fc518d531de8ba2e40ce99ec17042bcb9))
+
 ## [2.3.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.2...v2.3.3) (2023-07-30)
 
 
