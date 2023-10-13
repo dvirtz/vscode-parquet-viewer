@@ -1,3 +1,17 @@
+## [2.4.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.5...v2.4.0) (2023-10-13)
+
+
+### Features
+
+* add zstd support to arrow backend ([195a688](https://github.com/dvirtz/vscode-parquet-viewer/commit/195a688e7cf7214371bd6a1a5b658826731a38e0)), closes [#90](https://github.com/dvirtz/vscode-parquet-viewer/issues/90)
+* make arrow the default backend ([547ac84](https://github.com/dvirtz/vscode-parquet-viewer/commit/547ac849b958417d2f384f4bce754104f65de325))
+
+
+### Build and continuous integration
+
+* fix conan recipe revisions ([bf15cd1](https://github.com/dvirtz/vscode-parquet-viewer/commit/bf15cd1f678d42bac7d49e7ea0a2d065a95f0965))
+* upgrade use node 18 everywhere ([c50d64d](https://github.com/dvirtz/vscode-parquet-viewer/commit/c50d64d9258a0db9b4b1d3033616e08600c2cf87))
+
 ## [2.3.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.4...v2.3.5) (2023-10-10)
 
 
