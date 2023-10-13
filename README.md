@@ -18,17 +18,17 @@ After closing the JSON view, it is possible to reopen it by clicking on the link
 
 The extension supports three different backends for parsing the files:
 
-### parquets
-
-This is the default backend. It uses the [parquets](https://github.com/dvirtz/parquets) TypeScript library, which is a fork of the unmaintained [kbajalc/parquets](https://github.com/kbajalc/parquets) library with some bug fixes.
-
-It only supports parquet version 1.0.0.
-
 ### arrow
 
-This backend is a thin wrapper around the [Apache Arrow C++](https://github.com/apache/arrow/tree/main/cpp) implementation and so should support latest and greatest parquet features.
+This is the default backend. This backend is a thin wrapper around the [Apache Arrow C++](https://github.com/apache/arrow/tree/main/cpp) implementation and so should support latest and greatest parquet features.
 
 It is currently in an experimental state. To use, set `parquet-viewer.backend` setting to `arrow`.
+
+### parquets
+
+This backend uses the [parquets](https://github.com/dvirtz/parquets) TypeScript library, which is a fork of the unmaintained [kbajalc/parquets](https://github.com/kbajalc/parquets) library with some bug fixes.
+
+It only supports parquet version 1.0.0 with snappy compression.
 
 ### parquet-tools
 
