@@ -11,3 +11,4 @@ arrow/*:with_snappy=True
 arrow/*:with_boost=True
 arrow/*:with_thrift=True
 arrow/*:with_re2=True
+arrow/*:with_zstd=True

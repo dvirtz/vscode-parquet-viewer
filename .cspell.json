@@ -8,7 +8,8 @@
         "kbajalc",
         "prebuilds",
         "tempy",
-        "Yitzchaki"
+        "Yitzchaki",
+        "zstd"
     ],
     "ignorePaths": [
         "**/node_modules/**",
