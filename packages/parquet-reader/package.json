@@ -15,5 +15,8 @@
   "dependencies": {
     "node-addon-api": "^5.0.0",
     "pkg-prebuilds": "^0.2.1"
+  },
+  "devDependencies": {
+    "@vscode/test-electron": "^2.3.5"
   }
 }
