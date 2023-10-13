@@ -27,7 +27,8 @@ describe.each(BackendNames)("%s backend tests", (backendName) => {
     'arrow': [
       ['small', 'small'],
       ['large', 'large.arrow'],
-      ['version_2', 'version_2']
+      ['version_2', 'version_2'],
+      ['zstd', 'small']
     ]
   };
 

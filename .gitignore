@@ -15,3 +15,6 @@ node_modules
 # addon
 build/
 prebuilds/
+
+# python
+.venv/
