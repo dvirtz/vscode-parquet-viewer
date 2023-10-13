@@ -26,8 +26,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          # 18 doesn't work on windows: https://github.com/microsoft/vscode-test/issues/234
-          node-version: ${{ matrix.os == 'windows-latest' && '16' || '18' }}
+          node-version: 18
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
