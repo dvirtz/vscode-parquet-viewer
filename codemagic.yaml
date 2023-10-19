@@ -1,0 +1,21 @@
+cache:
+  cache_paths:
+    - $HOME/.npm
+    - $HOME/.conan2
+    - .vscode-test
+workflows:
+  apple-m1:
+    instance_type: mac_mini_m1
+    name: Apple M1
+    scripts:
+      - name: Install pipenv
+        script: |
+          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+      - npm ci
+      - name: Static checks
+        script: |
+          npm run spellcheck
+          npm run lint
+      - npm test
+    artifacts:
+      - packages/parquet-reader/prebuilds
