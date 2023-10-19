@@ -38,6 +38,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE NAPI_VERSION=${NAPI_VERSION})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 add_custom_target(prebuild ALL
-                  COMMAND node ${CMAKE_CURRENT_SOURCE_DIR}/dist/exec-from.js ${CMAKE_CURRENT_SOURCE_DIR} pkg-prebuilds-copy --baseDir .
+                  COMMAND npm run exec-from -- ${CMAKE_CURRENT_SOURCE_DIR} pkg-prebuilds-copy --baseDir .
                           --source $<PATH:RELATIVE_PATH,$<TARGET_FILE:${PROJECT_NAME}>,$<PATH:NORMAL_PATH,${CMAKE_SOURCE_DIR}>>
                           --name ${PROJECT_NAME} --napi_version ${NAPI_VERSION})

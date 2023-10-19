@@ -2,12 +2,15 @@
     "version": "0.2",
     "language": "en",
     "words": [
+        "artefacts",
+        "codemagic",
         "commitlint",
         "devcontainer",
         "dvirtz",
         "kbajalc",
         "prebuilds",
         "tempy",
+        "unzipper",
         "Yitzchaki",
         "zstd"
     ],
