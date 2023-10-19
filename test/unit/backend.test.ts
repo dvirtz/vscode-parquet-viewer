@@ -1,17 +1,20 @@
 import toArray from '@async-generators/to-array';
 import { afterEach, describe, expect, jest, test } from '@jest/globals';
 import { createReadStream } from 'fs';
+import os from 'os';
 import * as path from 'path';
 import { createInterface } from 'readline';
+import * as vscode from 'vscode';
 import { CancellationToken } from 'vscode';
 import { BackendNames } from '../../src/backend-name';
 import { createParquetBackend } from '../../src/parquet-backend-factory';
-import * as vscode from 'vscode';
 import { workspace } from './workspace';
 
 jest.setTimeout(60000);
 
-describe.each(BackendNames)("%s backend tests", (backendName) => {
+// parquet-tools doesn't work on Apple M1
+const backends = BackendNames.filter(backend => os.type() != 'Darwin' || os.arch() == 'x64' || backend != 'parquet-tools');
+describe.each(backends)("%s backend tests", (backendName) => {
   const backend = createParquetBackend(backendName);
 
   const testFiles = {
