@@ -19,3 +19,6 @@ ignorePatterns:
   - 'dist/**'
   - 'packages/*/dist/**'
   - 'jest.config.ts'
+  - 'scripts/*.ts'
+  - 'packages/*/scripts/**'
+  - 'conan-cache/**'
