@@ -21,8 +21,8 @@ export class ArrowBackend extends ParquetBackend {
       try {
         const module = await import("parquet-reader");
         this.readParquet_ = module.readParquet;
-      } catch (_) {
-        throw new Error('cannot find prebuilt arrow module, either build the module or use another backend');
+      } catch (error) {
+        throw new Error(`cannot find prebuilt arrow module, either build the module or use another backend: ${error}`);
       }
     }
     this.readParquet_(path, stream);

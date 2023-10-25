@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.1...v2.4.2) (2023-10-25)
+
+
+### General maintenance
+
+* add logging ([bef5dd9](https://github.com/dvirtz/vscode-parquet-viewer/commit/bef5dd9c074e45f5fc37684cd78b6df6f05c0ebd))
+
 ## [2.4.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.0...v2.4.1) (2023-10-22)
 
 
