@@ -1,3 +1,16 @@
+## [2.4.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.0...v2.4.1) (2023-10-22)
+
+
+### Build and continuous integration
+
+* add codemagic pipeline ([2095487](https://github.com/dvirtz/vscode-parquet-viewer/commit/209548736e1f1e096efa6decc81ebc449c60a365))
+* ignore conan-cache ([e2228aa](https://github.com/dvirtz/vscode-parquet-viewer/commit/e2228aa630a5777191dfeb5183ce7c96de891de9))
+
+
+### Tests
+
+* exclude parquet-tools when running on M1 ([8227c90](https://github.com/dvirtz/vscode-parquet-viewer/commit/8227c90e8cae974b194f01949131f74533527c1d))
+
 ## [2.4.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.3.5...v2.4.0) (2023-10-13)
 
 

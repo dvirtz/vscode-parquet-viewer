@@ -2,12 +2,15 @@
     "version": "0.2",
     "language": "en",
     "words": [
+        "artefacts",
+        "codemagic",
         "commitlint",
         "devcontainer",
         "dvirtz",
         "kbajalc",
         "prebuilds",
         "tempy",
+        "unzipper",
         "Yitzchaki",
         "zstd"
     ],
@@ -31,7 +34,8 @@
             "languageId": "git",
             "ignoreRegExpList": [
                 "/#\\s.*/", // comments
-                "/`.*?`/" // inline code
+                "/`.*?`/", // inline code
+                "/(```+)\\s?[\\s\\S]+?\\1/g" // code block
             ]
         }
     ]

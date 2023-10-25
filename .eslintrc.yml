@@ -15,7 +15,11 @@ rules:
   '@typescript-eslint/no-floating-promises':
     - warn
 ignorePatterns:
+  - '**/scripts/*.ts'
   - 'packages/*/build/**'
   - 'dist/**'
   - 'packages/*/dist/**'
   - 'jest.config.ts'
+  - 'scripts/*.ts'
+  - 'packages/*/scripts/**'
+  - 'conan-cache/**'

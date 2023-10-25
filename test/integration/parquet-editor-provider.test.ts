@@ -1,12 +1,13 @@
 import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globals';
+import os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { BackendName } from '../../src/backend-name';
 import { initLogger } from '../../src/logger';
 import { ParquetTextDocumentContentProvider } from "../../src/parquet-document-provider";
 import { ParquetEditorProvider } from "../../src/parquet-editor-provider";
 import * as settings from '../../src/settings';
 import { getUri, readFile } from "./utils";
+import { BackendName } from '../../src/backend-name';
 
 jest.setTimeout(60000);
 
@@ -54,13 +55,20 @@ describe('ParquetEditorProvider', function () {
     return uri;
   }
 
-  test.each<[string, BackendName]>([
-    ['small', 'parquet-tools'],
-    ['small', 'parquets'],
-    ['small', 'arrow'],
-    ['large', 'parquets'],
-    ['version_2', 'arrow']
-  ])('shows %p using %p', async function (name, backend) {
+  const tests = (() => {
+    const tests: [string, BackendName][] = [
+      ['small', 'parquets'],
+      ['small', 'arrow'],
+      ['large', 'parquets'],
+      ['version_2', 'arrow']
+    ];
+    if (os.type() != 'Darwin' || os.arch() == 'x64') {
+      return tests.concat([['small', 'parquet-tools']]);
+    }
+    return tests;
+  })();
+
+  test.each(tests)('shows %p using %p', async function (name, backend) {
     const parquet = await getUri(`${name}.parquet`);
     testFile = await copyTo(`${name}-${backend}.parquet`, parquet);
     const checkChanged = new Promise((resolve, reject) => {

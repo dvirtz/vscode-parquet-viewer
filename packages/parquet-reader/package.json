@@ -10,13 +10,16 @@
     "build:debug": "npm run build -- -D",
     "preinstall": "pipenv install && tsc --build",
     "install": "pkg-prebuilds-verify dist/binding-options.js || npm run build",
-    "clean": "rimraf dist build prebuilds"
+    "clean": "rimraf dist build prebuilds",
+    "exec-from": "ts-node scripts/exec-from.ts"
   },
   "dependencies": {
     "node-addon-api": "^5.0.0",
     "pkg-prebuilds": "^0.2.1"
   },
   "devDependencies": {
-    "@vscode/test-electron": "^2.3.5"
+    "@types/unzipper": "^0.10.8",
+    "@vscode/test-electron": "^2.3.5",
+    "unzipper": "^0.10.14"
   }
 }
