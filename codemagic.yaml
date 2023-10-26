@@ -1,10 +1,10 @@
-cache:
-  cache_paths:
-    - $HOME/.npm
-    - $HOME/.conan2
-    - .vscode-test
 workflows:
   apple-m1:
+    cache:
+      cache_paths:
+        - $HOME/.npm
+        - $HOME/.conan2
+        - .vscode-test
     instance_type: mac_mini_m1
     name: Apple M1
     scripts:
