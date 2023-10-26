@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.2...v2.4.3) (2023-10-26)
+
+
+### General maintenance
+
+* **deps:** bump urllib3 in /packages/parquet-reader ([c8958bb](https://github.com/dvirtz/vscode-parquet-viewer/commit/c8958bbb936b358afbc2254dbda086c6beb14417))
+
 ## [2.4.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.1...v2.4.2) (2023-10-25)
 
 
