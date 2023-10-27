@@ -77,9 +77,6 @@ jobs:
         with:
           # can't use 18 due to https://github.com/ZJONSSON/node-unzipper/issues/286
           node-version: 16
-      - name: Install pipenv
-        run: |
-          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
       - run: npm ci --ignore-scripts
       - run: npm run build-apple-m1
         env:
