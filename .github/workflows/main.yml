@@ -46,7 +46,7 @@ jobs:
         with:
           path: ${{ env.CONAN_HOME }}
           key: ${{ runner.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
-      - run: npm ci
+      - run: npm ci --foreground-scripts
       - name: Static checks
         run: |
           npm run spellcheck
@@ -75,11 +75,12 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          # can't use 18 due to https://github.com/ZJONSSON/node-unzipper/issues/286
+          node-version: 16
       - name: Install pipenv
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: npm run build-apple-m1
         env:
           CODEMAGIC_API_KEY: ${{ secrets.CODEMAGIC_API_KEY }}
