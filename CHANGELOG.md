@@ -1,3 +1,16 @@
+## [2.4.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.3...v2.4.4) (2023-10-30)
+
+
+### Bug Fixes
+
+* run apple-m1 using node 16 ([e61fbcc](https://github.com/dvirtz/vscode-parquet-viewer/commit/e61fbccdd0b6ec388c8895726c677a6c852108b4))
+
+
+### Build and continuous integration
+
+* fix codemagic caching ([ea31d19](https://github.com/dvirtz/vscode-parquet-viewer/commit/ea31d19a2bb0f612652d569242a13248a2b11da4))
+* run apple-m1 using node 16 ([b1ac811](https://github.com/dvirtz/vscode-parquet-viewer/commit/b1ac811fba7d7e44dfed62a144c021e2bd6c63e6))
+
 ## [2.4.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.2...v2.4.3) (2023-10-26)
 
 
