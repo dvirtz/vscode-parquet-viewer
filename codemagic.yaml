@@ -6,6 +6,8 @@ workflows:
         - $HOME/.conan2
         - .vscode-test
     instance_type: mac_mini_m1
+    environment:
+      xcode: 13.3
     name: Apple M1
     scripts:
       - name: Install pipenv

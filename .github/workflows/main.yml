@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         os: [
-            macos-latest,
-            ubuntu-latest,
-            windows-latest,
+            macos-11,
+            ubuntu-20.04,
+            windows-2019,
           ]
     env:
       CONAN_HOME: "${{ github.workspace }}/conan-cache"
@@ -51,11 +51,11 @@ jobs:
         run: |
           npm run spellcheck
           npm run lint
-        if: matrix.os == 'ubuntu-latest'
+        if: ${{ startsWith(matrix.os, 'ubuntu-') }}
       - run: xvfb-run -a npm test
-        if: matrix.os == 'ubuntu-latest'
+        if: ${{ startsWith(matrix.os, 'ubuntu-') }}
       - run: npm test
-        if: matrix.os != 'ubuntu-latest'
+        if: ${{ !startsWith(matrix.os, 'ubuntu-') }}
       - name: Upload prebuilds
         if: '!env.ACT'
         uses: actions/upload-artifact@v3
