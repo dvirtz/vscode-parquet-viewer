@@ -1,3 +1,15 @@
+## [2.4.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.4...v2.4.5) (2023-11-01)
+
+
+### Bug Fixes
+
+* support older platforms ([7a5399b](https://github.com/dvirtz/vscode-parquet-viewer/commit/7a5399bce272c545eb0df701f7a7e34b34c7622b)), closes [#99](https://github.com/dvirtz/vscode-parquet-viewer/issues/99)
+
+
+### Build and continuous integration
+
+* fix caching keys ([cafe6ad](https://github.com/dvirtz/vscode-parquet-viewer/commit/cafe6ad619835b7c354f39e817a8955d9d388797))
+
 ## [2.4.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.3...v2.4.4) (2023-10-30)
 
 
