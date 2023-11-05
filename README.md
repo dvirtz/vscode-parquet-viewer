@@ -50,7 +50,7 @@ The following setting options are available:
 |`parquet-viewer.logging.panel`|`false`|Whether to write diagnostic logs to an output panel|
 |`parquet-viewer.logging.folder`|empty|Write diagnostic logs under the given directory|
 |`parquet-viewer.logging.level`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
-|`parquet-viewer.jsonSpace`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `parquet-viewer.backend` is `parquet-tools`.|
+|`parquet-viewer.jsonSpace`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details|
 |`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
 
 ## Notes
