@@ -3,7 +3,7 @@ import { ParquetReader } from '@dvirtz/parquets';
 import { ParquetBackend } from './parquet-backend';
 
 export class ParquetsBackend extends ParquetBackend {
-  public async * toJsonImpl(parquetPath: string, _token?: CancellationToken): AsyncGenerator<object> {
+  public async * generateRowsImpl(parquetPath: string, _token?: CancellationToken): AsyncGenerator<object> {
     const reader = await ParquetReader.openFile(parquetPath);
     const cursor = reader.getCursor();
 

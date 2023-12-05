@@ -108,7 +108,8 @@
           "default": 0,
           "minimum": 0,
           "maximum": 10,
-          "maxLength": 10
+          "maxLength": 10,
+          "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.json.space#` instead."
         },
         "parquet-viewer.backend": {
           "markdownDescription": "Which backend to use for reading the files",
@@ -120,6 +121,22 @@
             "parquet-wasm"
           ],
           "default": "arrow"
+        },
+        "parquet-viewer.json.space": {
+          "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `#parquet-viewer.backend#` is `parquet-tools`.",
+          "type": [
+            "string",
+            "number"
+          ],
+          "default": 0,
+          "minimum": 0,
+          "maximum": 10,
+          "maxLength": 10
+        },
+        "parquet-viewer.json.asArray": {
+          "markdownDescription": "Format output JSON as one big array",
+          "type": "boolean",
+          "default": false
         }
       }
     },

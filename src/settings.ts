@@ -45,11 +45,15 @@ export function useParquetTools(): boolean {
 }
 
 export function jsonSpace(): number | string | undefined {
-  return settings().get('jsonSpace');
+  return settings().get('json.space', settings().get('jsonSpace'));
 }
 
 export const loggingSettings = ['logging', 'logLevel', 'logPanel', 'logFolder'].map(s => `${basename}.${s}`);
 
 export function backend(): BackendName {
   return useParquetTools() ? 'parquet-tools' : settings().get('backend', 'parquets');
+}
+
+export function jsonAsArray(): boolean {
+  return settings().get('json.asArray', false);
 }
