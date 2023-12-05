@@ -31,7 +31,7 @@ describe('Logger tests', function () {
     expect(logFolder()).toBe(folder);
 
     const parquet = await getUri('small.parquet');
-    const contents = await toArray(new ParquetsBackend().toJson(parquet.fsPath));
+    const contents = await toArray(new ParquetsBackend().generateRows(parquet.fsPath));
     const logContents = await promises.readFile(logPath, 'utf-8');
 
     expect(contents).toHaveLength(2);

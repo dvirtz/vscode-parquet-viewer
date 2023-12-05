@@ -8,6 +8,6 @@ describe("ParquetsBackend tests", () => {
   const backend = new ParquetsBackend();
 
   test("throws on invalid parquet version", async function () {
-    await expect(toArray(backend.toJson(path.join(workspace, 'version_2.parquet')))).rejects.toThrow('invalid parquet version');
+    await expect(toArray(backend.generateRows(path.join(workspace, 'version_2.parquet')))).rejects.toThrow('invalid parquet version');
   });
 });

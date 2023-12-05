@@ -54,7 +54,7 @@ export class ParquetToolsBackend extends ParquetBackend {
     return [parquetTools];
   }
 
-  public async * toJsonImpl(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<object> {
+  public async * generateRowsImpl(parquetPath: string, token?: vscode.CancellationToken): AsyncGenerator<object> {
     for await (const line of ParquetToolsBackend.spawnParquetTools(['cat', '-j', parquetPath], token)) {
       yield JSON.parse(line);
     }

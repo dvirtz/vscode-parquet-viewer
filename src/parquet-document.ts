@@ -1,10 +1,11 @@
-import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import * as os from 'os';
 import { promises } from 'fs';
 import { getLogger } from './logger';
 import { createParquetBackend } from './backends/parquet-backend-factory';
 import { backend } from './settings';
+import { createFormatter } from './formatter-factory';
 
 export default class ParquetDocument implements vscode.Disposable {
   private readonly _uri: vscode.Uri;
@@ -15,6 +16,7 @@ export default class ParquetDocument implements vscode.Disposable {
   private readonly _parquetPath: string;
   private _lastMod = 0;
   private readonly _backend = createParquetBackend(backend());
+  private readonly _formatter = createFormatter();
 
 
   private constructor(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>) {
@@ -40,7 +42,7 @@ export default class ParquetDocument implements vscode.Disposable {
   }
 
   get value() {
-    return this._lines.join(os.EOL) + os.EOL;
+    return `${this._lines.join(os.EOL)}${os.EOL}`;
   }
 
   private async tryPopulate() {
@@ -50,7 +52,7 @@ export default class ParquetDocument implements vscode.Disposable {
       const message = `while reading ${this._parquetPath}: ${error}`;
       getLogger().error(message);
       void vscode.window.showErrorMessage(message);
-      this._lines.push(JSON.stringify({error: message}));
+      this._lines.push(this._formatter.format_error(message));
     }
   }
 
@@ -75,7 +77,7 @@ export default class ParquetDocument implements vscode.Disposable {
       cancellable: true
     },
       async (progress, token) => {
-        for await (const line of this._backend.toJson(this._parquetPath, token)) {
+        for await (const line of this._formatter.format(this._backend.generateRows(this._parquetPath, token))) {
           const lineByteLength = encoder.encode(`${line}${os.EOL}`).byteLength;
           totalByteLength += lineByteLength;
           if (totalByteLength >= FILE_SIZE_MB_LIMIT * 1024 * 1024) {
