@@ -200,9 +200,12 @@
     "@dvirtz/parquets": "^0.11.6",
     "@vscode-logging/logger": "^1.2.3",
     "@vscode-logging/wrapper": "^1.0.1",
-    "apache-arrow": "^9.0.0",
+    "apache-arrow": "^14.0.1",
     "color-string": "^1.6.0",
     "parquet-reader": "file:packages/parquet-reader"
+  },
+  "overrides": {
+    "kexec": "meteor/node-kexec#update-for-node-12"
   },
   "commitlint": {
     "extends": [
