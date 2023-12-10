@@ -31,7 +31,10 @@ describe.each(backends)("%s backend tests", (backendName) => {
       ['small', 'small'],
       ['large', 'large.arrow'],
       ['version_2', 'version_2'],
-      ['zstd', 'small']
+      ['zstd', 'small'],
+      ['gzip', 'small'],
+      ['brotli', 'small'],
+      ['lz4', 'small'],
     ]
   };
 
