@@ -148,7 +148,7 @@ async function main() {
     await downloadArtifacts(appId, buildId);
   }
   else {
-    throw new Error('build failed');
+    throw new Error(`build failed: https://codemagic.io/app/${appId}/build/${buildId}`);
   }
 }
 
