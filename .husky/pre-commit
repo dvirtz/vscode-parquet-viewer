@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run spellcheck
-npm run lint
+
+BRANCH_NAME=$(git branch | grep '*' | sed 's/* //')
+if [[ $BRANCH_NAME != "rebase*" ]]; then
+  npm run spellcheck
+  npm run lint
+else
+  echo "Skipping commit during interactive rebase"
+fi
