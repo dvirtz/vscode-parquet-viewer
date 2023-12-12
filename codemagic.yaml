@@ -13,7 +13,10 @@ workflows:
       - name: Install pipenv
         script: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-      - npm ci
+      - name: Install node packages
+        script: |
+          npm update -g npm
+          npm ci
       - name: Static checks
         script: |
           npm run spellcheck
