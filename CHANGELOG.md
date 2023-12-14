@@ -1,3 +1,22 @@
+## [2.5.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.5...v2.5.0) (2023-12-14)
+
+
+### Features
+
+* support `gzip`, `brotli`, and `lz4` compressions ([95d1fef](https://github.com/dvirtz/vscode-parquet-viewer/commit/95d1fef828e9cbf3663267b10bce16cfb194fcbf)), closes [#102](https://github.com/dvirtz/vscode-parquet-viewer/issues/102)
+
+
+### Build and continuous integration
+
+* log build URL ([6e23e6e](https://github.com/dvirtz/vscode-parquet-viewer/commit/6e23e6e62610f607e987f11101a5d4d61a6a4bfa))
+* update npm in codemagic ([48380a3](https://github.com/dvirtz/vscode-parquet-viewer/commit/48380a3ff685f00a80aad4bd6056216dc7c87f7f))
+
+
+### General maintenance
+
+* bump dependencies ([1b8f886](https://github.com/dvirtz/vscode-parquet-viewer/commit/1b8f8869049bb7075ce0f6acd5f75f9b2a6b1a3a))
+* disable git hooks during rebase ([304c84d](https://github.com/dvirtz/vscode-parquet-viewer/commit/304c84d9e3a75e9252e0e49fb9444b1ac8236b76))
+
 ## [2.4.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.4...v2.4.5) (2023-11-01)
 
 
