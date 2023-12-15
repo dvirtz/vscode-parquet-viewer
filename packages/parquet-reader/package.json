@@ -1,6 +1,7 @@
 {
   "name": "parquet-reader",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
     "vscode:prepublish": "tsc --build",
     "build": "pipenv run cmake-js build --CDCMAKE_PROJECT_TOP_LEVEL_INCLUDES=cmake/conan_provider.cmake",
