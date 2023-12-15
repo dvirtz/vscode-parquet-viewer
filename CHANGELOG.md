@@ -1,3 +1,15 @@
+## [2.5.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.5.0...v2.5.1) (2023-12-15)
+
+
+### Bug Fixes
+
+* fail loading arrow backend ([2f96587](https://github.com/dvirtz/vscode-parquet-viewer/commit/2f965879cf33b04d3a287b2aa60eb7245c41a421)), closes [#102](https://github.com/dvirtz/vscode-parquet-viewer/issues/102)
+
+
+### Tests
+
+* retry parquet backend test ([32833d6](https://github.com/dvirtz/vscode-parquet-viewer/commit/32833d69fc8a25c5e9589f654f83719c3fcf12f5))
+
 ## [2.5.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.4.5...v2.5.0) (2023-12-14)
 
 

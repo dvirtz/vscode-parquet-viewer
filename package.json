@@ -19,7 +19,7 @@
     "url": "https://github.com/dvirtz"
   },
   "license": "MIT",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "workspaces": [
     "./packages/*"
   ],
