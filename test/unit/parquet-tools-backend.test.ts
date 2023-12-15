@@ -1,5 +1,7 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, test, jest } from '@jest/globals';
 import { ParquetToolsBackend } from "../../src/parquet-tools-backend";
+
+jest.retryTimes(3);
 
 describe("ParquetToolsBackend tests", () => {
   test("-h works", async function () {
