@@ -2,12 +2,12 @@ import { afterEach, beforeEach, describe, expect, jest, test } from '@jest/globa
 import os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { BackendName } from '../../src/backends/backend-name';
 import { initLogger } from '../../src/logger';
 import { ParquetTextDocumentContentProvider } from "../../src/parquet-document-provider";
 import { ParquetEditorProvider } from "../../src/parquet-editor-provider";
 import * as settings from '../../src/settings';
 import { getUri, readFile } from "./utils";
-import { BackendName } from '../../src/backend-name';
 
 jest.setTimeout(60000);
 
@@ -41,7 +41,9 @@ describe('ParquetEditorProvider', function () {
     while (disposables.length) {
       disposables.pop()?.dispose();
     }
-    await workspace.fs.delete(testFile);
+    if (testFile) {
+      await workspace.fs.delete(testFile);
+    }
   });
 
   function workspaceRoot() {
@@ -60,7 +62,8 @@ describe('ParquetEditorProvider', function () {
       ['small', 'parquets'],
       ['small', 'arrow'],
       ['large', 'parquets'],
-      ['version_2', 'arrow']
+      ['version_2', 'arrow'],
+      ['version_2', 'parquet-wasm'],
     ];
     if (os.type() != 'Darwin' || os.arch() == 'x64') {
       return tests.concat([['small', 'parquet-tools']]);

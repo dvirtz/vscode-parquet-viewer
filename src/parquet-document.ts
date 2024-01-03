@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { promises } from 'fs';
 import { getLogger } from './logger';
-import { createParquetBackend } from './parquet-backend-factory';
+import { createParquetBackend } from './backends/parquet-backend-factory';
 import { backend } from './settings';
 
 export default class ParquetDocument implements vscode.Disposable {

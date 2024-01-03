@@ -1,5 +1,5 @@
 import { describe, expect, test, jest } from '@jest/globals';
-import { ParquetToolsBackend } from "../../src/parquet-tools-backend";
+import { ParquetToolsBackend } from "../../src/backends/parquet-tools-backend";
 
 jest.retryTimes(3);
 

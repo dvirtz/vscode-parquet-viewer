@@ -16,13 +16,17 @@ After closing the JSON view, it is possible to reopen it by clicking on the link
 
 ## Backends
 
-The extension supports three different backends for parsing the files:
+The extension supports different backends for parsing the files:
 
 ### arrow
 
 This is the default backend. This backend is a thin wrapper around the [Apache Arrow C++](https://github.com/apache/arrow/tree/main/cpp) implementation and so should support latest and greatest parquet features.
 
-It is currently in an experimental state. To use, set `parquet-viewer.backend` setting to `arrow`.
+## parquet-wasm
+
+This backend uses the [parquet-wasm](https://kylebarron.dev/parquet-wasm) library which uses the "official" Rust implementations of Arrow and Parquet.
+
+It support most compression algorithms besides LZ4, see https://kylebarron.dev/parquet-wasm/index.html#md:compression-support for details.
 
 ### parquets
 

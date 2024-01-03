@@ -39,91 +39,90 @@
   ],
   "main": "./dist/src/extension",
   "contributes": {
-    "configuration": [
-      {
-        "title": "parquet-viewer",
-        "properties": {
-          "parquet-viewer.parquetToolsPath": {
-            "type": "string",
-            "default": "parquet-tools",
-            "description": "Path to parquet-tools executable or jar"
-          },
-          "parquet-viewer.logPanel": {
-            "description": "Write diagnostic logs to an output panel",
-            "type": "boolean",
-            "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.panel#` instead."
-          },
-          "parquet-viewer.logFolder": {
-            "description": "Write diagnostic logs under the given directory",
-            "type": "string",
-            "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.folder#` instead."
-          },
-          "parquet-viewer.logLevel": {
-            "description": "Log level",
-            "type": "string",
-            "enum": [
-              "off",
-              "fatal",
-              "error",
-              "warn",
-              "info",
-              "debug",
-              "trace"
-            ],
-            "default": "info",
-            "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.level#` instead."
-          },
-          "parquet-viewer.useParquetTools": {
-            "description": "Use legacy parquet-tools application for reading parquet files",
-            "type": "boolean",
-            "markdownDeprecationMessage": "Use `#parquet-viewer.backend#` configuration instead"
-          },
-          "parquet-viewer.logging.panel": {
-            "description": "Write diagnostic logs to an output panel",
-            "type": "boolean"
-          },
-          "parquet-viewer.logging.folder": {
-            "description": "Write diagnostic logs under the given directory",
-            "type": "string"
-          },
-          "parquet-viewer.logging.level": {
-            "description": "Log level",
-            "type": "string",
-            "enum": [
-              "off",
-              "fatal",
-              "error",
-              "warn",
-              "info",
-              "debug",
-              "trace"
-            ],
-            "default": "info"
-          },
-          "parquet-viewer.jsonSpace": {
-            "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `#parquet-viewer.backend#` is `parquet-tools`.",
-            "type": [
-              "string",
-              "number"
-            ],
-            "default": 0,
-            "minimum": 0,
-            "maximum": 10,
-            "maxLength": 10
-          },
-          "parquet-viewer.backend": {
-            "markdownDescription": "Which backend to use for reading the files",
-            "type": "string",
-            "enum": [
-              "parquet-tools",
-              "parquets",
-              "arrow"
-            ],
-            "default": "arrow"
-          }
+    "configuration": {
+      "title": "parquet-viewer",
+      "properties": {
+        "parquet-viewer.parquetToolsPath": {
+          "type": "string",
+          "default": "parquet-tools",
+          "description": "Path to parquet-tools executable or jar"
+        },
+        "parquet-viewer.logPanel": {
+          "description": "Write diagnostic logs to an output panel",
+          "type": "boolean",
+          "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.panel#` instead."
+        },
+        "parquet-viewer.logFolder": {
+          "description": "Write diagnostic logs under the given directory",
+          "type": "string",
+          "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.folder#` instead."
+        },
+        "parquet-viewer.logLevel": {
+          "description": "Log level",
+          "type": "string",
+          "enum": [
+            "off",
+            "fatal",
+            "error",
+            "warn",
+            "info",
+            "debug",
+            "trace"
+          ],
+          "default": "info",
+          "markdownDeprecationMessage": "**Deprecated**: Please use `#parquet-viewer.logging.level#` instead."
+        },
+        "parquet-viewer.useParquetTools": {
+          "description": "Use legacy parquet-tools application for reading parquet files",
+          "type": "boolean",
+          "markdownDeprecationMessage": "Use `#parquet-viewer.backend#` configuration instead"
+        },
+        "parquet-viewer.logging.panel": {
+          "description": "Write diagnostic logs to an output panel",
+          "type": "boolean"
+        },
+        "parquet-viewer.logging.folder": {
+          "description": "Write diagnostic logs under the given directory",
+          "type": "string"
+        },
+        "parquet-viewer.logging.level": {
+          "description": "Log level",
+          "type": "string",
+          "enum": [
+            "off",
+            "fatal",
+            "error",
+            "warn",
+            "info",
+            "debug",
+            "trace"
+          ],
+          "default": "info"
+        },
+        "parquet-viewer.jsonSpace": {
+          "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `#parquet-viewer.backend#` is `parquet-tools`.",
+          "type": [
+            "string",
+            "number"
+          ],
+          "default": 0,
+          "minimum": 0,
+          "maximum": 10,
+          "maxLength": 10
+        },
+        "parquet-viewer.backend": {
+          "markdownDescription": "Which backend to use for reading the files",
+          "type": "string",
+          "enum": [
+            "parquet-tools",
+            "parquets",
+            "arrow",
+            "parquet-wasm"
+          ],
+          "default": "arrow"
         }
       }
-    ],
+    },
     "customEditors": [
       {
         "viewType": "parquetViewer.parquetViewer",
@@ -202,7 +201,8 @@
     "@vscode-logging/wrapper": "^1.0.1",
     "apache-arrow": "^14.0.1",
     "color-string": "^1.6.0",
-    "parquet-reader": "file:packages/parquet-reader"
+    "parquet-reader": "file:packages/parquet-reader",
+    "parquet-wasm": "^0.5.0"
   },
   "overrides": {
     "kexec": "meteor/node-kexec#update-for-node-12"

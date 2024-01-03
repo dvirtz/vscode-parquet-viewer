@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 import { spawn } from "child_process";
 import * as path from 'path';
 import { strict as assert } from 'assert';
-import { getLogger } from './logger';
-import { parquetTools as getParquetTools, jsonSpace } from './settings';
+import { getLogger } from '../logger';
+import { parquetTools as getParquetTools, jsonSpace } from '../settings';
 import { createInterface } from 'readline';
 import { ParquetBackend } from './parquet-backend';
 

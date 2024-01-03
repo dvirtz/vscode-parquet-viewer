@@ -1,7 +1,7 @@
 import { CancellationToken } from 'vscode';
 import { ParquetReader } from '@dvirtz/parquets';
 import { ParquetBackend } from './parquet-backend';
-import { jsonSpace } from './settings';
+import { jsonSpace } from '../settings';
 
 export class ParquetsBackend extends ParquetBackend {
   public async * toJsonImpl(parquetPath: string, _token?: CancellationToken): AsyncGenerator<string> {

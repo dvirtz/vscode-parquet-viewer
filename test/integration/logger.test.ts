@@ -4,7 +4,7 @@ import { getUri } from './utils';
 import { promises } from 'fs';
 import path = require('path');
 import toArray from '@async-generators/to-array';
-import { ParquetsBackend } from '../../src/parquets-backend';
+import { ParquetsBackend } from '../../src/backends/parquets-backend';
 import * as vscode from 'vscode';
 import { initLogger } from '../../src/logger';
 import * as tempy from 'tempy';

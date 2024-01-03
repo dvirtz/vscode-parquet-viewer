@@ -1,10 +1,10 @@
-import { strict as assert } from 'assert';
+import { expect } from '@jest/globals';
 import { Uri, workspace } from 'vscode';
 import * as meta from '../../package.json';
 
 export async function getUri(fileName: string): Promise<Uri> {
   const testFiles = await workspace.findFiles(`**/${fileName}`);
-  assert.equal(testFiles.length, 1);
+  expect(testFiles.length).toBe(1);
   return testFiles[0];
 }
 
