@@ -6,8 +6,8 @@ import * as path from 'path';
 import { createInterface } from 'readline';
 import * as vscode from 'vscode';
 import { CancellationToken } from 'vscode';
-import { BackendNames } from '../../src/backend-name';
-import { createParquetBackend } from '../../src/parquet-backend-factory';
+import { BackendNames } from '../../src/backends/backend-name';
+import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
 import { workspace } from './workspace';
 
 jest.setTimeout(60000);
@@ -35,6 +35,14 @@ describe.each(backends)("%s backend tests", (backendName) => {
       ['gzip', 'small'],
       ['brotli', 'small'],
       ['lz4', 'small'],
+    ],
+    'parquet-wasm': [
+      ['small', 'small'],
+      ['large', 'large.arrow'],
+      ['version_2', 'version_2'],
+      ['zstd', 'small'],
+      ['gzip', 'small'],
+      ['brotli', 'small'],
     ]
   };
 

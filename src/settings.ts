@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { LogLevel } from '@vscode-logging/logger';
-import { BackendName } from './backend-name';
+import { BackendName } from './backends/backend-name';
 
 const basename = 'parquet-viewer';
 

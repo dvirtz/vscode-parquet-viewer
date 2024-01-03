@@ -1,7 +1,7 @@
 import toArray from '@async-generators/to-array';
 import { describe, expect, test } from '@jest/globals';
 import * as path from 'path';
-import { ParquetsBackend } from "../../src/parquets-backend";
+import { ParquetsBackend } from "../../src/backends/parquets-backend";
 import { workspace } from './workspace';
 
 describe("ParquetsBackend tests", () => {

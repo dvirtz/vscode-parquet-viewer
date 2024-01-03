@@ -1,5 +1,5 @@
 import { CancellationToken } from 'vscode';
-import { getLogger } from './logger';
+import { getLogger } from '../logger';
 
 export abstract class ParquetBackend {
   public async* toJson(parquetPath: string, token?: CancellationToken) {
