@@ -1,3 +1,10 @@
+## [2.6.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.5.1...v2.6.0) (2024-01-07)
+
+
+### Features
+
+* add parquet-wasm backend ([e5e2819](https://github.com/dvirtz/vscode-parquet-viewer/commit/e5e28199ce9762aec6bb617bcbbd404393c12545)), closes [#107](https://github.com/dvirtz/vscode-parquet-viewer/issues/107)
+
 ## [2.5.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.5.0...v2.5.1) (2023-12-15)
 
 
