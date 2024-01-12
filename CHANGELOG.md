@@ -1,3 +1,15 @@
+## [2.6.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.0...v2.6.1) (2024-01-12)
+
+
+### Build and continuous integration
+
+* use two workflows for dependabot PRs ([f377885](https://github.com/dvirtz/vscode-parquet-viewer/commit/f377885f943b2db01d9ce5e811165290602df38e)), closes [/github.com/dependabot/dependabot-core/issues/3253#issuecomment-852541544](https://github.com/dvirtz//github.com/dependabot/dependabot-core/issues/3253/issues/issuecomment-852541544)
+
+
+### General maintenance
+
+* **deps-dev:** bump follow-redirects from 1.15.3 to 1.15.4 ([cb8b8de](https://github.com/dvirtz/vscode-parquet-viewer/commit/cb8b8de1225832288ea3108ef2175cb7c3d7ee16))
+
 ## [2.6.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.5.1...v2.6.0) (2024-01-07)
 
 
