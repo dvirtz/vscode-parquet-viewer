@@ -3,6 +3,7 @@ import { runCLI } from 'jest';
 import { runTests } from '@vscode/test-electron';
 import type { Config } from '@jest/types';
 import { test_process } from './test-process';
+import * as meta from '../../package.json';
 
 export async function run(): Promise<void> {
   // jest doesn't seem to provide a way to inject global/dynamic imports.
@@ -51,6 +52,7 @@ async function main() {
         path.resolve(projectPath, './test/workspace'),
 				"--disable-extensions"
       ],
+      version: meta.engines.vscode.replace(/^(\^|~)/, ''),
       platform: process.platform == 'win32' ? 'win32-x64-archive' : undefined
     });
   } catch (err) {
