@@ -24,7 +24,7 @@
     "./packages/*"
   ],
   "engines": {
-    "vscode": "^1.63.0"
+    "vscode": "^1.66.0"
   },
   "categories": [
     "Other"
