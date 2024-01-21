@@ -1,3 +1,15 @@
+## [2.6.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.2...v2.6.3) (2024-01-21)
+
+
+### Bug Fixes
+
+* require VSCode 1.66.0 ([6672fc0](https://github.com/dvirtz/vscode-parquet-viewer/commit/6672fc0114944d99722530bf730ce52044881ebd))
+
+
+### Tests
+
+* run integration tests on earliest supported version ([753ed75](https://github.com/dvirtz/vscode-parquet-viewer/commit/753ed75df729c5dd5953b2a8c0e167a8c6d0ba97))
+
 ## [2.6.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.1...v2.6.2) (2024-01-12)
 
 
