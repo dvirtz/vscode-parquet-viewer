@@ -53,6 +53,14 @@ The following setting options are available:
 |`parquet-viewer.jsonSpace`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `parquet-viewer.backend` is `parquet-tools`.|
 |`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
 
-### What's new
+## Notes
+
+### Size limit
+
+VSCode allows extensions to work on files smaller than 50MB.
+If the data is larger, it will be truncated a message indicating that will be appended to the output.
+See https://github.com/microsoft/vscode/issues/31078 for details.
+
+## What's new
 
 See [CHANGELOG.md](CHANGELOG.md)
