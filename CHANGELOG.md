@@ -1,3 +1,10 @@
+## [2.6.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.3...v2.6.4) (2024-01-28)
+
+
+### Bug Fixes
+
+* opening large files ([6d2164f](https://github.com/dvirtz/vscode-parquet-viewer/commit/6d2164f214e01decd5ac725c52f602050f56021e)), closes [#114](https://github.com/dvirtz/vscode-parquet-viewer/issues/114) [#74](https://github.com/dvirtz/vscode-parquet-viewer/issues/74)
+
 ## [2.6.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.2...v2.6.3) (2024-01-21)
 
 
