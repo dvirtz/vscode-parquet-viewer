@@ -64,6 +64,10 @@ export default class ParquetDocument implements vscode.Disposable {
     this._lastMod = mtimeMs;
 
     const lines: string[] = [];
+    const encoder = new TextEncoder();
+    const FILE_SIZE_MB_LIMIT = 50;
+    const limitExceededMsg = JSON.stringify({warning: `file size exceeds ${FILE_SIZE_MB_LIMIT}MB limit`});
+    let totalByteLength = encoder.encode(limitExceededMsg).byteLength;
 
     await vscode.window.withProgress({
       location: vscode.ProgressLocation.Notification,
@@ -72,6 +76,12 @@ export default class ParquetDocument implements vscode.Disposable {
     },
       async (progress, token) => {
         for await (const line of this._backend.toJson(this._parquetPath, token)) {
+          const lineByteLength = encoder.encode(`${line}${os.EOL}`).byteLength;
+          totalByteLength += lineByteLength;
+          if (totalByteLength >= FILE_SIZE_MB_LIMIT * 1024 * 1024) {
+            lines.push(limitExceededMsg);
+            break;
+          }
           lines.push(line);
         }
       }
