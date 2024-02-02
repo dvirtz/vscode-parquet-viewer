@@ -35,6 +35,7 @@ describe.each(backends)("%s backend tests", (backendName) => {
       ['gzip', 'small'],
       ['brotli', 'small'],
       ['lz4', 'small'],
+      ['polars', 'polars'],
     ],
     'parquet-wasm': [
       ['small', 'small'],
@@ -43,6 +44,7 @@ describe.each(backends)("%s backend tests", (backendName) => {
       ['zstd', 'small'],
       ['gzip', 'small'],
       ['brotli', 'small'],
+      ['polars', 'polars'],
     ]
   };
 
