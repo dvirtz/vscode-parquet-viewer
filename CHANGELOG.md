@@ -1,3 +1,10 @@
+## [2.6.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.4...v2.6.5) (2024-02-02)
+
+
+### Bug Fixes
+
+* support LargeUtf8 by upgrading apache-arrow ([66efa57](https://github.com/dvirtz/vscode-parquet-viewer/commit/66efa57dc9cde40cfca31696de6ffd2301659b60)), closes [#105](https://github.com/dvirtz/vscode-parquet-viewer/issues/105)
+
 ## [2.6.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.3...v2.6.4) (2024-01-28)
 
 
