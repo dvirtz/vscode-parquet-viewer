@@ -1,3 +1,20 @@
+## [2.7.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.5...v2.7.0) (2024-02-04)
+
+
+### Features
+
+* format JSON as an array ([a44d406](https://github.com/dvirtz/vscode-parquet-viewer/commit/a44d406159272efda52c895324aea88de96c2eb5)), closes [#98](https://github.com/dvirtz/vscode-parquet-viewer/issues/98)
+
+
+### General maintenance
+
+* remove redundant file ([955a9a7](https://github.com/dvirtz/vscode-parquet-viewer/commit/955a9a73c424aca7dfa24a7611dcd5338abcbd2d))
+
+
+### Refactoring
+
+* move JSON creation to base class ([c7d381c](https://github.com/dvirtz/vscode-parquet-viewer/commit/c7d381c1211321ac18026e57fea16bc1b0b70fba))
+
 ## [2.6.5](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.4...v2.6.5) (2024-02-02)
 
 
