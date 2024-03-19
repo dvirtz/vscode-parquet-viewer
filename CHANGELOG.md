@@ -1,3 +1,15 @@
+## [2.7.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.7.0...v2.7.1) (2024-03-19)
+
+
+### Bug Fixes
+
+* Revert "ci: use two workflows for dependabot PRs" ([6cf44ca](https://github.com/dvirtz/vscode-parquet-viewer/commit/6cf44cadc8f3df8b022423f5cd0765fd7b595f79))
+
+
+### General maintenance
+
+* **deps-dev:** bump follow-redirects from 1.15.4 to 1.15.6 ([d9f1ab5](https://github.com/dvirtz/vscode-parquet-viewer/commit/d9f1ab590c90a1f295dfe15cd2df1b7cbd8a87ac))
+
 ## [2.7.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.6.5...v2.7.0) (2024-02-04)
 
 
