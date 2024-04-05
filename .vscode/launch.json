@@ -1,0 +1,128 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Extension Tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "${workspaceFolder}/test/workspace",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/dist/test/integration/runTests",
+        "--disable-extensions",
+      ],
+      "outFiles": [],
+      "preLaunchTask": "npm: build",
+      "env": {
+        "DEBUG_MODE": "TRUE"
+      },
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Launch Extension",
+      "request": "launch",
+      "type": "extensionHost",
+      "args": [
+        "${workspaceFolder}/test/workspace",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--disable-extensions"
+      ],
+      "preLaunchTask": "npm: build",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js",
+        "${workspaceFolder}/packages/parquet-reader/dist/**/*.js"
+      ],
+      "trace": true
+    },
+    {
+      "type": "node",
+      "name": "vscode-jest-tests.v2",
+      "request": "launch",
+      "args": [
+        "--runInBand",
+        "--watchAll=false",
+        "--config",
+        "test/unit/jest.config.ts",
+        "--testNamePattern",
+        "${jest.testNamePattern}",
+        "--runTestsByPath",
+        "${jest.testFile}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "windows": {
+        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+      },
+      "env": {
+        "DEBUG_MODE": "TRUE"
+      },
+      "outFiles": [
+        "${workspaceFolder}/**/*.js",
+        "!**/node_modules/**",
+        "${workspaceFolder}/node_modules/apache-arrow/**/*.js"
+      ]
+    },
+    {
+      "name": "vsce",
+      "program": "${workspaceFolder}/node_modules/@vscode/vsce/vsce",
+      "args": [
+        "package"
+      ],
+      "cwd": "${workspaceFolder}",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "(Windows) Attach",
+      "type": "cppvsdbg",
+      "request": "attach",
+      "processId": "${command:pickProcess}",
+      "presentation": {
+        "hidden": true
+      },
+      "windows": {
+        "presentation": {
+          "hidden": false,
+        }
+      },
+    },
+    {
+      "name": "(Windows) Launch",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "node",
+      "args": [
+        "${workspaceFolder}/node_modules/jest/bin/jest",
+        "test/unit/arrow-backend.test.ts"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUG_MODE",
+          "value": "TRUE"
+        }
+      ],
+      "console": "externalTerminal",
+      "presentation": {
+        "hidden": true
+      },
+      "windows": {
+        "presentation": {
+          "hidden": false,
+        }
+      },
+    }
+  ]
+}
