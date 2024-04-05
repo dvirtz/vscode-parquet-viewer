@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "clean",
+      "problemMatcher": [],
+      "label": "npm: clean",
+      "detail": "rimraf dist .vscode-test"
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "label": "npm: build",
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "integration",
+      "problemMatcher": [],
+      "label": "npm: integration",
+      "detail": "node --enable-source-maps ./dist/test/integration/runTests.js",
+      "group": "test",
+      "presentation": {
+        "clear": true
+      }
+    }
+  ]
+}
