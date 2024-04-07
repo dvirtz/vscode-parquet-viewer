@@ -9,7 +9,8 @@ import { ParquetEditorProvider } from "../../src/parquet-editor-provider";
 import * as settings from '../../src/settings';
 import { getUri, readFile } from "./utils";
 
-jest.setTimeout(60000);
+if (!process.env.DEBUG_MODE)
+  jest.setTimeout(60000);
 
 jest.mock('../../src/settings', () => {
   const originalModule = jest.requireActual<typeof import('../../src/settings')>('../../src/settings');
