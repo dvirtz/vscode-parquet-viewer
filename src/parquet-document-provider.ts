@@ -31,6 +31,6 @@ export class ParquetTextDocumentContentProvider implements vscode.TextDocumentCo
       this._documents.set(uri, document);
     }
 
-    return this._documents.get(uri)?.value;
+    return await this._documents.get(uri)?.value();
   }
 }
