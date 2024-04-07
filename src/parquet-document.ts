@@ -1,22 +1,22 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as os from 'os';
-import { promises } from 'fs';
 import { getLogger } from './logger';
 import { createParquetBackend } from './backends/parquet-backend-factory';
-import { backend } from './settings';
+import { backend, affectsDocument } from './settings';
 import { createFormatter } from './formatter-factory';
+import assert from 'assert';
 
 export default class ParquetDocument implements vscode.Disposable {
   private readonly _uri: vscode.Uri;
   private readonly _emitter: vscode.EventEmitter<vscode.Uri>;
 
   private _lines: string[] = [];
-  private readonly _disposables: vscode.Disposable[] = [];
+  private readonly _disposable: vscode.Disposable;
   private readonly _parquetPath: string;
-  private _lastMod = 0;
   private readonly _backend = createParquetBackend(backend());
   private readonly _formatter = createFormatter();
+  private _dirty = true;
 
 
   private constructor(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>) {
@@ -24,15 +24,24 @@ export default class ParquetDocument implements vscode.Disposable {
     this._emitter = emitter;
     this._parquetPath = this._uri.fsPath.replace(/\.as\.json$/, '');
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(this._parquetPath, "*"));
-    this._disposables.push(watcher);
-    this._disposables.push(watcher.onDidChange(this.tryPopulate.bind(this)));
-    this._disposables.push(watcher.onDidCreate(this.tryPopulate.bind(this)));
+    this._disposable = vscode.Disposable.from(watcher,
+      watcher.onDidChange(this.update.bind(this)),
+      watcher.onDidCreate(this.update.bind(this)),
+      vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
+        if (affectsDocument(e)) {
+          this.update();
+        }
+      })
+    );
+  }
+
+  update() {
+    this._dirty = true;
+    this._emitter.fire(this._uri);
   }
 
   dispose() {
-    for (const disposable of this._disposables) {
-      disposable.dispose();
-    }
+    this._disposable.dispose();
   }
 
   public static async create(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>) {
@@ -41,7 +50,10 @@ export default class ParquetDocument implements vscode.Disposable {
     return parquet;
   }
 
-  get value() {
+  async value() {
+    if (this._dirty) {
+      await this.tryPopulate();
+    }
     return `${this._lines.join(os.EOL)}${os.EOL}`;
   }
 
@@ -57,18 +69,12 @@ export default class ParquetDocument implements vscode.Disposable {
   }
 
   private async populate() {
-    // protect against onCreate firing right after create
-    const { mtimeMs } = await promises.stat(this._parquetPath);
-    if (mtimeMs == this._lastMod) {
-      getLogger().debug("skipping populate() as modification timestamp hasn't changed");
-      return;
-    }
-    this._lastMod = mtimeMs;
+    assert(this._dirty, 'populate called when not dirty');
 
     const lines: string[] = [];
     const encoder = new TextEncoder();
     const FILE_SIZE_MB_LIMIT = 50;
-    const limitExceededMsg = JSON.stringify({warning: `file size exceeds ${FILE_SIZE_MB_LIMIT}MB limit`});
+    const limitExceededMsg = JSON.stringify({ warning: `file size exceeds ${FILE_SIZE_MB_LIMIT}MB limit` });
     let totalByteLength = encoder.encode(limitExceededMsg).byteLength;
 
     await vscode.window.withProgress({
@@ -88,9 +94,7 @@ export default class ParquetDocument implements vscode.Disposable {
         }
       }
     );
-    if (lines != this._lines) {
-      this._lines = lines;
-      this._emitter.fire(this._uri);
-    }
+    this._lines = lines;
+    this._dirty = false;
   }
 }

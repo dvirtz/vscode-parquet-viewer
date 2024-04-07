@@ -1,11 +1,10 @@
 import * as vscode from 'vscode';
 import { LogLevel } from '@vscode-logging/logger';
 import { BackendName } from './backends/backend-name';
-
-const basename = 'parquet-viewer';
+import { name } from '../package.json'
 
 function settings() {
-  return vscode.workspace.getConfiguration(basename);
+  return vscode.workspace.getConfiguration(name);
 }
 
 export function parquetTools(): string | undefined {
@@ -48,12 +47,22 @@ export function jsonSpace(): number | string | undefined {
   return settings().get('json.space', settings().get('jsonSpace'));
 }
 
-export const loggingSettings = ['logging', 'logLevel', 'logPanel', 'logFolder'].map(s => `${basename}.${s}`);
-
 export function backend(): BackendName {
   return useParquetTools() ? 'parquet-tools' : settings().get('backend', 'parquets');
 }
 
 export function jsonAsArray(): boolean {
   return settings().get('json.asArray', false);
+}
+
+function settingsChanged(e: vscode.ConfigurationChangeEvent, sections: string[]): boolean {
+  return sections.map(s => `${name}.${s}`).some(s => e.affectsConfiguration(s));
+}
+
+export function affectsLogging(e: vscode.ConfigurationChangeEvent): boolean {
+  return settingsChanged(e, ['logging', 'logLevel', 'logPanel', 'logFolder'])
+}
+
+export function affectsDocument(e: vscode.ConfigurationChangeEvent): boolean {
+  return settingsChanged(e, ['backend', 'useParquetTools', 'json.space', 'json.asArray']);
 }
