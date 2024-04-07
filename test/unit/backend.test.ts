@@ -7,7 +7,8 @@ import { BackendNames } from '../../src/backends/backend-name';
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
 import { workspace } from './workspace';
 
-jest.setTimeout(60000);
+if (!process.env.DEBUG_MODE)
+  jest.setTimeout(60000);
 
 
 // parquet-tools doesn't work on Apple M1

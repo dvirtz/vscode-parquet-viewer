@@ -10,7 +10,8 @@ import { createParquetBackend } from '../../src/backends/parquet-backend-factory
 import { workspace } from './workspace';
 import { JsonFormatter } from '../../src/json-formatter';
 
-jest.setTimeout(60000);
+if (!process.env.DEBUG_MODE)
+  jest.setTimeout(60000);
 
 // https://stackoverflow.com/a/48293566
 async function* zip<T extends AsyncIterable<unknown>[]>(...iterables: T) {
