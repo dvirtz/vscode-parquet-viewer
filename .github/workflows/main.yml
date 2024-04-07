@@ -9,11 +9,11 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [
-            macos-11,
-            ubuntu-20.04,
-            windows-2019,
-          ]
+        os:
+          - ubuntu-20.04
+          - windows-2019
+          - macos-11
+          - macos-14
     env:
       CONAN_HOME: "${{ github.workspace }}/conan-cache"
     runs-on: ${{ matrix.os }}
@@ -64,37 +64,10 @@ jobs:
           path: packages/parquet-reader/prebuilds
           retention-days: 1
 
-  apple-m1:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # for commit linting and semantic-release
-          persist-credentials: false
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          # can't use 18 due to https://github.com/ZJONSSON/node-unzipper/issues/286
-          node-version: 16
-      - run: npm ci --ignore-scripts
-      - run: npm run build-apple-m1
-        env:
-          CODEMAGIC_API_KEY: ${{ secrets.CODEMAGIC_API_KEY }}
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-      - name: Upload prebuilds
-        if: '!env.ACT'
-        uses: actions/upload-artifact@v3
-        with:
-          name: prebuilds
-          path: packages/parquet-reader/prebuilds
-          retention-days: 1
-
   release:
     runs-on: ubuntu-latest
     needs:
       - build
-      - apple-m1
     env:
       HUSKY: 0
     steps:
