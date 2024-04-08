@@ -19,15 +19,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # for commit linting and semantic-release
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: 'pipenv'
@@ -35,14 +35,14 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
       - name: Cache .vscode-test
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: packages/packet-viewer/.vscode-test
           key: ${{ matrix.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ matrix.os }}-node-
       - name: Cache .conan
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
           key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
@@ -58,9 +58,9 @@ jobs:
         if: ${{ !startsWith(matrix.os, 'ubuntu-') }}
       - name: Upload prebuilds
         if: '!env.ACT'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: prebuilds
+          name: prebuilds-${{ matrix.os }}
           path: packages/parquet-reader/prebuilds
           retention-days: 1
 
@@ -72,25 +72,26 @@ jobs:
       HUSKY: 0
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # for commit linting and semantic-release
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: 'pipenv'
       - name: Install pipenv
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: prebuilds
           path: packages/parquet-reader/prebuilds
+          pattern: prebuilds-*
+          merge-multiple: true
       - run: npm ci
       - name: Release
         env:
@@ -105,7 +106,7 @@ jobs:
           args: "package"
       - name: Upload
         if: github.ref != 'refs/heads/master' && !env.ACT
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: vscode-package
           path: parquet-viewer-*.vsix
