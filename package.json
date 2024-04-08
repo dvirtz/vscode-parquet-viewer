@@ -21,7 +21,8 @@
   "license": "MIT",
   "version": "2.7.1",
   "workspaces": [
-    "./packages/*"
+    "./packages/*",
+    "."
   ],
   "engines": {
     "vscode": "^1.66.0"

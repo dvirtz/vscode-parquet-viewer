@@ -123,6 +123,21 @@
           "hidden": false,
         }
       },
+    },
+    {
+      "name": "Conan Install",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "conans.conan",
+      "justMyCode": false,
+      "args": [
+        "install",
+        "${workspaceFolder}/packages/parquet-reader",
+        "-of=${workspaceFolder}/packages/parquet-reader/dist/build/conan",
+        "-pr=${workspaceFolder}/packages/parquet-reader/dist/build/conan_host_profile",
+        "--build=missing",
+        "-g CMakeDeps"
+      ]
     }
   ]
 }

@@ -27,6 +27,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
+        env:
+          npm_config_workspaces: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
@@ -46,7 +49,7 @@ jobs:
         with:
           path: ${{ env.CONAN_HOME }}
           key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
-      - run: npm ci --foreground-scripts
+      - run: npm ci --forward-scripts
       - name: Static checks
         run: |
           npm run spellcheck
@@ -80,6 +83,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
+        env:
+          npm_config_workspaces: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
@@ -92,13 +98,13 @@ jobs:
           path: packages/parquet-reader/prebuilds
           pattern: prebuilds-*
           merge-multiple: true
-      - run: npm ci
+      - run: npm ci --forward-scripts
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
-        run: npx --no-workspaces semantic-release
+        run: npx semantic-release
       - name: Package
         if: github.ref != 'refs/heads/master'
         uses: lannonbr/vsce-action@master
