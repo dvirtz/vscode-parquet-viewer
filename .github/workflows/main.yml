@@ -40,15 +40,13 @@ jobs:
       - name: Cache .vscode-test
         uses: actions/cache@v4
         with:
-          path: packages/packet-viewer/.vscode-test
+          path: .vscode-test
           key: ${{ matrix.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ matrix.os }}-node-
       - name: Cache .conan
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
+          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.py') }}
       - run: npm ci --forward-scripts
       - name: Static checks
         run: |
