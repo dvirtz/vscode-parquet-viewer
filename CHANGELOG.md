@@ -1,3 +1,29 @@
+## [2.8.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.7.1...v2.8.0) (2024-04-08)
+
+
+### Features
+
+* update documents when settings change ([fee72cd](https://github.com/dvirtz/vscode-parquet-viewer/commit/fee72cdb8d896d67f897d644faea56cf49163b79)), closes [/github.com/dvirtz/vscode-parquet-viewer/issues/105#issuecomment-1984046929](https://github.com/dvirtz//github.com/dvirtz/vscode-parquet-viewer/issues/105/issues/issuecomment-1984046929)
+
+
+### Tests
+
+* avoid timeout when debugging ([2acf438](https://github.com/dvirtz/vscode-parquet-viewer/commit/2acf438b2a6125e84c09859f3c48c21edf01f009))
+
+
+### Build and continuous integration
+
+* avoid always having workspaces=true ([962b2b8](https://github.com/dvirtz/vscode-parquet-viewer/commit/962b2b8e28e6d0495cd3763c7f6595bc593ec1b2))
+* fix caching ([e9edb77](https://github.com/dvirtz/vscode-parquet-viewer/commit/e9edb770fc9084d3ecf7f829cb5cd576c1a765f2))
+* simplify prebuilds by building inside dist ([328247c](https://github.com/dvirtz/vscode-parquet-viewer/commit/328247c2a2f497c4c05c7c11a53d22be63af58a8))
+* update actions to use node 20 ([e0a5252](https://github.com/dvirtz/vscode-parquet-viewer/commit/e0a5252bed09af6138f03843ad9c240ce39b5a80))
+* use GitHub's M1 macOS runner ([147881d](https://github.com/dvirtz/vscode-parquet-viewer/commit/147881dc1f4a7c026b94f8ac4aed123edbc6b4b2))
+
+
+### General maintenance
+
+* add .vscode files ([3eb9d76](https://github.com/dvirtz/vscode-parquet-viewer/commit/3eb9d763798a8fd27e3cf665009988be035702b2))
+
 ## [2.7.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.7.0...v2.7.1) (2024-03-19)
 
 
