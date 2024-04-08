@@ -3,14 +3,14 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "clean",
+      "script": "clean --workspaces",
       "problemMatcher": [],
       "label": "npm: clean",
       "detail": "rimraf dist .vscode-test"
     },
     {
       "type": "npm",
-      "script": "build",
+      "script": "build --workspaces",
       "group": {
         "kind": "build",
         "isDefault": true
