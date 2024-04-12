@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "vscode:prepublish": "tsc --build",
-    "build": "pipenv run cmake-js build",
+    "build": "pipenv run cmake-js build && tsc --build && pkg-prebuilds-verify dist/binding-options.js",
     "rebuild": "pipenv run cmake-js rebuild",
     "build:debug": "npm run rebuild -- -D",
     "preinstall": "pipenv install && tsc --build",
