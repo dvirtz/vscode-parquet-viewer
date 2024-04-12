@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.py') }}
+          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
       - run: npm ci --forward-scripts
       - name: Static checks
         run: |
