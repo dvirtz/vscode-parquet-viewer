@@ -1,3 +1,20 @@
+## [2.8.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.0...v2.8.1) (2024-04-12)
+
+
+### Bug Fixes
+
+* look for prebuilds in the root path ([8b94ae2](https://github.com/dvirtz/vscode-parquet-viewer/commit/8b94ae28abe2263167f24a80339d40fa16acfe7a))
+
+
+### Build and continuous integration
+
+* go back to `conanfile.txt` ([273aaf9](https://github.com/dvirtz/vscode-parquet-viewer/commit/273aaf993dba8cf95e95195532f9b4d661399b7f))
+
+
+### General maintenance
+
+* fix vscode tasks ([6b103f3](https://github.com/dvirtz/vscode-parquet-viewer/commit/6b103f30eb73634060eb1e2e91bdf908c00b7cba))
+
 ## [2.8.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.7.1...v2.8.0) (2024-04-08)
 
 
