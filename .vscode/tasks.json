@@ -3,14 +3,24 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "clean --workspaces",
+      "script": "clean",
+      "options": {
+        "env": {
+          "npm_config_workspaces": "true"
+        }
+      },
       "problemMatcher": [],
       "label": "npm: clean",
       "detail": "rimraf dist .vscode-test"
     },
     {
       "type": "npm",
-      "script": "build --workspaces",
+      "script": "build",
+      "options": {
+        "env": {
+          "npm_config_workspaces": "true"
+        }
+      },
       "group": {
         "kind": "build",
         "isDefault": true
