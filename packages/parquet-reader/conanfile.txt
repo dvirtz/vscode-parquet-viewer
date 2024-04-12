@@ -1,0 +1,15 @@
+[requires]
+arrow/14.0.1#5b75f73a855df81310858017c1396ee8
+fmt/9.1.0#f79808141cb396759a829be09dd5592c
+
+[generators]
+CMakeDeps
+
+[options]
+arrow/*:parquet=True
+arrow/*:with_thrift=True
+arrow/*:with_snappy=True
+arrow/*:with_zstd=True
+arrow/*:with_lz4=True
+arrow/*:with_brotli=True
+arrow/*:with_zlib=True
