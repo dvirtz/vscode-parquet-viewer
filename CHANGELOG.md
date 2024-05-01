@@ -1,3 +1,10 @@
+## [2.8.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.1...v2.8.2) (2024-05-01)
+
+
+### General maintenance
+
+* **deps:** bump idna from 3.4 to 3.7 in /packages/parquet-reader ([2371ddb](https://github.com/dvirtz/vscode-parquet-viewer/commit/2371ddb9d8ea6c351a971bc9e4f7a9e50c9309e8))
+
 ## [2.8.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.0...v2.8.1) (2024-04-12)
 
 
