@@ -1,3 +1,10 @@
+## [2.8.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.2...v2.8.3) (2024-05-06)
+
+
+### General maintenance
+
+* **deps:** bump jinja2 from 3.1.3 to 3.1.4 in /packages/parquet-reader ([d360957](https://github.com/dvirtz/vscode-parquet-viewer/commit/d360957bc8eb78a296619de59fe9eed974405222))
+
 ## [2.8.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.1...v2.8.2) (2024-05-01)
 
 
