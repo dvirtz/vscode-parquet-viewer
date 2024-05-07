@@ -7,9 +7,6 @@
       "test/**/*.ts",
       "package.json"
     ],
-    "exclude": [
-      "**/jest.config.ts"
-    ],
     "compilerOptions": {
         "composite": true,
         "module": "commonjs",

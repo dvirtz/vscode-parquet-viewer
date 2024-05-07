@@ -1,11 +1,10 @@
-import { describe, expect, test, jest } from '@jest/globals';
+import { test } from 'node:test';
+import { strict as assert } from 'node:assert';
 import { ParquetToolsBackend } from "../../src/backends/parquet-tools-backend";
 
-jest.retryTimes(3);
-
-describe("ParquetToolsBackend tests", () => {
-  test("-h works", async function () {
-    const stdout = (await ParquetToolsBackend.spawnParquetTools(['-h']).next()).value;
-    expect(stdout).toContain('parquet-tools cat:');
+void test("ParquetToolsBackend tests", async (context) => {
+  await context.test("-h works", async () => {
+    const stdout = (await ParquetToolsBackend.spawnParquetTools(['-h']).next()).value as string;
+    assert.match(stdout, /parquet-tools cat:/);
   });
 });

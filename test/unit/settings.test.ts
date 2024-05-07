@@ -1,9 +1,10 @@
-import { describe, expect, it } from "@jest/globals";
+import { test } from "node:test";
+import { strict as assert } from 'node:assert';
 import * as meta from '../../package.json';
 import { BackendNames } from "../../src/backends/backend-name";
 
-describe('settings', () => {
-  it ('should have all backend names', () => {
-    expect(meta.contributes.configuration.properties['parquet-viewer.backend'].enum).toEqual(Array.from(BackendNames));
+void test('settings', async (context) => {
+  await context.test('should have all backend names', () => {
+    assert.deepEqual(meta.contributes.configuration.properties['parquet-viewer.backend'].enum, Array.from(BackendNames));
   });
 });
