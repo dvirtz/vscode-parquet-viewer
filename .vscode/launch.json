@@ -17,11 +17,15 @@
       "outFiles": [],
       "preLaunchTask": "npm: build",
       "env": {
-        "DEBUG_MODE": "TRUE"
+        "DEBUG_MODE": "TRUE",
+        "LOG_TO_CONSOLE": "true"
       },
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
         "!**/node_modules/**"
+      ],
+      "skipFiles": [
+        // "<node_internals>/**"
       ]
     },
     {

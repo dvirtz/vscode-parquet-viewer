@@ -89,13 +89,6 @@
     "xtree": "cpp",
     "xutility": "cpp"
   },
-  "debug.javascript.terminalOptions": {
-    "outFiles": [
-      "${workspaceFolder}/**/*.js",
-      "!**/node_modules/**",
-      "${workspaceFolder}/node_modules/cspell/**/*.js"
-    ]
-  },
   "cmake.sourceDirectory": "${workspaceFolder}/src/arrow-parquet-reader",
   "parquet-viewer.logging.level": "debug",
   "parquet-viewer.logging.panel": true,
