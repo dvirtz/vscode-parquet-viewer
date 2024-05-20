@@ -26,7 +26,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
           cache: npm
         env:
           npm_config_workspaces: false
@@ -84,7 +84,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
           cache: npm
         env:
           npm_config_workspaces: false
