@@ -1,43 +1,32 @@
-import * as path from 'path';
-import { runCLI } from 'jest';
 import { runTests } from '@vscode/test-electron';
-import type { Config } from '@jest/types';
-import { test_process } from './test-process';
+import * as path from 'path';
 import * as meta from '../../package.json';
 
 export async function run(): Promise<void> {
-  // jest doesn't seem to provide a way to inject global/dynamic imports.
-  // Basically if we have a `require`, jest assumes that it is a module on disc.
-  // However `vscode` isn't a module in disc, its provided by vscode host environment.
-  // Hack - put vscode namespace into global variable `process`, and re-export as as mock in jest (see __mocks__/vscode.ts).
-  // Using global variables don't work, as jest seems to fiddle with that as well.
-  test_process.__VSCODE = require('vscode');
-
+  const vscode = await import('vscode');
   try {
-    // Run the mocha test
-    const { results } = await runCLI({ runInBand: true } as Config.Argv, [path.join(__dirname, '..', '..', '..', 'test', 'integration')]);
-    for (const suite of results.testResults) {
-      for (const test of suite.testResults) {
-        if (test.status == 'passed') {
-          console.info(`  ● ${test.ancestorTitles} › ${test.title} (${test.status})`);
-        }
-        else {
-          console.error(`in ${suite.testFilePath}:`);
-          console.error(`  ● ${test.ancestorTitles} › ${test.title} (${test.status})`);
-          console.error(test.failureMessages.join('\n'));
-        }
+    if (process.env.TEST_SUBPROCESS) {
+      const { run: runNodeTests } = await import('node:test');
+      const { glob } = await import('glob');
+      const { spec } = await import('node:test/reporters');
+      const { finished } = await import('stream/promises')
+      await finished(runNodeTests({
+        files: await glob(`${__dirname}/*.test.[jt]s`),
+        concurrency: false,
+        inspectPort: process.debugPort,
+      })
+        .compose(new spec)
+        .pipe(process.stdout));
+    } else {
+      const { globIterate } = await import('glob');
+      for await (const test of globIterate('*.test.[jt]s', { cwd: __dirname })) {
+        const { runTest } = await import(`./${test}`);
+        await runTest();
       }
-      if (suite.failureMessage) {
-        console.error(`in ${suite.testFilePath}:`);
-        console.error(suite.failureMessage);
-      }
-    }
-    if (!results.success) {
-      throw new Error(`${results.numFailedTestSuites} tests failed.`);
+      process.emit('beforeExit', Number(process.exitCode));
     }
   } finally {
-    await test_process.__VSCODE?.commands.executeCommand("workbench.action.closeAllEditors");
-    delete test_process.__VSCODE;
+    await vscode.commands.executeCommand("workbench.action.closeAllEditors");
   }
 }
 
@@ -50,10 +39,10 @@ async function main() {
       extensionTestsPath: __filename,
       launchArgs: [
         path.resolve(projectPath, './test/workspace'),
-				"--disable-extensions"
+        "--disable-extensions"
       ],
       version: meta.engines.vscode.replace(/^(\^|~)/, ''),
-      platform: process.platform == 'win32' ? 'win32-x64-archive' : undefined
+      platform: process.platform == 'win32' ? 'win32-x64-archive' : undefined,
     });
   } catch (err) {
     console.error(err);

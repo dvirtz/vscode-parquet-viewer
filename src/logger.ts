@@ -36,6 +36,6 @@ export function initLogger(context?: ExtensionContext): void {
     level: logLevel(),
     logPath: logFolder() || context?.logUri.fsPath,
     logOutputChannel: logPanel() ? getPanel(meta.displayName) : undefined,
-    logConsole: context == undefined
+    logConsole: process.env.LOG_TO_CONSOLE === 'true',
   }));
 }
