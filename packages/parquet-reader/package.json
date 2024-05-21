@@ -11,7 +11,7 @@
     "install": "pkg-prebuilds-verify dist/binding-options.js || npm run build",
     "clean": "rimraf dist prebuilds",
     "exec-from": "ts-node scripts/exec-from.ts",
-    "update-lockfile": "pipenv run conan lock create ."
+    "update-lockfile": "pipenv install && pipenv run conan profile detect && pipenv run conan lock create ."
   },
   "dependencies": {
     "node-addon-api": "^5.0.0",

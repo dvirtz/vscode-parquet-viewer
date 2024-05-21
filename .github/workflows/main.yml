@@ -12,7 +12,7 @@ jobs:
         os:
           - ubuntu-20.04
           - windows-2019
-          - macos-11
+          - macos-12
           - macos-14
     env:
       CONAN_HOME: "${{ github.workspace }}/conan-cache"
@@ -26,7 +26,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
           cache: npm
         env:
           npm_config_workspaces: false
@@ -55,8 +55,12 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu-') }}
       - run: xvfb-run -a npm test
         if: ${{ startsWith(matrix.os, 'ubuntu-') }}
+        env:
+          LOG_TO_CONSOLE: ${{ secrets.ACTIONS_STEP_DEBUG }}
       - run: npm test
         if: ${{ !startsWith(matrix.os, 'ubuntu-') }}
+        env:
+          LOG_TO_CONSOLE: ${{ secrets.ACTIONS_STEP_DEBUG }}
       - name: Upload prebuilds
         if: '!env.ACT'
         uses: actions/upload-artifact@v4
@@ -80,7 +84,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
           cache: npm
         env:
           npm_config_workspaces: false
@@ -105,9 +109,7 @@ jobs:
         run: npx semantic-release
       - name: Package
         if: github.ref != 'refs/heads/master'
-        uses: lannonbr/vsce-action@master
-        with:
-          args: "package"
+        run: npx vsce package
       - name: Upload
         if: github.ref != 'refs/heads/master' && !env.ACT
         uses: actions/upload-artifact@v4

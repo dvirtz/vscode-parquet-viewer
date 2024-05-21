@@ -1,6 +1,6 @@
 name: Update lockfile
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       os:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   update-lockfile:
-    runs-on: ${{ env.ACT && 'ubuntu-20.04' || github.event.inputs.os }}
+    runs-on: ${{ github.event.inputs.os || 'ubuntu-20.04' }}
     env:
       CONAN_HOME: "${{ github.workspace }}/conan-cache"
     permissions:
@@ -29,7 +29,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
           cache: npm
         env:
           npm_config_workspaces: false
@@ -40,17 +40,12 @@ jobs:
       - name: Install pipenv
         run: |
           curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-      - name: Cache .vscode-test
-        uses: actions/cache@v4
-        with:
-          path: .vscode-test
-          key: ${{ matrix.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Cache .conan
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
           key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
-      - run: npm ci --forward-scripts
+      - run: npm ci --ignore-scripts
       - run: npm run update-lockfile --workspace parquet-reader
       - name: Commit files
         run: |
@@ -64,4 +59,3 @@ jobs:
           branch: ${{ github.ref }}
 
 
-  

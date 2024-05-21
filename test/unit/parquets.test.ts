@@ -1,13 +1,14 @@
 import toArray from '@async-generators/to-array';
-import { describe, expect, test } from '@jest/globals';
+import { test } from 'node:test';
+import { strict as assert } from 'node:assert';
 import * as path from 'path';
 import { ParquetsBackend } from "../../src/backends/parquets-backend";
 import { workspace } from './workspace';
 
-describe("ParquetsBackend tests", () => {
+void test("ParquetsBackend tests", async (context) => {
   const backend = new ParquetsBackend();
 
-  test("throws on invalid parquet version", async function () {
-    await expect(toArray(backend.generateRows(path.join(workspace, 'version_2.parquet')))).rejects.toThrow('invalid parquet version');
+  await context.test("throws on invalid parquet version", async () => {
+    await assert.rejects(toArray(backend.generateRows(path.join(workspace, 'version_2.parquet'))), /invalid parquet version/);
   });
 });

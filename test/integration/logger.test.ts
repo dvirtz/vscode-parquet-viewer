@@ -1,4 +1,5 @@
-import {describe, expect, test, afterEach} from '@jest/globals';
+import { test } from 'node:test';
+import { strict as assert } from 'node:assert';
 import { logLevel, logFolder, setLogFolder, setLogLevel } from '../../src/settings';
 import { getUri } from './utils';
 import { promises } from 'fs';
@@ -9,32 +10,34 @@ import * as vscode from 'vscode';
 import { initLogger } from '../../src/logger';
 import * as tempy from 'tempy';
 
-describe('Logger tests', function () {
-  afterEach(async function () {
-    await setLogFolder(undefined);
-    await setLogLevel('debug');
+export async function runTest() {
+  await test('Logger tests', async (context) => {
+    context.afterEach(async () => {
+      await setLogFolder(undefined);
+      await setLogLevel('debug');
+    });
+
+    await context.test('log level', async () => {
+      assert.equal(logLevel(), 'debug');
+      await setLogLevel('fatal');
+      assert.equal(logLevel(), 'fatal');
+    });
+
+    await context.test('log file', async () => {
+      vscode.workspace.onDidChangeConfiguration(() => initLogger());
+
+      const folder = tempy.directory();
+      const logPath = path.join(folder, 'parquet-viewer.log');
+
+      await setLogFolder(folder);
+      assert.equal(logFolder(), folder);
+
+      const parquet = await getUri('small.parquet');
+      const contents = await toArray(new ParquetsBackend().generateRows(parquet.fsPath));
+      const logContents = await promises.readFile(logPath, 'utf-8');
+
+      assert.equal(contents.length, 2);
+      assert.match(logContents, /\{\s+"label": "parquet-viewer",\s+"level": "info",\s+"message": "opening .*small.parquet",\s+"time": "\S+"\s+\}/);
+    });
   });
-
-  test('log level', async function () {
-    expect(logLevel()).toBe('debug');
-    await setLogLevel('fatal');
-    expect(logLevel()).toBe('fatal');
-  });
-
-  test('log file', async function () {
-    vscode.workspace.onDidChangeConfiguration(() => initLogger());
-
-    const folder = tempy.directory();
-    const logPath = path.join(folder, 'parquet-viewer.log');
-
-    await setLogFolder(folder);
-    expect(logFolder()).toBe(folder);
-
-    const parquet = await getUri('small.parquet');
-    const contents = await toArray(new ParquetsBackend().generateRows(parquet.fsPath));
-    const logContents = await promises.readFile(logPath, 'utf-8');
-
-    expect(contents).toHaveLength(2);
-    expect(logContents).toMatch(/\{\s+"label": "parquet-viewer",\s+"level": "info",\s+"message": "opening .*small.parquet",\s+"time": "\S+"\s+\}/);
-  });
-});
+}

@@ -1,3 +1,22 @@
+## [2.8.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.3...v2.8.4) (2024-05-21)
+
+
+### Tests
+
+* use node:test for integration tests ([9eb4674](https://github.com/dvirtz/vscode-parquet-viewer/commit/9eb4674987d16fc357a512f73f4dba44c3a20ba1))
+* use node:test for running unit tests ([bcdbce2](https://github.com/dvirtz/vscode-parquet-viewer/commit/bcdbce22c2db647261dfc6e0d62cc4ab26d5f360))
+
+
+### Build and continuous integration
+
+* add a job to update conan lock file ([4300e49](https://github.com/dvirtz/vscode-parquet-viewer/commit/4300e496dc0f9547733fe2df3b6b64906806ea9f))
+* fix update-lockfile job ([f289d14](https://github.com/dvirtz/vscode-parquet-viewer/commit/f289d14f03c3098900e13c104031b7d2e4ad7f75))
+* replace action with command line ([adc707e](https://github.com/dvirtz/vscode-parquet-viewer/commit/adc707eee289395b9f2a1c9f95b89967085d0840))
+* update conan lockfile ([d5d840e](https://github.com/dvirtz/vscode-parquet-viewer/commit/d5d840ebb095474fc15063ab48c6ce4c09a6ba78))
+* upgrade macos build machine ([aa32190](https://github.com/dvirtz/vscode-parquet-viewer/commit/aa321903848b6fc6185ba577b81d3b318f7b1905))
+* upgrade to node 21 ([56fbd9d](https://github.com/dvirtz/vscode-parquet-viewer/commit/56fbd9db79b72df990deec44fcc3e34b8b48d3a8))
+* use conan lock file ([c1f0205](https://github.com/dvirtz/vscode-parquet-viewer/commit/c1f02055b7ec6267d1cdba4d404327a0de5a696f))
+
 ## [2.8.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.2...v2.8.3) (2024-05-06)
 
 
