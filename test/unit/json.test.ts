@@ -3,23 +3,13 @@ import { test } from 'node:test';
 import { strict as assert } from 'node:assert';
 import { createReadStream } from 'fs';
 import os from 'os';
-import * as path from 'path';
 import { createInterface } from 'readline';
 import { BackendNames } from '../../src/backends/backend-name';
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
-import { workspace } from './workspace';
-import { JsonFormatter } from '../../src/json-formatter';
+import * as workspace from './workspace';
+import { JsonFormatter } from '../../src/formatters/json-formatter';
 import { jsonAsArrayMock, jsonSpaceMock } from './mocks/vscode';
-
-// https://stackoverflow.com/a/48293566
-async function* zip<T extends AsyncIterable<unknown>[]>(...iterables: T) {
-  const iterators = iterables.map(i => i[Symbol.asyncIterator]())
-  while (true) {
-    const results = await Promise.all(iterators.map(async iter => await iter.next()));
-    if (results.some(res => res.done)) break;
-    yield results.map(res => res.value);
-  }
-}
+import { zip } from './zip';
 
 const formatter = new JsonFormatter();
 
@@ -62,8 +52,8 @@ void test("JSON tests", async (context) => {
 
       for (const [input, expectedFile] of testFiles[backendName]) {
         await context.test(`Converts ${input} parquet to JSON`, async () => {
-          for await (const [actual, expected] of zip(formatter.format(backend.generateRows(path.join(workspace, `${input}.parquet`))),
-            createInterface({ input: createReadStream(path.join(workspace, `${expectedFile}.json`)) }))) {
+          for await (const [actual, expected] of zip(formatter.format(backend.generateRows(workspace.parquet(input))),
+            createInterface({ input: createReadStream(workspace.json(expectedFile)) }))) {
             assert.equal(actual, expected);
           }
         });
@@ -77,8 +67,8 @@ void test("JSON tests", async (context) => {
     await context.test(`JSON space ${space}`, async () => {
       jsonSpaceMock.mock.mockImplementation(() => space);
 
-      for await (const [actual, expected] of zip(formatter.format(backend.generateRows(path.join(workspace, `small.parquet`))),
-        createInterface({ input: createReadStream(path.join(workspace, `small.json`)) }))) {
+      for await (const [actual, expected] of zip(formatter.format(backend.generateRows(workspace.parquet('small'))),
+        createInterface({ input: createReadStream(workspace.json('small')) }))) {
         assert.equal(actual, JSON.stringify(JSON.parse(expected), null, space));
       }
 
@@ -90,8 +80,8 @@ void test("JSON tests", async (context) => {
   await context.test('jsonAsArray', async () => {
     jsonAsArrayMock.mock.mockImplementation(() => true);
 
-    const json = await toArray(formatter.format(backend.generateRows(path.join(workspace, `large.parquet`))));
-    const records = await toArray(createInterface({ input: createReadStream(path.join(workspace, `large.arrow.json`)) }));
+    const json = await toArray(formatter.format(backend.generateRows(workspace.parquet('large'))));
+    const records = await toArray(createInterface({ input: createReadStream(workspace.json('large.arrow')) }));
     assert.equal(json.join(''), JSON.stringify(records.map(str => JSON.parse(str))));
 
     jsonAsArrayMock.mock.resetCalls();

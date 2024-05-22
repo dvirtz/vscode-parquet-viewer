@@ -2,10 +2,9 @@ import toArray from '@async-generators/to-array';
 import { test } from 'node:test';
 import { strict as assert } from 'node:assert';
 import os from 'os';
-import * as path from 'path';
 import { BackendNames } from '../../src/backends/backend-name';
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
-import { workspace } from './workspace';
+import * as workspace from './workspace';
 
 // parquet-tools doesn't work on Apple M1
 for (const backendName of BackendNames.filter(backend => os.type() != 'Darwin' || os.arch() == 'x64' || backend != 'parquet-tools')) {
@@ -40,7 +39,7 @@ for (const backendName of BackendNames.filter(backend => os.type() != 'Darwin' |
         })(),
         onCancellationRequested: context.mock.fn(_ => ({dispose: () => undefined}))
       };
-      assert.equal((await toArray(backend.generateRows(path.join(workspace, `small.parquet`), token))).length, 1);
+      assert.equal((await toArray(backend.generateRows(workspace.parquet('small'), token))).length, 1);
       assert.equal(token.isCancellationRequestedMock.mock.callCount(), 2);
     });
   });

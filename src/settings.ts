@@ -1,7 +1,10 @@
 import * as vscode from 'vscode';
 import { LogLevel } from '@vscode-logging/logger';
 import { BackendName } from './backends/backend-name';
-import { name } from '../package.json'
+import { name, contributes } from '../package.json';
+import { FormatterName } from './formatters/formatter-name';
+
+const propertiesMeta = contributes.configuration.properties;
 
 function settings() {
   return vscode.workspace.getConfiguration(name);
@@ -11,16 +14,8 @@ export function parquetTools(): string | undefined {
   return settings().get('parquetToolsPath');
 }
 
-export async function setParquetTools(parquetTools: string | undefined): Promise<void> {
-  await settings().update('parquetToolsPath', parquetTools);
-}
-
 export function logPanel(): boolean {
-  return settings().get('logging.panel', settings().get('logPanel', false));
-}
-
-export async function setLogPanel(logPanel: boolean | undefined): Promise<void> {
-  await settings().update('logging.panel', logPanel);
+  return settings().get('logging.panel', settings().get('logPanel', propertiesMeta['parquet-viewer.logging.panel']['default']));
 }
 
 export function logFolder(): string {
@@ -32,7 +27,7 @@ export async function setLogFolder(logFolder: string | undefined): Promise<void>
 }
 
 export function logLevel(): LogLevel {
-  return settings().get('logging.level', settings().get('logLevel', 'info'));
+  return settings().get('logging.level', settings().get('logLevel', propertiesMeta['parquet-viewer.logging.level']['default'] as LogLevel));
 }
 
 export async function setLogLevel(logLevel: LogLevel | undefined): Promise<void> {
@@ -48,11 +43,19 @@ export function jsonSpace(): number | string | undefined {
 }
 
 export function backend(): BackendName {
-  return useParquetTools() ? 'parquet-tools' : settings().get('backend', 'parquets');
+  return useParquetTools() ? 'parquet-tools' : settings().get('backend', propertiesMeta['parquet-viewer.backend']['default'] as BackendName);
 }
 
 export function jsonAsArray(): boolean {
-  return settings().get('json.asArray', false);
+  return settings().get('json.asArray', propertiesMeta['parquet-viewer.json.asArray']['default']);
+}
+
+export function format(): FormatterName {
+  return settings().get('format', propertiesMeta['parquet-viewer.format']['default'] as FormatterName);
+}
+
+export function csvSeparator(): string {
+  return settings().get('csv.separator', propertiesMeta['parquet-viewer.csv.separator']['default']);
 }
 
 function settingsChanged(e: vscode.ConfigurationChangeEvent, sections: string[]): boolean {
@@ -64,5 +67,5 @@ export function affectsLogging(e: vscode.ConfigurationChangeEvent): boolean {
 }
 
 export function affectsDocument(e: vscode.ConfigurationChangeEvent): boolean {
-  return settingsChanged(e, ['backend', 'useParquetTools', 'json.space', 'json.asArray']);
+  return settingsChanged(e, ['backend', 'useParquetTools', 'json.space', 'json.asArray', 'csv.separator']);
 }

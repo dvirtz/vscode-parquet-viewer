@@ -78,7 +78,8 @@
         },
         "parquet-viewer.logging.panel": {
           "description": "Write diagnostic logs to an output panel",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false
         },
         "parquet-viewer.logging.folder": {
           "description": "Write diagnostic logs under the given directory",
@@ -136,6 +137,24 @@
           "markdownDescription": "Format output JSON as one big array",
           "type": "boolean",
           "default": false
+        },
+        "parquet-viewer.format": {
+          "markdownDescription": "Textual representation format",
+          "type": "string",
+          "enum": [
+            "json",
+            "csv"
+          ],
+          "enumItemLabels": [
+            "JSON",
+            "CSV"
+          ],
+          "default": "json"
+        },
+        "parquet-viewer.csv.separator": {
+          "markdownDescription": "CSV field separator",
+          "type": "string",
+          "default": ", "
         }
       }
     },

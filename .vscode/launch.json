@@ -18,14 +18,15 @@
       "preLaunchTask": "npm: build",
       "env": {
         "DEBUG_MODE": "TRUE",
-        "LOG_TO_CONSOLE": "true"
+        "LOG_TO_CONSOLE": "true",
+        "TEST_GLOB_PATTERN": "extension.test.js"
       },
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
         "!**/node_modules/**"
       ],
       "skipFiles": [
-        // "<node_internals>/**"
+        "<node_internals>/**"
       ]
     },
     {

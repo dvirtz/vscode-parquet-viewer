@@ -4,6 +4,7 @@ import * as meta from '../../package.json';
 
 export async function run(): Promise<void> {
   const vscode = await import('vscode');
+  const pattern = process.env.TEST_GLOB_PATTERN || '*.test.[jt]s';
   try {
     if (process.env.TEST_SUBPROCESS) {
       const { run: runNodeTests } = await import('node:test');
@@ -11,7 +12,7 @@ export async function run(): Promise<void> {
       const { spec } = await import('node:test/reporters');
       const { finished } = await import('stream/promises')
       await finished(runNodeTests({
-        files: await glob(`${__dirname}/*.test.[jt]s`),
+        files: await glob(pattern, { cwd: __dirname }),
         concurrency: false,
         inspectPort: process.debugPort,
       })
@@ -19,7 +20,7 @@ export async function run(): Promise<void> {
         .pipe(process.stdout));
     } else {
       const { globIterate } = await import('glob');
-      for await (const test of globIterate('*.test.[jt]s', { cwd: __dirname })) {
+      for await (const test of globIterate(pattern, { cwd: __dirname })) {
         const { runTest } = await import(`./${test}`);
         await runTest();
       }

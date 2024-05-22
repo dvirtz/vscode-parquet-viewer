@@ -61,7 +61,7 @@ export async function runTest() {
       expectedContent: string | RegExp,
       context: TestContext): Promise<Mock<(document: vscode.TextDocument) => void>> {
       const listener = context.mock.fn((document: vscode.TextDocument) => {
-        assert.equal(document.fileName, `${file.fsPath}.as.json`);
+        assert.equal(document.fileName, `${file.fsPath}.as.${settings.format()}`);
         const actual = document.getText();
         const message = [`${document.fileName} content mismatch`, 'expected', expectedContent, 'actual', actual].join('\n');
         if (typeof expectedContent === 'string') {
