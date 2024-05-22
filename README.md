@@ -42,6 +42,12 @@ This is a legacy Java backend, using [parquet-tools](https://mvnrepository.com/a
 
 The textual output can be either JSON or CSV based on the [parquet-viewer.format](#settings) setting.
 
+## A richer view
+
+After getting the textual representation, it's possible to use other extensions like [JSON Table Viewer](https://marketplace.visualstudio.com/items?itemName=lengmo.json-table-viewer) or [Edit csv](https://marketplace.visualstudio.com/items?itemName=janisdd.vscode-edit-csv) to get a richer view of the data (e.g. in a table).
+
+![csv-as-table](images/csv-table.gif)
+
 ## Settings
 
 ![settings](images/settings.png)
