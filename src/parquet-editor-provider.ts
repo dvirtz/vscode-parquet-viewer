@@ -1,9 +1,9 @@
 import * as vscode from "vscode";
-import * as path from 'path';
-import { getNonce } from './util';
 import { Disposable } from "./dispose";
-import { ParquetTextDocumentContentProvider } from './parquet-document-provider';
 import { getLogger } from './logger';
+import { ParquetTextDocumentContentProvider } from './parquet-document-provider';
+import { format } from "./settings";
+import { getNonce } from './util';
 class CustomParquetDocument extends Disposable implements vscode.CustomDocument {
   uri: vscode.Uri;
   path: string;
@@ -11,13 +11,13 @@ class CustomParquetDocument extends Disposable implements vscode.CustomDocument 
   constructor(uri: vscode.Uri) {
     super();
     this.uri = uri;
-    this.path = uri.fsPath;
+    this.path = `${uri.fsPath}.as.${format()}`;
   }
 
   public async open() {
-    getLogger().info(`opening ${this.path}.as.json`);
+    getLogger().info(`opening ${this.path}`);
     await vscode.window.showTextDocument(
-      this.uri.with({ scheme: 'parquet', path: this.path + '.as.json' })
+      this.uri.with({ scheme: 'parquet', path: `${this.path}` })
     );
   }
 }
@@ -80,9 +80,8 @@ export class ParquetEditorProvider implements vscode.CustomReadonlyEditorProvide
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src ${webview.cspSource} 'nonce-${nonce}'; img-src ${webview.cspSource}; style-src 'unsafe-inline' ${webview.cspSource};"> -->
     </head>
   <body>
-    <p>Click <a href="${path.basename(document.uri.fsPath)}.as.json" id="here">here</a> to open JSON</p>
+    <p>Click <a href="${document.path}" id="here">here</a> to view contents</p>
     <script nonce="${nonce}">
-      //# sourceURL=to-json.js
       const vscode = acquireVsCodeApi();
       document.getElementById('here').addEventListener('click', _ => {
         vscode.postMessage('clicked');

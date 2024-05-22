@@ -2,15 +2,15 @@
 
 # parquet-viewer
 
-Views [Apache Parquet](https://parquet.apache.org/) files as JSON.
+Views [Apache Parquet](https://parquet.apache.org/) files as text (JSON or CSV).
 
 ## Features
 
-When opening a Parquet file, a JSON presentation of the file will open automatically:
+When opening a Parquet file, a textual presentation of the file will open automatically:
 
 ![automatic](images/automatic.gif)
 
-After closing the JSON view, it is possible to reopen it by clicking on the link in the parquet view.
+After closing the textual view, it is possible to reopen it by clicking on the link in the parquet view.
 
 ![command](images/reopen.gif)
 
@@ -38,21 +38,27 @@ It only supports parquet version 1.0.0 with snappy compression.
 
 This is a legacy Java backend, using [parquet-tools](https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools). To use that, you should set `parquet-viewer.backend` to `parquet-tools` and `paruqet-tools` should be in your `PATH`, or pointed by the `parquet-viewer.parquetToolsPath` setting.
 
-![settings](images/settings.png)
+## Format
+
+The textual output can be either JSON or CSV based on the [parquet-viewer.format](#settings) setting.
 
 ## Settings
+
+![settings](images/settings.png)
 
 The following setting options are available:
 
 |name|default|description|
 |----|-------|-----------|
 |`parquet-viewer.backend`|`parquets`|Which backend to use for reading the files|
+|`parquet-viewer.format`|`json`|textual output format|
 |`parquet-viewer.logging.panel`|`false`|Whether to write diagnostic logs to an output panel|
 |`parquet-viewer.logging.folder`|empty|Write diagnostic logs under the given directory|
 |`parquet-viewer.logging.level`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
 |`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
 |`parquet-viewer.json.space`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details|
-|`parquet-viewer.json.asArray`|`false`|Wether to format output JSON as one big array|
+|`parquet-viewer.json.asArray`|`false`|Whether to format output JSON as one big array|
+|`parquet-viewer.csv.separator`|`', '`|CSV separator|
 
 ## Notes
 

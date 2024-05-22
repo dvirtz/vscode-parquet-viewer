@@ -4,7 +4,7 @@ import * as os from 'os';
 import { getLogger } from './logger';
 import { createParquetBackend } from './backends/parquet-backend-factory';
 import { backend, affectsDocument } from './settings';
-import { createFormatter } from './formatter-factory';
+import { createFormatter } from './formatters/formatter-factory';
 import assert from 'assert';
 
 export default class ParquetDocument implements vscode.Disposable {
@@ -22,7 +22,7 @@ export default class ParquetDocument implements vscode.Disposable {
   private constructor(uri: vscode.Uri, emitter: vscode.EventEmitter<vscode.Uri>) {
     this._uri = uri;
     this._emitter = emitter;
-    this._parquetPath = this._uri.fsPath.replace(/\.as\.json$/, '');
+    this._parquetPath = this._uri.fsPath.replace(/\.as\.\w+$/, '');
     const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(this._parquetPath, "*"));
     this._disposable = vscode.Disposable.from(watcher,
       watcher.onDidChange(this.update.bind(this)),

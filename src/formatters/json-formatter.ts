@@ -1,5 +1,5 @@
 import { Formatter } from "./formatter";
-import { jsonSpace, jsonAsArray } from './settings';
+import { jsonSpace, jsonAsArray } from '../settings';
 
 export class JsonFormatter extends Formatter {
   async* format(lines: AsyncGenerator<object>): AsyncGenerator<string> {
