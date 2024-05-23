@@ -1,3 +1,15 @@
+## [2.9.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.4...v2.9.0) (2024-05-23)
+
+
+### Features
+
+* add CSV output option ([8b8b667](https://github.com/dvirtz/vscode-parquet-viewer/commit/8b8b6679d09389c746650bc3ee04d6445e5ff70a)), closes [#75](https://github.com/dvirtz/vscode-parquet-viewer/issues/75)
+
+
+### Documentation
+
+* add info about getting a richer view ([3dc4f62](https://github.com/dvirtz/vscode-parquet-viewer/commit/3dc4f6211f5b548fe78bdc29bcb2eb5f03e52dd0))
+
 ## [2.8.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.3...v2.8.4) (2024-05-21)
 
 
