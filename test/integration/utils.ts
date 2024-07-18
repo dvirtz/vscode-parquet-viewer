@@ -4,7 +4,7 @@ import * as meta from '../../package.json';
 
 export async function getUri(fileName: string): Promise<Uri> {
   const testFiles = await workspace.findFiles(`**/${fileName}`);
-  assert.equal(testFiles.length, 1);
+  assert.equal(testFiles.length, 1, `Expected to find exactly one file named ${fileName}`);
   return testFiles[0];
 }
 

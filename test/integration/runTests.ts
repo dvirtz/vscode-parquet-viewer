@@ -12,7 +12,7 @@ export async function run(): Promise<void> {
       const { spec } = await import('node:test/reporters');
       const { finished } = await import('stream/promises')
       await finished(runNodeTests({
-        files: await glob(pattern, { cwd: __dirname }),
+        files: await glob(pattern, { cwd: __dirname, absolute: true }),
         concurrency: false,
         inspectPort: process.debugPort,
       })

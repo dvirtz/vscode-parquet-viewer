@@ -1,10 +1,10 @@
+import { mock, Mock } from 'node:test';
 import * as path from 'path';
 import { root as workspacePath } from '../workspace';
-import { mock, Mock } from 'node:test';
 
 export const jsonSpaceMock: Mock<() => unknown> = mock.fn();
 export const jsonAsArrayMock: Mock<() => unknown> = mock.fn();
-export const csvSeparatorMock = mock.fn();
+export const csvSeparatorMock: Mock<() => unknown> = mock.fn();
 
 export const workspace = {
   getConfiguration: () => ({

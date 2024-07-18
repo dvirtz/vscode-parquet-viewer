@@ -1,47 +1,39 @@
-import { Formatter } from "./formatter";
-import { jsonSpace, jsonAsArray } from '../settings';
+import { Transform, TransformCallback } from 'node:stream';
+import { jsonAsArray, jsonSpace } from '../settings';
 
-export class JsonFormatter extends Formatter {
-  async* format(lines: AsyncGenerator<object>): AsyncGenerator<string> {
-    if (jsonAsArray()) {
-      yield* this.arrayLines(lines);
-    } else {
-      yield* this.generateRows(lines);
+export class JsonFormatter extends Transform {
+  private asArray = jsonAsArray();
+  private last: string | undefined;
+
+  constructor() {
+    super({
+      objectMode: true
+    });
+    if (this.asArray) {
+      this.push('[');
     }
   }
 
-  private async *arrayLines(lines: AsyncGenerator<object>) {
-    yield `[`;
-    const rows = this.generateRows(lines);
-    let current = await rows.next();
-    if (!current.done) {
-      let next = await rows.next();
-      while (!next.done) {
-        if (next.value) {
-          yield `${current.value},`;
-        }
-        current = next;
-        next = await rows.next();
-      }
+  _transform(chunk: object, _encoding: BufferEncoding, callback: TransformCallback): void {
+    if (this.last) {
+      this.push(`${this.last}${this.asArray ? ',' : ''}`);
     }
-    if (current.value) {
-      yield current.value;
-    }
-    yield `]`;
+    this.last = JSON.stringify(chunk, (key, value) => {
+      return typeof value === 'bigint'
+        ? this.bigIntToJson(value)
+        : value; // return everything else unchanged
+    }, jsonSpace());
+    callback();
   }
 
-  format_error(message: string): string {
-    return JSON.stringify({ error: message });
-  }
-
-  private async* generateRows(lines: AsyncGenerator<object>) {
-    for await (const line of lines) {
-      yield JSON.stringify(line, (key, value) => {
-        return typeof value === 'bigint'
-          ? this.bigIntToJson(value)
-          : value; // return everything else unchanged
-      }, jsonSpace());
+  _flush(callback: TransformCallback): void {
+    if (this.last) {
+      this.push(this.last);
     }
+    if (this.asArray) {
+      this.push(']');
+    }
+    callback();
   }
 
   private bigIntToJson(value: bigint) {

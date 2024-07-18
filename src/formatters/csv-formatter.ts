@@ -1,27 +1,31 @@
+import { Transform } from 'node:stream';
+import { TransformCallback } from 'stream';
 import { csvSeparator } from '../settings';
-import { Formatter } from "./formatter";
 
-export class CsvFormatter implements Formatter {
-  async* format(lines: AsyncGenerator<object>): AsyncGenerator<string> {
-    const first = await lines.next();
-    if (first.value) {
-      yield this.generateHeader(first.value);
-      yield this.generateRow(first.value);
-    }
-    for await (const line of lines) {
-      yield this.generateRow(line);
-    }
+export class CsvFormatter extends Transform {
+  private first = true;
+  private separator = csvSeparator();
+
+  constructor() {
+    super({
+      objectMode: true
+    });
   }
 
-  format_error(message: string): string {
-    return message;
+  _transform(chunk: object, _encoding: BufferEncoding, callback: TransformCallback): void {
+    if (this.first) {
+      this.first = false;
+      this.push(this.generateHeader(chunk));
+    }
+    this.push(this.generateRow(chunk));
+    callback();
   }
 
   private generateHeader(line: object) {
-    return Object.keys(line).join(csvSeparator());
+    return Object.keys(line).join(this.separator);
   }
 
   private generateRow(line: object) {
-    return Object.values(line).join(csvSeparator());
+    return Object.values(line).join(this.separator);
   }
 }

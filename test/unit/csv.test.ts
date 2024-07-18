@@ -1,35 +1,35 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import assert from 'node:assert';
 import { createReadStream } from 'node:fs';
 import os from 'node:os';
 import { createInterface } from 'node:readline/promises';
-import { test } from "node:test";
+import { describe, test } from "node:test";
 
-import { BackendNames } from "../../src/backends/backend-name";
+import { BackendName, BackendNames } from "../../src/backends/backend-name";
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
 import { CsvFormatter } from "../../src/formatters/csv-formatter";
 
+import { csvSeparatorMock } from './mocks/vscode';
 import * as workspace from './workspace';
 import { zip } from './zip';
-import { csvSeparatorMock } from './mocks/vscode';
 
+describe("CSV tests", () => {
+  async function formattedParquet(backend: BackendName, filename: string) {
+    return (await createParquetBackend(backend, workspace.parquet(filename))).compose(new CsvFormatter());
+  }
 
-const formatter = new CsvFormatter();
-
-
-void test("CSV tests", async (context) => {
-  for (const backendName of BackendNames.filter(backend => os.type() != 'Darwin' || os.arch() == 'x64' || backend != 'parquet-tools')) {
-    await context.test(`${backendName} backend`, async (context) => {
-      const backend = createParquetBackend(backendName);
+  for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || os.arch() == 'x64' || backend != 'parquet-tools')) {
+    test(`${backend} backend`, async (context) => {
 
       const testFiles = {
         'parquet-tools': [
-            ['small', 'small'],
-            ['large', 'large'],
-            ['version_2', 'version_2']
+          ['small', 'small'],
+          ['large', 'large'],
+          ['version_2', 'version_2']
         ],
         'parquets': [
-            ['small', 'small'],
-            ['large', 'large'],
+          ['small', 'small'],
+          ['large', 'large'],
         ],
         'arrow': [
           ['small', 'small'],
@@ -42,19 +42,19 @@ void test("CSV tests", async (context) => {
           ['polars', 'polars'],
         ],
         'parquet-wasm': [
-            ['small', 'small'],
-            ['large', 'large.arrow'],
-            ['version_2', 'version_2'],
-            ['zstd', 'small'],
-            ['gzip', 'small'],
-            ['brotli', 'small'],
-            ['polars', 'polars'],
+          ['small', 'small'],
+          ['large', 'large.arrow'],
+          ['version_2', 'version_2'],
+          ['zstd', 'small'],
+          ['gzip', 'small'],
+          ['brotli', 'small'],
+          ['polars', 'polars'],
         ]
       };
 
-      for (const [input, expectedFile] of testFiles[backendName]) {
+      for (const [input, expectedFile] of testFiles[backend]) {
         await context.test(`Converts ${input} parquet to CSV`, async () => {
-          for await (const [actual, expected] of zip(formatter.format(backend.generateRows(workspace.parquet(input))),
+          for await (const [actual, expected] of zip(await formattedParquet(backend, input),
             createInterface({ input: createReadStream(workspace.csv(expectedFile)) }))) {
             assert.equal(actual, expected);
           }
@@ -62,17 +62,15 @@ void test("CSV tests", async (context) => {
       }
     });
 
-    const backend = createParquetBackend('arrow');
-
     for (const separator of ['\t', ';']) {
-      await context.test(`CSV separator ${separator}`, async (context) => {
+      test(`CSV separator ${separator}`, async (context) => {
         context.after(() => {
           csvSeparatorMock.mock.restore();
         });
 
         csvSeparatorMock.mock.mockImplementation(() => separator);
 
-        for await (const [actual, expected] of zip(formatter.format(backend.generateRows(workspace.parquet('small'))),
+        for await (const [actual, expected] of zip(await formattedParquet('arrow', 'small'),
           createInterface({ input: createReadStream(workspace.csv('small')) }))) {
           assert.equal(actual, (expected as string).replaceAll(', ', separator));
         }

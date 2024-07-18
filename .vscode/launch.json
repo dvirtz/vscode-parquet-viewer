@@ -5,6 +5,24 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Unit test",
+      "args": "./test/unit/backend.test.ts",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "runtimeArgs": [
+        "--import",
+        "tsx",
+        "--import",
+        "./test/unit/automocks.ts",
+        "--test-name-pattern",
+        "parquet-tools backend tests supports cancellation",
+        "--test"
+      ]
+    },
+    {
       "name": "Extension Tests",
       "type": "extensionHost",
       "request": "launch",
@@ -19,14 +37,15 @@
       "env": {
         "DEBUG_MODE": "TRUE",
         "LOG_TO_CONSOLE": "true",
-        "TEST_GLOB_PATTERN": "extension.test.js"
+        // "TEST_GLOB_PATTERN": "extension.test.js",
+        // "TEST_SUBPROCESS": "true"
       },
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
         "!**/node_modules/**"
       ],
       "skipFiles": [
-        "<node_internals>/**"
+        // "<node_internals>/**"
       ]
     },
     {
@@ -46,36 +65,6 @@
       "trace": true
     },
     {
-      "type": "node",
-      "name": "vscode-jest-tests.v2",
-      "request": "launch",
-      "args": [
-        "--runInBand",
-        "--watchAll=false",
-        "--config",
-        "test/unit/jest.config.ts",
-        "--testNamePattern",
-        "${jest.testNamePattern}",
-        "--runTestsByPath",
-        "${jest.testFile}"
-      ],
-      "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-      },
-      "env": {
-        "DEBUG_MODE": "TRUE"
-      },
-      "outFiles": [
-        "${workspaceFolder}/**/*.js",
-        "!**/node_modules/**",
-        "${workspaceFolder}/node_modules/apache-arrow/**/*.js"
-      ]
-    },
-    {
       "name": "vsce",
       "program": "${workspaceFolder}/node_modules/@vscode/vsce/vsce",
       "args": [
@@ -93,33 +82,6 @@
       "type": "cppvsdbg",
       "request": "attach",
       "processId": "${command:pickProcess}",
-      "presentation": {
-        "hidden": true
-      },
-      "windows": {
-        "presentation": {
-          "hidden": false,
-        }
-      },
-    },
-    {
-      "name": "(Windows) Launch",
-      "type": "cppvsdbg",
-      "request": "launch",
-      "program": "node",
-      "args": [
-        "${workspaceFolder}/node_modules/jest/bin/jest",
-        "test/unit/arrow-backend.test.ts"
-      ],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [
-        {
-          "name": "DEBUG_MODE",
-          "value": "TRUE"
-        }
-      ],
-      "console": "externalTerminal",
       "presentation": {
         "hidden": true
       },

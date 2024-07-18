@@ -1,22 +1,18 @@
-import { AsyncRecordBatchStreamReader } from "apache-arrow";
-import { ArrowBackend } from "./arrow-backend";
-import { PassThrough, Stream } from "stream";
+import { AsyncRecordBatchStreamReader } from 'apache-arrow';
+import { PassThrough, Readable } from "node:stream";
+import { recordBatchTransform } from './record-batch-transform';
 
-export class ArrowCppBackend extends ArrowBackend {
-  readParquet_: ((path: string, stream: Stream) => void) | undefined;
 
-  async readParquet(path: string) {
-      if (typeof (this.readParquet_) == 'undefined') {
-        try {
-          const module = await import("parquet-reader");
-          this.readParquet_ = module.readParquet;
-        } catch (error) {
-          throw new Error(`cannot find prebuilt arrow module, either build the module or use another backend: ${error}`);
-        }
-      }
-      const stream = new PassThrough;
-      this.readParquet_(path, stream);
-      return AsyncRecordBatchStreamReader.from(stream);
-  }
-
+export async function arrowCppBackend(path: string, signal?: AbortSignal): Promise<Readable> {
+  const readParquet = await (async () => {
+    try {
+      const module = await import("parquet-reader");
+      return module.readParquet;
+    } catch (error) {
+      throw new Error(`cannot find prebuilt arrow module, either build the module or use another backend: ${error}`);
+    }
+  })();
+  const stream = new PassThrough;
+  readParquet(path, stream);
+  return recordBatchTransform((await AsyncRecordBatchStreamReader.from(stream)).toNodeStream(), signal);
 }

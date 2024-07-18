@@ -41,6 +41,23 @@
       "presentation": {
         "clear": true
       }
+    },
+    {
+      "type": "npm",
+      "script": "unit",
+      "problemMatcher": [],
+      "label": "npm: unit",
+      "detail": "node --import tsx --import ./test/unit/automocks.ts --test test/unit/*.test.ts",
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": [],
+      "label": "npm: lint",
+      "detail": "eslint --max-warnings=0 \"**/*.ts\""
     }
   ]
 }
