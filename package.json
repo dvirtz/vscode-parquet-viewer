@@ -205,7 +205,8 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/glob": "^8.1.0",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.14.12",
+    "@types/split2": "^4.2.3",
     "@types/unzipper": "^0.10.8",
     "@types/vscode": "^1.46.0",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
@@ -235,7 +236,8 @@
     "apache-arrow": "^15.0.0",
     "color-string": "^1.6.0",
     "parquet-reader": "file:packages/parquet-reader",
-    "parquet-wasm": "^0.5.0"
+    "parquet-wasm": "^0.5.0",
+    "split2": "^4.2.0"
   },
   "overrides": {
     "kexec": "meteor/node-kexec#update-for-node-12"

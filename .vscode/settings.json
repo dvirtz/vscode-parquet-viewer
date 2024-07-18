@@ -107,5 +107,11 @@
         "./automocks.ts"
       ]
     }
-  ]
+  ],
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  }
 }
