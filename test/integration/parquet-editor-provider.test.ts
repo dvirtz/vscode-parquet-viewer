@@ -1,16 +1,17 @@
 console.log(`node ${process.execPath} ${process.execArgv}`);
-import { test, Mock } from 'node:test';
 import { strict as assert } from 'node:assert';
+import { Mock, test } from 'node:test';
 import os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { name } from '../../package.json';
 import { BackendName } from '../../src/backends/backend-name';
+import { FormatterName } from '../../src/formatters/formatter-name';
 import { initLogger } from '../../src/logger';
 import { ParquetTextDocumentContentProvider } from "../../src/parquet-document-provider";
 import { ParquetEditorProvider } from "../../src/parquet-editor-provider";
 import * as settings from '../../src/settings';
 import { getUri, readFile } from "./utils";
-import { name } from '../../package.json';
 
 function checkMockCalled(mock: Mock<(...args: never[]) => unknown>, msg: string) {
   assert(mock.mock.callCount() > 0, msg);
@@ -22,9 +23,9 @@ export async function runTest() {
     const workspace = vscode.workspace;
     const fs = workspace.fs;
     const editorProvider = new ParquetEditorProvider;
-    let testFile: vscode.Uri | undefined;
     type TestContext = typeof context;
     const DEFAULT_BACKEND = 'parquets';
+    const DEFAULT_FORMAT = 'json';
 
     context.beforeEach(async () => {
       await vscode.commands.executeCommand('workbench.action.closeAllEditors');
@@ -32,15 +33,14 @@ export async function runTest() {
       disposables.push(
         workspace.registerTextDocumentContentProvider('parquet', new ParquetTextDocumentContentProvider)
       );
+      context.mock.method(settings, 'backend', () => DEFAULT_BACKEND);
+      context.mock.method(settings, 'format', () => DEFAULT_FORMAT);
+      context.mock.method(settings, 'jsonAsArray', () => false);
     });
 
     context.afterEach(async () => {
       while (disposables.length) {
         disposables.pop()?.dispose();
-      }
-      if (testFile) {
-        await workspace.fs.delete(testFile);
-        testFile = undefined;
       }
     });
 
@@ -52,6 +52,7 @@ export async function runTest() {
     async function copyTo(name: string, source: vscode.Uri) {
       const uri = vscode.Uri.file(path.join(workspaceRoot(), name));
       await fs.copy(source, uri, { overwrite: true });
+      disposables.push(new vscode.Disposable(() => workspace.fs.delete(uri)));
       return uri;
     }
 
@@ -98,25 +99,28 @@ export async function runTest() {
     }
 
     const tests = (() => {
-      const tests: [string, BackendName][] = [
-        ['small', 'parquets'],
-        ['small', 'arrow'],
-        ['large', 'parquets'],
-        ['version_2', 'arrow'],
-        ['version_2', 'parquet-wasm'],
+      const tests: [string, BackendName, FormatterName][] = [
+        ['small', 'parquets', 'json'],
+        ['small', 'arrow', 'csv'],
+        ['large', 'parquets', 'json'],
+        ['version_2', 'arrow', 'csv'],
+        ['version_2', 'parquet-wasm', 'json'],
       ];
       if (os.type() != 'Darwin' || os.arch() == 'x64') {
-        return tests.concat([['small', 'parquet-tools']]);
+        return tests.concat([['small', 'parquet-tools', 'csv']]);
       }
       return tests;
     })();
 
-    for (const [name, backend] of tests) {
-      await context.test(`shows ${name} using ${backend}`, async function (context) {
-        const parquet = await getUri(`${name}.parquet`);
-        testFile = await copyTo(`${name}-${backend}.parquet`, parquet);
+    for (const [name, backend, format] of tests) {
+      await context.test(`shows ${name} using ${backend} formatted as ${format}`, async function (context) {
         context.mock.method(settings, 'backend', () => backend);
-        const onDocumentOpened = registerDocumentOpenedListener(testFile, await readFile(`${name}.json`), context);
+        context.mock.method(settings, 'format', () => format);
+
+        const parquet = await getUri(`${name}.parquet`);
+        const testFile = await copyTo(`${name}-${backend}.parquet`, parquet);
+        const expected = await readFile(`${name}.${format == 'csv' ? 'csv' : 'json'}`);
+        const onDocumentOpened = registerDocumentOpenedListener(testFile, expected, context);
         await openDocument(testFile);
         checkMockCalled(await onDocumentOpened, 'onDidOpenTextDocument not called')
       });
@@ -124,10 +128,8 @@ export async function runTest() {
 
 
     await context.test('updated on file change', async function (context) {
-      context.mock.method(settings, 'backend', () => DEFAULT_BACKEND);
-
       const small = await getUri('small.parquet');
-      testFile = await copyTo('temp.parquet', small);
+      const testFile = await copyTo('temp.parquet', small);
 
       const smallOpened = registerDocumentOpenedListener(testFile, await readFile('small.json'), context);
       await openDocument(testFile);
@@ -143,9 +145,8 @@ export async function runTest() {
 
     await context.test('handles error', async function (context) {
       const parquet = await getUri(`version_2.parquet`);
-      testFile = await copyTo(`version_2-parquets.parquet`, parquet);
-      context.mock.method(settings, 'backend', () => DEFAULT_BACKEND);
-      const onDocumentOpened = registerDocumentOpenedListener(testFile, new RegExp(`{\\"error\\":\\"while reading ${testFile.fsPath.replace(/\\/g, '\\\\\\\\')}: .*\\"}`), context);
+      const testFile = await copyTo(`version_2-parquets.parquet`, parquet);
+      const onDocumentOpened = registerDocumentOpenedListener(testFile, new RegExp(`while reading ${testFile.fsPath.replace(/\\/g, '\\\\')}: .*`), context);
       await openDocument(testFile);
       checkMockCalled(await onDocumentOpened, 'onDidOpenTextDocument not called');
     });
@@ -153,7 +154,6 @@ export async function runTest() {
     await context.test('updates when settings change', async function (context) {
       type ConfigurationListener = (e: vscode.ConfigurationChangeEvent) => unknown
       let listener: ConfigurationListener = (e: vscode.ConfigurationChangeEvent) => { e };
-      context.mock.method(settings, 'backend', () => DEFAULT_BACKEND);
       const onDidChangeConfiguration = context.mock.method(vscode.workspace, 'onDidChangeConfiguration', (l: ConfigurationListener) => {
         listener = l;
         return { dispose: () => undefined };

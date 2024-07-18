@@ -1,14 +1,13 @@
-import { test } from 'node:test';
-import { strict as assert } from 'node:assert';
-import { logLevel, logFolder, setLogFolder, setLogLevel } from '../../src/settings';
-import { getUri } from './utils';
 import { promises } from 'fs';
-import path = require('path');
-import toArray from '@async-generators/to-array';
-import { ParquetsBackend } from '../../src/backends/parquets-backend';
-import * as vscode from 'vscode';
-import { initLogger } from '../../src/logger';
+import { strict as assert } from 'node:assert';
+import { test } from 'node:test';
 import * as tempy from 'tempy';
+import * as vscode from 'vscode';
+import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
+import { initLogger } from '../../src/logger';
+import { logFolder, logLevel, setLogFolder, setLogLevel } from '../../src/settings';
+import { getUri } from './utils';
+import path = require('path');
 
 export async function runTest() {
   await test('Logger tests', async (context) => {
@@ -33,11 +32,15 @@ export async function runTest() {
       assert.equal(logFolder(), folder);
 
       const parquet = await getUri('small.parquet');
-      const contents = await toArray(new ParquetsBackend().generateRows(parquet.fsPath));
+      const contents = await (await createParquetBackend('parquets', parquet.fsPath)).toArray();
       const logContents = await promises.readFile(logPath, 'utf-8');
 
       assert.equal(contents.length, 2);
-      assert.match(logContents, /\{\s+"label": "parquet-viewer",\s+"level": "info",\s+"message": "opening .*small.parquet",\s+"time": "\S+"\s+\}/);
+      const log = JSON.parse(logContents);
+      assert.equal(log.label, 'parquet-viewer');
+      assert.equal(log.level, 'info');
+      assert.match(log.message, /opening .*small.parquet using .* backend/);
+      assert.match(log.time, new RegExp(new Date().toISOString().split('T')[0]));
     });
   });
 }

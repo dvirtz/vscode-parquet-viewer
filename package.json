@@ -25,7 +25,7 @@
     "."
   ],
   "engines": {
-    "node": ">=19.0.0",
+    "node": ">=21.0.0",
     "vscode": "^1.82.0"
   },
   "categories": [
@@ -205,7 +205,8 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/glob": "^8.1.0",
-    "@types/node": "^20.12.7",
+    "@types/node": "^22.4.0",
+    "@types/split2": "^4.2.3",
     "@types/unzipper": "^0.10.8",
     "@types/vscode": "^1.46.0",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
@@ -228,14 +229,14 @@
     "unzipper": "^0.10.14"
   },
   "dependencies": {
-    "@async-generators/to-array": "^0.1.0",
     "@dvirtz/parquets": "^0.11.6",
     "@vscode-logging/logger": "^1.2.3",
     "@vscode-logging/wrapper": "^1.0.1",
     "apache-arrow": "^15.0.0",
     "color-string": "^1.6.0",
     "parquet-reader": "file:packages/parquet-reader",
-    "parquet-wasm": "^0.5.0"
+    "parquet-wasm": "^0.5.0",
+    "split2": "^4.2.0"
   },
   "overrides": {
     "kexec": "meteor/node-kexec#update-for-node-12"

@@ -1,18 +1,14 @@
-import { CancellationToken } from 'vscode';
 import { ParquetReader } from '@dvirtz/parquets';
-import { ParquetBackend } from './parquet-backend';
+import { Readable } from 'node:stream';
 
-export class ParquetsBackend extends ParquetBackend {
-  public async * generateRowsImpl(parquetPath: string, _token?: CancellationToken): AsyncGenerator<object> {
-    const reader = await ParquetReader.openFile(parquetPath);
-    const cursor = reader.getCursor();
+async function* parquetsGenerator(path: string) {
+  const reader = await ParquetReader.openFile(path);
+  const cursor = reader.getCursor();
+  yield* cursor;
 
-    // read all records from the file and print them
-    let record = null;
-    while ((record = await cursor.next())) {
-      yield record;
-    }
+  await reader.close();
+}
 
-    await reader.close();
-  }
+export async function parquetsBackend(path: string, signal?: AbortSignal): Promise<Readable> {
+  return Readable.from(parquetsGenerator(path), { objectMode: true, signal: signal });
 }

@@ -1,12 +1,11 @@
-import { AsyncRecordBatchStreamReader } from "apache-arrow";
+import { AsyncRecordBatchStreamReader } from 'apache-arrow';
+import { readFile } from "node:fs/promises";
+import { Readable } from 'node:stream';
 import { readParquet } from "parquet-wasm/node/arrow1";
-import { promises } from "fs";
-import { ArrowBackend } from "./arrow-backend";
+import { recordBatchTransform } from './record-batch-transform';
 
-export class ParquetWasmBackend extends ArrowBackend {
-  async readParquet(path: string) {
-    const data = new Uint8Array(await promises.readFile(path));
-    const stream = readParquet(data);
-    return AsyncRecordBatchStreamReader.from(stream.intoIPCStream());
-  }
+export async function parquetWasmBackend(path: string, signal?: AbortSignal): Promise<Readable> {
+  const data = new Uint8Array(await readFile(path));
+  const stream = readParquet(data);
+  return recordBatchTransform(AsyncRecordBatchStreamReader.from(stream.intoIPCStream()).toNodeStream(), signal);
 }
