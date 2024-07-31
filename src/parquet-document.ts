@@ -1,11 +1,11 @@
+import assert from 'assert';
+import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import * as os from 'os';
-import { getLogger } from './logger';
-import { createParquetBackend } from './backends/parquet-backend-factory';
-import { backend, affectsDocument } from './settings';
+import { generateParquetRows } from './backends/parquet-backend-factory';
 import { createFormatter } from './formatters/formatter-factory';
-import assert from 'assert';
+import { getLogger } from './logger';
+import { affectsDocument, backend } from './settings';
 
 export default class ParquetDocument implements vscode.Disposable {
   private readonly _uri: vscode.Uri;
@@ -14,7 +14,6 @@ export default class ParquetDocument implements vscode.Disposable {
   private _lines: string[] = [];
   private readonly _disposable: vscode.Disposable;
   private readonly _parquetPath: string;
-  private readonly _backend = createParquetBackend(backend());
   private readonly _formatter = createFormatter();
   private _dirty = true;
 
@@ -83,7 +82,8 @@ export default class ParquetDocument implements vscode.Disposable {
       cancellable: true
     },
       async (progress, token) => {
-        for await (const line of this._formatter.format(this._backend.generateRows(this._parquetPath, token))) {
+        // consume the generator to get the lines
+        for await (const line of this._formatter.format(generateParquetRows(backend(), this._parquetPath, token))) {
           const lineByteLength = encoder.encode(`${line}${os.EOL}`).byteLength;
           totalByteLength += lineByteLength;
           if (totalByteLength >= FILE_SIZE_MB_LIMIT * 1024 * 1024) {
