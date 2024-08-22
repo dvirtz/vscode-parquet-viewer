@@ -47,6 +47,10 @@ jobs:
         with:
           path: ${{ env.CONAN_HOME }}
           key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
+      - name: Use Java 8
+        run: |
+          echo "JAVA_HOME=${JAVA_HOME_8_X64}" >> $GITHUB_ENV
+          echo "PATH=${JAVA_HOME_8_X64}/bin:${PATH}" >> $GITHUB_ENV
       - run: npm ci --forward-scripts
       - name: Static checks
         run: |
