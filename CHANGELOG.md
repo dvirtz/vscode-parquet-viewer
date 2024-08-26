@@ -1,3 +1,20 @@
+## [2.10.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.9.0...v2.10.0) (2024-08-26)
+
+
+### Features
+
+* make all backends and formatters node streams ([65965cd](https://github.com/dvirtz/vscode-parquet-viewer/commit/65965cdd0e61b33f7d59fd12b354a6db004d9409)), closes [#128](https://github.com/dvirtz/vscode-parquet-viewer/issues/128)
+
+
+### Build and continuous integration
+
+* **deps-dev:** bump braces from 3.0.2 to 3.0.3 ([15e8fe6](https://github.com/dvirtz/vscode-parquet-viewer/commit/15e8fe654f0806e3fe5f8e9761ad12363b4db1b1))
+* **deps:** bump certifi in /packages/parquet-reader ([f44d3c8](https://github.com/dvirtz/vscode-parquet-viewer/commit/f44d3c80bdcc43bb686e6ce14789c4f478394362))
+* **deps:** bump urllib3 in /packages/parquet-reader ([a24371f](https://github.com/dvirtz/vscode-parquet-viewer/commit/a24371f3994a754e5a6a42d20202f5d98214760f))
+* **deps:** bump ws from 5.2.3 to 5.2.4 ([284713b](https://github.com/dvirtz/vscode-parquet-viewer/commit/284713b26c9f84ace18e3fb06d1f0a777ac295f5))
+* npm audit fix ([a84f55a](https://github.com/dvirtz/vscode-parquet-viewer/commit/a84f55a916b7ce3885bc9826799739d5bc37ff5a))
+* test on Java 8 ([00d8b1d](https://github.com/dvirtz/vscode-parquet-viewer/commit/00d8b1d502af64ac2f8dbed319620727ea08cfd7))
+
 ## [2.9.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.8.4...v2.9.0) (2024-05-23)
 
 
