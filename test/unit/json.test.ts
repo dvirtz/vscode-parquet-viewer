@@ -7,7 +7,7 @@ import { createInterface } from 'readline';
 import { BackendName, BackendNames } from '../../src/backends/backend-name';
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
 import { JsonFormatter } from '../../src/formatters/json-formatter';
-import { jsonAsArrayMock, jsonSpaceMock } from './mocks/vscode';
+import { workspace as workspaceMock } from './mocks/vscode';
 import * as workspace from './workspace';
 import { zip } from './zip';
 
@@ -63,20 +63,20 @@ describe("JSON tests", async () => {
 
   for (const space of [0, 2, 10, '\t', '###']) {
     test(`JSON space ${space}`, async () => {
-      jsonSpaceMock.mock.mockImplementation(() => space);
+      workspaceMock.mocks.jsonSpace.mock.mockImplementation(() => space);
 
       for await (const [actual, expected] of zip(await formattedParquet('arrow', 'small'),
         createInterface({ input: createReadStream(workspace.json('small')) }))) {
         assert.equal(actual, JSON.stringify(JSON.parse(expected), null, space));
       }
 
-      jsonSpaceMock.mock.resetCalls();
-      jsonSpaceMock.mock.restore();
+      workspaceMock.mocks.jsonSpace.mock.resetCalls();
+      workspaceMock.mocks.jsonSpace.mock.restore();
     });
   }
 
   test('jsonAsArray', async () => {
-    jsonAsArrayMock.mock.mockImplementation(() => true);
+    workspaceMock.mocks.jsonAsArray.mock.mockImplementation(() => true);
 
     async function* asArray() {
       const json = JSON.parse((await (await formattedParquet('arrow', 'large')).toArray()).join(''));
@@ -89,7 +89,7 @@ describe("JSON tests", async () => {
       assert.equal(JSON.stringify(actual), expected);
     }
 
-    jsonAsArrayMock.mock.resetCalls();
-    jsonAsArrayMock.mock.restore();
+    workspaceMock.mocks.jsonAsArray.mock.resetCalls();
+    workspaceMock.mocks.jsonAsArray.mock.restore();
   });
 });

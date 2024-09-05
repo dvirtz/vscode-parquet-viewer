@@ -104,11 +104,12 @@
         "--import",
         "tsx",
         "--import",
-        "./automocks.ts"
+        "./test/unit/automocks.ts"
       ]
     }
   ],
   "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": "always"
