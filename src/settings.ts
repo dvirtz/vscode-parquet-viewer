@@ -1,8 +1,10 @@
-import * as vscode from 'vscode';
 import { LogLevel } from '@vscode-logging/logger';
+import * as vscode from 'vscode';
+import { contributes, name } from '../package.json';
 import { BackendName } from './backends/backend-name';
-import { name, contributes } from '../package.json';
 import { FormatterName } from './formatters/formatter-name';
+import { GlobalState } from './global-state';
+import { getLogger } from './logger';
 
 const propertiesMeta = contributes.configuration.properties;
 
@@ -69,3 +71,46 @@ export function affectsLogging(e: vscode.ConfigurationChangeEvent): boolean {
 export function affectsDocument(e: vscode.ConfigurationChangeEvent): boolean {
   return settingsChanged(e, ['backend', 'useParquetTools', 'json.space', 'json.asArray', 'csv.separator']);
 }
+
+export const DeprecationWarningActions = [
+  'Open settings',
+  'Ignore',
+  'View documentation',
+] as const;
+
+export async function checkDeprecatedSettings(globalState: GlobalState) {
+  if (globalState.areDeprecationWarningsIgnored()) {
+    getLogger().warn('deprecation warning disabled');
+    return;
+  }
+
+  const backendName = backend();
+  if (backendName == 'parquet-tools' || backendName == 'parquets') {
+    const action = await vscode.window.showWarningMessage(
+      `Backend ${backendName} is deprecated and will be removed in a future version.
+      Please switch to another backend`,
+      ...DeprecationWarningActions
+    );
+    switch (action) {
+      case 'Open settings':
+        await vscode.commands.executeCommand('workbench.action.openSettings');
+        break;
+      case 'View documentation':
+        await vscode.env.openExternal(
+          vscode.Uri.parse(
+            'https://github.com/dvirtz/vscode-parquet-viewer#backends'
+          )
+        );
+        break;
+      case 'Ignore':
+        getLogger().warn('deprecation warning disabled');
+        await globalState.ignoreDeprecationWarnings();
+        break;
+    }
+  }
+}
+
+export function affectsDeprecation(e: vscode.ConfigurationChangeEvent): boolean {
+  return settingsChanged(e, ['backend', 'useParquetTools']);
+}
+

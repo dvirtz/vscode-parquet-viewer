@@ -9,7 +9,7 @@ import { BackendName, BackendNames } from "../../src/backends/backend-name";
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
 import { CsvFormatter } from "../../src/formatters/csv-formatter";
 
-import { csvSeparatorMock } from './mocks/vscode';
+import { workspace as workspaceMock } from './mocks/vscode';
 import * as workspace from './workspace';
 import { zip } from './zip';
 
@@ -65,10 +65,10 @@ describe("CSV tests", () => {
     for (const separator of ['\t', ';']) {
       test(`CSV separator ${separator}`, async (context) => {
         context.after(() => {
-          csvSeparatorMock.mock.restore();
+          workspaceMock.mocks.csvSeparator.mock.restore();
         });
 
-        csvSeparatorMock.mock.mockImplementation(() => separator);
+        workspaceMock.mocks.csvSeparator.mock.mockImplementation(() => separator);
 
         for await (const [actual, expected] of zip(await formattedParquet('arrow', 'small'),
           createInterface({ input: createReadStream(workspace.csv('small')) }))) {

@@ -100,7 +100,7 @@
           "default": "info"
         },
         "parquet-viewer.jsonSpace": {
-          "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details. Doesn't apply when `#parquet-viewer.backend#` is `parquet-tools`.",
+          "markdownDescription": "JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details.",
           "type": [
             "string",
             "number"
