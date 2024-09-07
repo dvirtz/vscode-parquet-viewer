@@ -1,3 +1,21 @@
+## [2.11.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.10.0...v2.11.0) (2024-09-07)
+
+
+### Features
+
+* deprecate parquet-tools and parquets backends ([6b6dd10](https://github.com/dvirtz/vscode-parquet-viewer/commit/6b6dd1027ceca336aab86f452d08ff7a74737d09)), closes [#137](https://github.com/dvirtz/vscode-parquet-viewer/issues/137)
+
+
+### Bug Fixes
+
+* remove workspaces from VSCE package ([1c0290f](https://github.com/dvirtz/vscode-parquet-viewer/commit/1c0290f57687b1832f536b8421003abdd25988ed)), closes [#138](https://github.com/dvirtz/vscode-parquet-viewer/issues/138)
+* require a newer VSCode ([f3f4b79](https://github.com/dvirtz/vscode-parquet-viewer/commit/f3f4b79e999efe28a41d2be3e4818cc686523a78))
+
+
+### Build and continuous integration
+
+* **deps-dev:** bump axios from 1.6.8 to 1.7.5 ([42109c3](https://github.com/dvirtz/vscode-parquet-viewer/commit/42109c3eb5fbe8c4f47e46e7ea2d00f43241f1ab))
+
 ## [2.10.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.9.0...v2.10.0) (2024-08-26)
 
 
