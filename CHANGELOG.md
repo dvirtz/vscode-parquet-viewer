@@ -1,3 +1,10 @@
+## [2.11.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.0...v2.11.1) (2024-09-08)
+
+
+### Bug Fixes
+
+* restore parquet-reader symbolic link ([a0318d8](https://github.com/dvirtz/vscode-parquet-viewer/commit/a0318d8db6072d82b2554a621ecc2ade1cb03647)), closes [#140](https://github.com/dvirtz/vscode-parquet-viewer/issues/140)
+
 ## [2.11.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.10.0...v2.11.0) (2024-09-07)
 
 
