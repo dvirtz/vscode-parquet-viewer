@@ -16,5 +16,4 @@ Dockerfile
 packages/parquet-reader/**
 !packages/parquet-reader/dist/*.js
 !packages/parquet-reader/prebuilds
-node_modules/parquet-reader
 node_modules/parquet-viewer
