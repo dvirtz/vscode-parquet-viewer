@@ -224,7 +224,7 @@
     "semantic-release-vsce": "^5.0.17",
     "tempy": "^1.0.1",
     "ts-node": "^10.9.1",
-    "tsx": "^4.9.3",
+    "tsx": "^4.19.3",
     "typescript": "^4.0.5",
     "unzipper": "^0.10.14"
   },
