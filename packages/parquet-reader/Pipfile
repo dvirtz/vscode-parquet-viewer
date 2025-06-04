@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-conan = "*"
-cmake = "*"
+conan = "~=2.6.0"
+cmake = "~=3.24.0"
 
 [dev-packages]
 
