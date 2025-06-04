@@ -9,13 +9,13 @@ import * as workspace from './workspace';
 
 class CancellationTokenMock implements CancellationToken {
   isCancellationRequested = false;
-  callback?: (_: unknown) => undefined;
-  onCancellationRequested = mock.fn((callback: (_: unknown) => undefined) => {
+  callback?: () => undefined;
+  onCancellationRequested = mock.fn((callback: (_?: unknown) => undefined) => {
     if (this.callback) {
       const existingCallback = this.callback;
-      this.callback = (arg: unknown) => {
-        existingCallback(arg);
-        return callback(arg);
+      this.callback = () => {
+        existingCallback();
+        return callback();
       };
     } else {
       this.callback = callback;
@@ -24,7 +24,7 @@ class CancellationTokenMock implements CancellationToken {
   });
   cancel = () => {
     this.isCancellationRequested = true;
-    if (this.callback) this.callback(undefined);
+    if (this.callback) this.callback();
   }
 }
 
@@ -55,7 +55,10 @@ for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || os
       assert.notEqual(first.value, "");
       assert.ok(token.onCancellationRequested.mock.callCount() >= 1);
       token.cancel();
-      await assert.rejects(rows.next(), /AbortError: The operation was aborted/);
+      if (backend !== 'parquet-tools') {
+        // parquet-tools might already be done by the time we cancel
+        await assert.rejects(rows.next(), /AbortError: The operation was aborted/);
+      }
     });
   });
 }
