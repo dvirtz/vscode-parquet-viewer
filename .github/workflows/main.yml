@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
+          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt', 'packages/parquet-reader/Pipfile') }}
       - name: Use Java 8
         run: |
           echo "JAVA_HOME=${JAVA_HOME_8_X64}" >> $GITHUB_ENV
