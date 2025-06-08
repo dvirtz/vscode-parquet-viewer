@@ -1,3 +1,22 @@
+## [2.11.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.1...v2.11.2) (2025-06-08)
+
+
+### Tests
+
+* skip check for parquet-tools cancellation ([b8c7ab2](https://github.com/dvirtz/vscode-parquet-viewer/commit/b8c7ab273ebe04ffcc28f015632535cc01d220c5))
+
+
+### Build and continuous integration
+
+* **deps-dev:** bump axios from 1.7.5 to 1.8.4 ([a31bd4a](https://github.com/dvirtz/vscode-parquet-viewer/commit/a31bd4a40d6abb4494d6cd0dee7442ccddd5a312))
+* **deps-dev:** bump tar-fs from 2.1.1 to 2.1.2 ([a352f13](https://github.com/dvirtz/vscode-parquet-viewer/commit/a352f13ce385eee3fff217b90522da8dbb9cf685))
+* **deps-dev:** bump tar-fs from 2.1.2 to 2.1.3 ([a2f0a9c](https://github.com/dvirtz/vscode-parquet-viewer/commit/a2f0a9cbb8435532e1d49b2f39b1b8e47a855599))
+* **deps:** bump esbuild and tsx ([594e1ea](https://github.com/dvirtz/vscode-parquet-viewer/commit/594e1eaf561224d92902a2e2c32032e309ef5ff4))
+* **deps:** bump jinja2 from 3.1.4 to 3.1.6 in /packages/parquet-reader ([75ffee6](https://github.com/dvirtz/vscode-parquet-viewer/commit/75ffee68dda334a6c5324a4db816601e8056c3b2))
+* invalidate conan cache when version changes ([65e92c7](https://github.com/dvirtz/vscode-parquet-viewer/commit/65e92c767efe1d403ff314530894d471ade2e19b))
+* remove macos-12 ([1f93b00](https://github.com/dvirtz/vscode-parquet-viewer/commit/1f93b0062e7106b356eb7b015bf26a0d5afec981))
+* upgrade build machines ([d12c1dc](https://github.com/dvirtz/vscode-parquet-viewer/commit/d12c1dcb8d9b240ecce598a8633e8f5579c8ddd3))
+
 ## [2.11.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.0...v2.11.1) (2024-09-08)
 
 
