@@ -15,7 +15,7 @@ target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE ${CMAKE_JS_LIB}
           fmt::fmt
-          arrow::libparquet)
+          arrow::arrow)
 
 # Include Node-API wrappers
 execute_process(
