@@ -19,7 +19,7 @@
     ],
     "build_requires": [
         "winflexbison/2.5.25#6b08309e90720974e49b4cf745242e64%1695252638.759",
-        "strawberryperl/5.32.1.1#8f83d05a60363a422f9033e52d106b47%1666134191.176",
+        "strawberryperl/5.32.1.1#707032463aa0620fa17ec0d887f5fe41",
         "nasm/2.15.05#058c93b2214a49ca1cfe9f8f26205568%1703550024.076",
         "m4/1.4.19#adbdd7fb7db33e609425c797196baccb%1697449900.379",
         "flex/2.6.4#e35bc44b3fcbcd661e0af0dc5b5b1ad4%1674818991.113",
@@ -27,5 +27,6 @@
         "bison/3.8.2#ed1ba0c42d2ab7ab64fc3a62e9ecc673%1688556312.342",
         "b2/4.10.1#a41eecb267963ddf518e3c177eae60e1%1707500896.52"
     ],
-    "python_requires": []
+    "python_requires": [],
+    "config_requires": []
 }
