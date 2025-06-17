@@ -58,6 +58,14 @@
       "problemMatcher": [],
       "label": "npm: lint",
       "detail": "eslint --max-warnings=0 \"**/*.ts\""
+    },
+    {
+      "type": "npm",
+      "script": "update-lockfile",
+      "path": "packages/parquet-reader",
+      "problemMatcher": [],
+      "label": "npm: update-lockfile - packages/parquet-reader",
+      "detail": "pipenv install && pipenv run conan profile detect && pipenv run conan lock create ."
     }
   ]
 }

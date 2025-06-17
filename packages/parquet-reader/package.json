@@ -7,11 +7,10 @@
     "build": "uv run env cmake-js build && tsc --build && pkg-prebuilds-verify dist/binding-options.js",
     "rebuild": "uv run env cmake-js rebuild",
     "build:debug": "npm run rebuild -- -D",
-    "preprepare": "tsc --build",
-    "prepare": "pkg-prebuilds-verify dist/binding-options.js || npm run build",
+    "postinstall": "tsc --build && pkg-prebuilds-verify dist/binding-options.js || npm run build",
     "clean": "rimraf dist prebuilds",
     "exec-from": "ts-node scripts/exec-from.ts",
-    "update-lockfile": "uv run conan profile detect && uv run conan lock create ."
+    "update-lockfile": "uv run conan profile detect & uv run conan lock create ."
   },
   "dependencies": {
     "node-addon-api": "^5.0.0",
