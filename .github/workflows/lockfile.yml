@@ -33,18 +33,19 @@ jobs:
           cache: npm
         env:
           npm_config_workspaces: false
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-          cache: 'pipenv'
-      - name: Install pipenv
-        run: |
-          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+          version: "0.7.13"
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "./packages/parquet-reader/pyproject.toml"
       - name: Cache .conan
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt') }}
+          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt', 'packages/parquet-reader/pyproject.toml') }}
       - run: npm ci --ignore-scripts
       - run: npm run update-lockfile --workspace parquet-reader
       - name: Commit files
