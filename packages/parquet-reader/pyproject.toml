@@ -1,0 +1,8 @@
+[project]
+name = "parquet-reader-builder"
+version = '1.0.0'
+requires-python = ">=3.10"
+dependencies = [
+    "cmake~=3.24.0",
+    "conan~=2.6.0",
+]
