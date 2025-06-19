@@ -52,6 +52,11 @@ jobs:
           echo "JAVA_HOME=${JAVA_HOME_8_X64}" >> $GITHUB_ENV
           echo "PATH=${JAVA_HOME_8_X64}/bin:${PATH}" >> $GITHUB_ENV
       - run: npm ci --forward-scripts
+      - name: Debug in Codespace
+        if: failure()
+        uses: dlemstra/github-actions-debugger@main
+        with:
+          token: ${{ secrets.CODESPACES_TOKEN }}
       - name: Static checks
         run: |
           npm run spellcheck
