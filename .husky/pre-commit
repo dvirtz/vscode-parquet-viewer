@@ -3,7 +3,7 @@
 
 
 BRANCH_NAME=$(git branch | grep '*' | sed 's/* //')
-if [[ $BRANCH_NAME != "rebase*" ]]; then
+if [ $BRANCH_NAME != "rebase*" ]; then
   npm run spellcheck
   npm run lint
 else
