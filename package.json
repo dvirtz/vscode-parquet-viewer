@@ -213,7 +213,6 @@
     "@typescript-eslint/parser": "^5.27.1",
     "@vscode/test-electron": "^2.3.5",
     "cli-wd": "^0.6.0",
-    "cmake-js": "^7.2.1",
     "copyfiles": "^2.4.1",
     "cspell": "^5.11.0",
     "eslint": "^8.17.0",
