@@ -107,7 +107,7 @@ wheels = [
 
 [[package]]
 name = "conan"
-version = "2.6.0"
+version = "2.9.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama" },
@@ -120,7 +120,7 @@ dependencies = [
     { name = "requests" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f5/eb/329968b0a011fcf207bed64e07b19bebfd60865f83ebde7c16de612aff35/conan-2.6.0.tar.gz", hash = "sha256:042c6255e29076b6a66483b51348238f9ebaaa8efeeaca37e99abc53d92de16c", size = 449894, upload-time = "2024-08-01T05:57:17.045Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/89/49/9fcbd9d07ff974b10e37dfbe8bb40ad3b353a04442ec692686653e43ce8d/conan-2.9.3.tar.gz", hash = "sha256:4c3f0ce7302fe081c603080c8babb981dc1ab7ed698480e378b389bcef700a2b", size = 471568, upload-time = "2024-11-21T10:16:58.224Z" }
 
 [[package]]
 name = "distro"
@@ -231,14 +231,14 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "cmake", specifier = "~=3.27.9" },
-    { name = "conan", specifier = "~=2.6.0" },
+    { name = "conan", specifier = "~=2.9.0" },
 ]
 
 [[package]]
 name = "patch-ng"
-version = "1.17.4"
+version = "1.18.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c1/b2/ad3cd464101435fdf642d20e0e5e782b4edaef1affdf2adfc5c75660225b/patch-ng-1.17.4.tar.gz", hash = "sha256:627abc5bd723c8b481e96849b9734b10065426224d4d22cd44137004ac0d4ace", size = 17395, upload-time = "2020-03-18T15:01:49.128Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/c0/53a2f017ac5b5397a7064c2654b73c3334ac8461315707cbede6c12199eb/patch-ng-1.18.1.tar.gz", hash = "sha256:52fd46ee46f6c8667692682c1fd7134edc65a2d2d084ebec1d295a6087fc0291", size = 17913, upload-time = "2024-10-25T12:20:10.591Z" }
 
 [[package]]
 name = "python-dateutil"
