@@ -107,7 +107,7 @@ wheels = [
 
 [[package]]
 name = "conan"
-version = "2.9.3"
+version = "2.17.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama" },
@@ -120,7 +120,7 @@ dependencies = [
     { name = "requests" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/89/49/9fcbd9d07ff974b10e37dfbe8bb40ad3b353a04442ec692686653e43ce8d/conan-2.9.3.tar.gz", hash = "sha256:4c3f0ce7302fe081c603080c8babb981dc1ab7ed698480e378b389bcef700a2b", size = 471568, upload-time = "2024-11-21T10:16:58.224Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/f2/cdc0214d1bdbdf56275f805a8225e232f30cf00fefd9c4b1a2b4a731d8f3/conan-2.17.1.tar.gz", hash = "sha256:7605c8e9990382d37266e69b9f4f671cc23d6478c75b572be53829387f1cf8c8", size = 507667, upload-time = "2025-06-23T09:33:56.463Z" }
 
 [[package]]
 name = "distro"
@@ -231,7 +231,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "cmake", specifier = "~=3.27.9" },
-    { name = "conan", specifier = "~=2.9.0" },
+    { name = "conan", specifier = "~=2.17.0" },
 ]
 
 [[package]]
