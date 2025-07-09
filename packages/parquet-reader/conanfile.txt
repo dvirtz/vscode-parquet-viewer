@@ -1,6 +1,0 @@
-[requires]
-arrow/14.0.1
-fmt/9.1.0
-
-[generators]
-CMakeDeps
