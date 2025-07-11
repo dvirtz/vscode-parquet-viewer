@@ -60,12 +60,12 @@ jobs:
         if: startsWith(matrix.os, 'windows-')
         run: |
           echo "RC=$(vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find **/rc.exe)" >> $Env:GITHUB_ENV
-      - name: Print environment variables
-        if: startsWith(matrix.os, 'windows-')
-        run: |
-          echo "RC=$(vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find **/rc.exe)"
-          echo "RC=$RC"
-          printenv
+      - name: Install LLVM and Clang
+        uses: KyleMayes/install-llvm-action@v2.0.7
+        if: matrix.os == 'windows-11-arm'
+        with:
+          version: 20
+          env: true
       - run: npm ci --forward-scripts
       - name: Debug in Codespace
         if: failure()
