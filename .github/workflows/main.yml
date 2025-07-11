@@ -10,8 +10,13 @@ jobs:
     strategy:
       matrix:
         os:
+          # Intel processors
           - ubuntu-22.04
           - windows-2022
+          - macos-13
+          # ARM processors
+          - windows-11-arm
+          - ubuntu-22.04-arm
           - macos-14
     env:
       CONAN_HOME: "${{ github.workspace }}/conan-cache"
@@ -29,13 +34,14 @@ jobs:
           cache: npm
         env:
           npm_config_workspaces: false
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-          cache: 'pipenv'
-      - name: Install pipenv
-        run: |
-          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+          version: "0.7.13"
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "./packages/parquet-reader/pyproject.toml"
       - name: Cache .vscode-test
         uses: actions/cache@v4
         with:
@@ -45,12 +51,27 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt', 'packages/parquet-reader/Pipfile') }}
+          key: ${{ matrix.os }}-conan-${{ hashFiles('packages/parquet-reader/conanfile.txt', 'packages/parquet-reader/pyproject.toml') }}
       - name: Use Java 8
         run: |
           echo "JAVA_HOME=${JAVA_HOME_8_X64}" >> $GITHUB_ENV
           echo "PATH=${JAVA_HOME_8_X64}/bin:${PATH}" >> $GITHUB_ENV
+      - name: Set RC path
+        if: startsWith(matrix.os, 'windows-')
+        run: |
+          echo "RC=$(vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find **/rc.exe)" >> $Env:GITHUB_ENV
+      - name: Install LLVM and Clang
+        uses: KyleMayes/install-llvm-action@v2.0.7
+        if: matrix.os == 'windows-11-arm'
+        with:
+          version: 20
+          env: true
       - run: npm ci --forward-scripts
+      - name: Debug in Codespace
+        if: failure()
+        uses: dlemstra/github-actions-debugger@main
+        with:
+          token: ${{ secrets.CODESPACES_TOKEN }}
       - name: Static checks
         run: |
           npm run spellcheck
@@ -91,13 +112,14 @@ jobs:
           cache: npm
         env:
           npm_config_workspaces: false
-      - uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-          cache: 'pipenv'
-      - name: Install pipenv
-        run: |
-          curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+          version: "0.7.13"
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "./packages/parquet-reader/pyproject.toml"
       - uses: actions/download-artifact@v4
         with:
           path: packages/parquet-reader/prebuilds
