@@ -1,3 +1,19 @@
+## [2.11.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.2...v2.11.3) (2025-07-15)
+
+
+### Build and continuous integration
+
+* debug using code spaces ([70523f4](https://github.com/dvirtz/vscode-parquet-viewer/commit/70523f46b7161225d28ca9ac48adc0f2acbfc6d1))
+* move cmake-js to workspace ([457dca1](https://github.com/dvirtz/vscode-parquet-viewer/commit/457dca14aefcd702b3384067c0c4b7c7002909ed))
+* restore Intel MacOS and add ARM Linux ([d4bae8f](https://github.com/dvirtz/vscode-parquet-viewer/commit/d4bae8fac36e21ff254db400c9bfdee1cae8a50e))
+* switch to uv ([9e0f319](https://github.com/dvirtz/vscode-parquet-viewer/commit/9e0f319747f3ae7cff1d877f96fa66a5c477582b))
+* update cmake ([72115c8](https://github.com/dvirtz/vscode-parquet-viewer/commit/72115c82ec2cef2033df94252bc0fa94f393b6ac))
+
+
+### General maintenance
+
+* fix pre commit script ([42b8dcc](https://github.com/dvirtz/vscode-parquet-viewer/commit/42b8dccbabc0a7e6bff6f0449e843712630937a1))
+
 ## [2.11.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.1...v2.11.2) (2025-06-08)
 
 
