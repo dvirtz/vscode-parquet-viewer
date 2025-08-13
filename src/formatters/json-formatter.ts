@@ -19,10 +19,13 @@ export class JsonFormatter extends Transform {
       this.push(`${this.last}${this.asArray ? ',' : ''}`);
     }
     this.last = JSON.stringify(chunk, (key, value) => {
-      return typeof value === 'bigint'
-        ? this.bigIntToJson(value)
-        : value; // return everything else unchanged
-    }, jsonSpace());
+      if (typeof value === 'bigint') {
+        return this.bigIntToJson(value);
+      }
+      return value;
+    }, jsonSpace()).replace(/:(\d+(\.\d+)?)\b/g, (match, number) => {
+      return `:${Number(number).toFixed(2)}`;
+    });
     callback();
   }
 

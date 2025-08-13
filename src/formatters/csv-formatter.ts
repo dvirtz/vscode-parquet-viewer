@@ -26,6 +26,11 @@ export class CsvFormatter extends Transform {
   }
 
   private generateRow(line: object) {
-    return Object.values(line).join(this.separator);
+    return Object.values(line).map(value => {
+      if (typeof value === 'number') {
+        return value.toFixed(2); // format floating point numbers
+      }
+      return value; // return other types as is
+    }).join(this.separator);
   }
 }

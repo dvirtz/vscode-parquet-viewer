@@ -1,0 +1,3 @@
+{"country":"USA","customer_id":12345,"amount":100.50,"event_timestamp":1754395200000}
+{"country":"Canada","customer_id":67890,"amount":0.00,"event_timestamp":1754398800000}
+{"country":"UK","customer_id":54321,"amount":300.25,"event_timestamp":1754402400000}

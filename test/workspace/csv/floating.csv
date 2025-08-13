@@ -1,0 +1,4 @@
+country, customer_id, amount, event_timestamp
+USA, 12345, 100.5, 1754395200000
+Canada, 67890, 0, 1754398800000
+UK, 54321, 300.25, 1754402400000
