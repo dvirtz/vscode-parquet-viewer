@@ -1,3 +1,16 @@
+## [2.11.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.3...v2.11.4) (2025-08-23)
+
+
+### Documentation
+
+* clarify JSON viewers require formatting as array ([e4d5fde](https://github.com/dvirtz/vscode-parquet-viewer/commit/e4d5fde6177db44dfeb2e543bbb7d756f9e7da5f))
+
+
+### Build and continuous integration
+
+* audit fix ([fdaab33](https://github.com/dvirtz/vscode-parquet-viewer/commit/fdaab33442c30e2f3b0403ca0c7be08764d81e99))
+* **deps-dev:** bump tmp from 0.2.3 to 0.2.4 ([9b8802e](https://github.com/dvirtz/vscode-parquet-viewer/commit/9b8802e012ad77b7cd8151dde4a48d31e1078957))
+
 ## [2.11.3](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.2...v2.11.3) (2025-07-15)
 
 
