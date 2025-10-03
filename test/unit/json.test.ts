@@ -16,7 +16,8 @@ describe("JSON tests", async () => {
     return (await createParquetBackend(backend, workspace.parquet(filename))).compose(new JsonFormatter());
   }
 
-  for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || os.arch() == 'x64' || backend != 'parquet-tools')) {
+  // parquet-tools doesn't work on MacOS due to Java version issues
+  for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || backend != 'parquet-tools')) {
     test(`${backend} backend`, async (context) => {
 
       const testFiles = {

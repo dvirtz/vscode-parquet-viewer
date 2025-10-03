@@ -28,8 +28,8 @@ class CancellationTokenMock implements CancellationToken {
   }
 }
 
-// parquet-tools doesn't work on Apple M1
-for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || os.arch() == 'x64' || backend != 'parquet-tools')) {
+// parquet-tools doesn't work on MacOS due to Java version issues
+for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || backend != 'parquet-tools')) {
   describe(`${backend} backend tests`, async () => {
     test("error on none existing file", async () => {
       const expected = (() => {
