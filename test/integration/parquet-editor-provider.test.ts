@@ -106,7 +106,8 @@ export async function runTest() {
         ['version_2', 'arrow', 'csv'],
         ['version_2', 'parquet-wasm', 'json'],
       ];
-      if (os.type() != 'Darwin' || os.arch() == 'x64') {
+      // parquet-tools doesn't work on MacOS due to Java version issues
+      if (os.type() != 'Darwin') {
         return tests.concat([['small', 'parquet-tools', 'csv']]);
       }
       return tests;
