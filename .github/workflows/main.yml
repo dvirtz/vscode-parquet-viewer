@@ -60,11 +60,6 @@ jobs:
         run: |
           echo "RC=$(vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find **/rc.exe)" >> $Env:GITHUB_ENV
       - run: npm ci --forward-scripts
-      - name: Debug in Codespace
-        if: failure()
-        uses: dlemstra/github-actions-debugger@main
-        with:
-          token: ${{ secrets.CODESPACES_TOKEN }}
       - name: Static checks
         run: |
           npm run spellcheck
@@ -78,6 +73,11 @@ jobs:
         if: ${{ !startsWith(matrix.os, 'ubuntu-') }}
         env:
           LOG_TO_CONSOLE: ${{ secrets.ACTIONS_STEP_DEBUG }}
+      - name: Debug in Codespace
+        if: failure()
+        uses: dlemstra/github-actions-debugger@main
+        with:
+          token: ${{ secrets.CODESPACES_TOKEN }}
       - name: Upload prebuilds
         if: '!env.ACT'
         uses: actions/upload-artifact@v4
