@@ -60,7 +60,7 @@ jobs:
         if: startsWith(matrix.os, 'windows-')
         run: |
           echo "RC=$(vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find **/rc.exe)" >> $Env:GITHUB_ENV
-      - run: npm ci --forward-scripts
+      - run: npm ci --foreground-scripts
       - name: Static checks
         run: |
           npm run spellcheck
@@ -119,7 +119,7 @@ jobs:
           path: packages/parquet-reader/prebuilds
           pattern: prebuilds-*
           merge-multiple: true
-      - run: npm ci --forward-scripts
+      - run: npm ci --foreground-scripts
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
