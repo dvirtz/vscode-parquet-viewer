@@ -17,6 +17,7 @@ jobs:
           # ARM processors
           - ubuntu-22.04-arm
           - macos-14
+          - windows-11-arm
     env:
       CONAN_HOME: "${{ github.workspace }}/conan-cache"
     runs-on: ${{ matrix.os }}
