@@ -14,3 +14,4 @@ arrow/*:with_lz4=True
 arrow/*:with_brotli=True
 arrow/*:with_zlib=True
 boost/*:debug_level=1
+boost/*:header_only=True
