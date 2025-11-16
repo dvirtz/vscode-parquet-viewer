@@ -63,11 +63,11 @@ arrow::Status streamTable(Napi::Env env, const std::string &path, Napi::Object &
   const auto infile = arrow::io::ReadableFile::Open(path);
   ARROW_RETURN_NOT_OK(infile.status());
 
-  std::unique_ptr<parquet::arrow::FileReader> reader;
-  ARROW_RETURN_NOT_OK(parquet::arrow::OpenFile(infile.ValueOrDie(), arrow::default_memory_pool(), &reader));
+  auto reader = parquet::arrow::OpenFile(infile.ValueOrDie(), arrow::default_memory_pool());
+  ARROW_RETURN_NOT_OK(reader.status());
 
   std::shared_ptr<arrow::Table> table;
-  ARROW_RETURN_NOT_OK(reader->ReadTable(&table));
+  ARROW_RETURN_NOT_OK(reader.ValueOrDie()->ReadTable(&table));
 
   Writer writer{ env, stream };
   const auto options = [] {

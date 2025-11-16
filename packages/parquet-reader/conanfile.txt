@@ -1,5 +1,5 @@
 [requires]
-arrow/14.0.1
+arrow/21.0.0
 fmt/9.1.0
 
 [generators]
