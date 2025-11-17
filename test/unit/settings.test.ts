@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { describe, test } from "node:test";
 import { strict as assert } from "node:assert";
+import { describe, test } from "node:test";
+import { Uri } from "vscode";
 import * as meta from "../../package.json";
 import { BackendNames } from "../../src/backends/backend-name";
+import { GlobalState } from "../../src/global-state";
 import {
   checkDeprecatedSettings,
   DeprecationWarningActions,
 } from "../../src/settings";
 import {
-  workspace,
-  window,
   commands,
   env,
   SyncedMemento,
+  window,
+  workspace,
 } from "./mocks/vscode";
-import { Uri } from "vscode";
-import { GlobalState } from "../../src/global-state";
 
 void describe("settings", () => {
   test("should have all backend names", () => {
@@ -33,7 +33,7 @@ void describe("settings", () => {
 
     for (const action of DeprecationWarningActions) {
       // set backend to a deprecated one and check a warning is shown
-      const backendName = "parquet-tools";
+      const backendName = "parquets";
       workspace.mocks.backendName.mock.mockImplementation(() => backendName);
 
       window.showWarningMessage.mock.mockImplementation(

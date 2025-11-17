@@ -2,7 +2,6 @@
 import { createReadStream } from 'fs';
 import { strict as assert } from 'node:assert';
 import { describe, test } from 'node:test';
-import os from 'os';
 import { createInterface } from 'readline';
 import { BackendName, BackendNames } from '../../src/backends/backend-name';
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
@@ -16,16 +15,10 @@ describe("JSON tests", async () => {
     return (await createParquetBackend(backend, workspace.parquet(filename))).compose(new JsonFormatter());
   }
 
-  // parquet-tools doesn't work on MacOS due to Java version issues
-  for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || backend != 'parquet-tools')) {
+  for (const backend of BackendNames) {
     test(`${backend} backend`, async (context) => {
 
       const testFiles = {
-        'parquet-tools': [
-          ['small', 'small'],
-          ['large', 'large'],
-          ['version_2', 'version_2']
-        ],
         'parquets': [
           ['small', 'small'],
           ['large', 'large'],

@@ -34,10 +34,6 @@ This backend uses the [parquets](https://github.com/dvirtz/parquets) TypeScript 
 
 It only supports parquet version 1.0.0 with snappy compression.
 
-### parquet-tools
-
-This is a legacy Java backend, using [parquet-tools](https://mvnrepository.com/artifact/org.apache.parquet/parquet-tools). To use that, you should set `parquet-viewer.backend` to `parquet-tools` and `paruqet-tools` should be in your `PATH`, or pointed by the `parquet-viewer.parquetToolsPath` setting.
-
 ## Format
 
 The textual output can be either JSON or CSV based on the [parquet-viewer.format](#settings) setting.
@@ -61,7 +57,6 @@ The following setting options are available:
 |`parquet-viewer.logging.panel`|`false`|Whether to write diagnostic logs to an output panel|
 |`parquet-viewer.logging.folder`|empty|Write diagnostic logs under the given directory|
 |`parquet-viewer.logging.level`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
-|`parquet-viewer.parquetToolsPath`|`parquet-tools`|The name of the parquet-tools executable or a path to the parquet-tools jar|
 |`parquet-viewer.json.space`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details|
 |`parquet-viewer.json.asArray`|`false`|Whether to format output JSON as one big array|
 |`parquet-viewer.csv.separator`|`', '`|CSV separator|
