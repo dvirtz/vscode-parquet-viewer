@@ -12,16 +12,12 @@ function settings() {
   return vscode.workspace.getConfiguration(name);
 }
 
-export function parquetTools(): string | undefined {
-  return settings().get('parquetToolsPath');
-}
-
 export function logPanel(): boolean {
-  return settings().get('logging.panel', settings().get('logPanel', propertiesMeta['parquet-viewer.logging.panel']['default']));
+  return settings().get('logging.panel', propertiesMeta['parquet-viewer.logging.panel']['default']);
 }
 
 export function logFolder(): string {
-  return settings().get('logging.folder', settings().get('logFolder', ''));
+  return settings().get('logging.folder', propertiesMeta['parquet-viewer.logging.folder']['default']);
 }
 
 export async function setLogFolder(logFolder: string | undefined): Promise<void> {
@@ -29,15 +25,11 @@ export async function setLogFolder(logFolder: string | undefined): Promise<void>
 }
 
 export function logLevel(): LogLevel {
-  return settings().get('logging.level', settings().get('logLevel', propertiesMeta['parquet-viewer.logging.level']['default'] as LogLevel));
+  return settings().get('logging.level', propertiesMeta['parquet-viewer.logging.level']['default'] as LogLevel);
 }
 
 export async function setLogLevel(logLevel: LogLevel | undefined): Promise<void> {
   await settings().update('logging.level', logLevel);
-}
-
-export function useParquetTools(): boolean {
-  return settings().get('useParquetTools', false);
 }
 
 export function jsonSpace(): number | string | undefined {
@@ -45,7 +37,7 @@ export function jsonSpace(): number | string | undefined {
 }
 
 export function backend(): BackendName {
-  return useParquetTools() ? 'parquet-tools' : settings().get('backend', propertiesMeta['parquet-viewer.backend']['default'] as BackendName);
+  return settings().get('backend', propertiesMeta['parquet-viewer.backend']['default'] as BackendName);
 }
 
 export function jsonAsArray(): boolean {
@@ -85,7 +77,7 @@ export async function checkDeprecatedSettings(globalState: GlobalState) {
   }
 
   const backendName = backend();
-  if (backendName == 'parquet-tools' || backendName == 'parquets') {
+  if (backendName == 'parquets') {
     const action = await vscode.window.showWarningMessage(
       `Backend ${backendName} is deprecated and will be removed in a future version.
       Please switch to another backend`,

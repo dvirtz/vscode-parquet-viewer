@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import assert from 'node:assert';
 import { createReadStream } from 'node:fs';
-import os from 'node:os';
 import { createInterface } from 'node:readline/promises';
 import { describe, test } from "node:test";
 
@@ -18,16 +17,10 @@ describe("CSV tests", () => {
     return (await createParquetBackend(backend, workspace.parquet(filename))).compose(new CsvFormatter());
   }
 
-  // parquet-tools doesn't work on MacOS due to Java version issues
-  for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || backend != 'parquet-tools')) {
+  for (const backend of BackendNames) {
     test(`${backend} backend`, async (context) => {
 
       const testFiles = {
-        'parquet-tools': [
-          ['small', 'small'],
-          ['large', 'large'],
-          ['version_2', 'version_2']
-        ],
         'parquets': [
           ['small', 'small'],
           ['large', 'large'],

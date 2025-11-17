@@ -1,7 +1,5 @@
 import { mock, Mock } from 'node:test';
-import * as path from 'path';
 import { BackendName } from '../../../src/backends/backend-name';
-import { root as workspacePath } from '../workspace';
 
 export const workspace = {
   mocks: {
@@ -13,8 +11,6 @@ export const workspace = {
   getConfiguration: () => ({
     get: (name: string, defaultValue?: string) => {
       switch (name) {
-        case 'parquetToolsPath':
-          return path.join(workspacePath, 'parquet-tools-1.12.0-SNAPSHOT.jar');
         case 'json.space':
           return workspace.mocks.jsonSpace() ?? defaultValue;
         case 'json.asArray':
