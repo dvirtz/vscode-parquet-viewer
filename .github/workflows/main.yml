@@ -56,10 +56,9 @@ jobs:
         run: |
           echo "JAVA_HOME=${JAVA_HOME_8_X64}" >> $GITHUB_ENV
           echo "PATH=${JAVA_HOME_8_X64}/bin:${PATH}" >> $GITHUB_ENV
-      - name: Set RC path
+      - name: Find RC path
         if: startsWith(matrix.os, 'windows-')
-        run: |
-          echo "RC=$(vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -find **/rc.exe)" >> $Env:GITHUB_ENV
+        run: '& .github/scripts/find-rc.ps1 | ForEach-Object { "RC=$_" } | Add-Content -Path $Env:GITHUB_ENV'
       - run: npm ci --foreground-scripts
       - name: Static checks
         run: |
