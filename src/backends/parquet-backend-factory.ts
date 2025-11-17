@@ -3,7 +3,6 @@ import { CancellationToken } from 'vscode';
 import { getLogger } from '../logger';
 import { arrowCppBackend } from './arrow-cpp-backend';
 import { BackendName } from './backend-name';
-import { parquetToolsBackend } from './parquet-tools-backend';
 import { parquetWasmBackend } from './parquet-wasm-backend';
 import { parquetsBackend } from './parquets-backend';
 
@@ -23,8 +22,6 @@ export async function createParquetBackend(backend: BackendName, path: string, t
 
   getLogger().info(`opening ${path} using ${backend} backend`);
   switch (backend) {
-    case 'parquet-tools':
-      return parquetToolsBackend(path, abortSignal);
     case 'parquets':
       return parquetsBackend(path, abortSignal);
     case 'arrow':

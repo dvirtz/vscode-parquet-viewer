@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { strict as assert } from 'node:assert';
 import { describe, mock, test } from 'node:test';
-import os from 'os';
 import { CancellationToken } from 'vscode';
 import { BackendNames } from '../../src/backends/backend-name';
 import { createParquetBackend } from '../../src/backends/parquet-backend-factory';
@@ -28,8 +27,7 @@ class CancellationTokenMock implements CancellationToken {
   }
 }
 
-// parquet-tools doesn't work on MacOS due to Java version issues
-for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || backend != 'parquet-tools')) {
+for (const backend of BackendNames) {
   describe(`${backend} backend tests`, async () => {
     test("error on none existing file", async () => {
       const expected = (() => {
@@ -38,8 +36,6 @@ for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || ba
             return /Failed to open no-such-file: Failed to open local file 'no-such-file'/;
           case 'parquets':
             return /ENOENT: no such file or directory, stat '.*no-such-file'/;
-          case 'parquet-tools':
-            return /parquet-tools exited with code 1\n.*java.io.FileNotFoundException: File no-such-file does not exist/;
           case 'parquet-wasm':
             return /ENOENT: no such file or directory, open '.*no-such-file'/;
         }
@@ -55,10 +51,7 @@ for (const backend of BackendNames.filter(backend => os.type() != 'Darwin' || ba
       assert.notEqual(first.value, "");
       assert.ok(token.onCancellationRequested.mock.callCount() >= 1);
       token.cancel();
-      if (backend !== 'parquet-tools') {
-        // parquet-tools might already be done by the time we cancel
-        await assert.rejects(rows.next(), /AbortError: The operation was aborted/);
-      }
+      await assert.rejects(rows.next(), /AbortError: The operation was aborted/);
     });
   });
 }
