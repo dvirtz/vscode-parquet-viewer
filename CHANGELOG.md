@@ -1,3 +1,24 @@
+## [3.0.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.4...v3.0.0) (2025-11-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove parquet-tools support
+
+### Features
+
+* remove parquet-tools support and deprecated settings ([1193e89](https://github.com/dvirtz/vscode-parquet-viewer/commit/1193e8900571674f55bb541505175ba4fc7a52f0))
+
+
+### Build and continuous integration
+
+* debug tests ([7ff1182](https://github.com/dvirtz/vscode-parquet-viewer/commit/7ff1182c0e97639303bf79ddfde6847ef147ba00))
+* **deps-dev:** bump glob and rimraf ([db7dbc7](https://github.com/dvirtz/vscode-parquet-viewer/commit/db7dbc7f20d8e9c631e58ba5cb53e689caf93a3a))
+* **deps-dev:** bump js-yaml from 4.1.0 to 4.1.1 ([063a3f1](https://github.com/dvirtz/vscode-parquet-viewer/commit/063a3f17527a0251fe4607612ef7fc71238d6d77))
+* **deps-dev:** bump tar-fs from 2.1.3 to 2.1.4 ([a197662](https://github.com/dvirtz/vscode-parquet-viewer/commit/a197662b1c2a11f150c38bda401c668598aff19d))
+* upgrade macos intel image ([67a6375](https://github.com/dvirtz/vscode-parquet-viewer/commit/67a6375f096195aa8cfd4af7c57821cbb7e2886e))
+* upgrade minimum vscode version ([47d5c83](https://github.com/dvirtz/vscode-parquet-viewer/commit/47d5c83cdc3c15e1164685f516620dc06f5a025d))
+
 ## [2.11.4](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.3...v2.11.4) (2025-08-23)
 
 
