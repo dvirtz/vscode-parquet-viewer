@@ -1,3 +1,21 @@
+## [3.0.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.0.0...v3.0.1) (2025-11-21)
+
+
+### Bug Fixes
+
+* show scripts output ([df0af53](https://github.com/dvirtz/vscode-parquet-viewer/commit/df0af53bef48eb232c19dd5956a472f28e69cf3b))
+
+
+### Build and continuous integration
+
+* add script to find rc.exe for Windows ARM ([5b0d2d5](https://github.com/dvirtz/vscode-parquet-viewer/commit/5b0d2d5266a05623fd54426dd4d1aa71a0ec19b3))
+* build on windows arm64 ([365062e](https://github.com/dvirtz/vscode-parquet-viewer/commit/365062e131f48d94e5ba58292b596a0d27da2709))
+* debug boost ([53da752](https://github.com/dvirtz/vscode-parquet-viewer/commit/53da752a17750636975c3992fde75a011bf35231))
+* header only boost ([eda8906](https://github.com/dvirtz/vscode-parquet-viewer/commit/eda8906b447186e822acfab0352388b1ce0b10b1))
+* update devcontainer configuration and remove Dockerfile ([d1ea25d](https://github.com/dvirtz/vscode-parquet-viewer/commit/d1ea25d0be376e00cad90b03736c549bca52ab0b))
+* upgrade arrow ([6eac2e2](https://github.com/dvirtz/vscode-parquet-viewer/commit/6eac2e21313aeb68d296e6ae15f02d2d1e0d00bb))
+* upgrade nodejs version ([2a3e3e5](https://github.com/dvirtz/vscode-parquet-viewer/commit/2a3e3e513faaf74802cb1f0f7b4d74a0a61b1d7e))
+
 ## [3.0.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v2.11.4...v3.0.0) (2025-11-19)
 
 
