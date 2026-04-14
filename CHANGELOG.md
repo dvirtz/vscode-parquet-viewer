@@ -1,3 +1,25 @@
+## [3.0.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.0.1...v3.0.2) (2026-04-14)
+
+
+### Documentation
+
+* Update README badges for marketplace versions ([b591748](https://github.com/dvirtz/vscode-parquet-viewer/commit/b591748eba0a2cf66db30b51289f7f7ec54c5c56))
+
+
+### Build and continuous integration
+
+* **deps-dev:** bump flatted from 3.3.1 to 3.4.2 ([21a0751](https://github.com/dvirtz/vscode-parquet-viewer/commit/21a07512105996513472539f2040181b32cd1297))
+* **deps-dev:** bump follow-redirects from 1.15.6 to 1.16.0 ([d0b2c3f](https://github.com/dvirtz/vscode-parquet-viewer/commit/d0b2c3fb8efc85aba866158bb98fdcf28ea82b1a))
+* **deps-dev:** bump handlebars from 4.7.8 to 4.7.9 ([f447a28](https://github.com/dvirtz/vscode-parquet-viewer/commit/f447a28172b3fc41d4491dde4a9c666c83b29dce))
+* **deps-dev:** bump lodash-es from 4.17.21 to 4.17.23 ([6c94589](https://github.com/dvirtz/vscode-parquet-viewer/commit/6c9458903a1003953ee484d66c2347877613ce94))
+* **deps-dev:** bump lodash-es from 4.17.23 to 4.18.1 ([81e71f3](https://github.com/dvirtz/vscode-parquet-viewer/commit/81e71f3a58940fd9bacd796776df1c66e509b681))
+* **deps-dev:** bump picomatch from 2.3.1 to 2.3.2 ([8e10b30](https://github.com/dvirtz/vscode-parquet-viewer/commit/8e10b3057b0a9418b4b8227ab12d52830804b304))
+* **deps-dev:** bump qs from 6.12.0 to 6.14.1 ([65250ac](https://github.com/dvirtz/vscode-parquet-viewer/commit/65250ac258d52b9a97164f1f8d55a0985f8a86a9))
+* **deps-dev:** bump qs from 6.14.1 to 6.14.2 ([232b5bd](https://github.com/dvirtz/vscode-parquet-viewer/commit/232b5bd0d4e1332076e0c01438a80ed03d93420b))
+* **deps:** bump lodash from 4.17.21 to 4.18.1 ([e58a5f7](https://github.com/dvirtz/vscode-parquet-viewer/commit/e58a5f7849076ea3dfa86e99ac6f732fa22faadd))
+* **deps:** bump minimatch ([9d61357](https://github.com/dvirtz/vscode-parquet-viewer/commit/9d613572878ca58731b08a6c0c62e10444f93d20))
+* **deps:** bump requests in /packages/parquet-reader ([85d26c3](https://github.com/dvirtz/vscode-parquet-viewer/commit/85d26c3d8aad764ab0477acdde2295a4f1e44866))
+
 ## [3.0.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.0.0...v3.0.1) (2025-11-21)
 
 
