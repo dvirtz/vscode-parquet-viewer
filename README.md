@@ -1,4 +1,5 @@
-[![Main](https://github.com/dvirtz/vscode-parquet-viewer/workflows/Main/badge.svg)](https://github.com/dvirtz/vscode-parquet-viewer/actions?query=workflow%3AMain) [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dvirtz.parquet-viewer)](https://marketplace.visualstudio.com/items?itemName=dvirtz.parquet-viewer)
+[![Main](https://github.com/dvirtz/vscode-parquet-viewer/workflows/Main/badge.svg)](https://github.com/dvirtz/vscode-parquet-viewer/actions?query=workflow%3AMain) [![Visual Studio Marketplace Version](https://img.shields.io/github/v/release/dvirtz/vscode-parquet-viewer?label=Visual%20Studio%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=dvirtz.parquet-viewer) ![Open VSX Version](https://img.shields.io/open-vsx/v/dvirtz/parquet-viewer)
+
 
 # parquet-viewer
 
