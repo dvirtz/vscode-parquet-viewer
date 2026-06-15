@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { Disposable } from "./dispose";
 import { getLogger } from './logger';
 import { ParquetTextDocumentContentProvider } from './parquet-document-provider';
-import { format } from "./settings";
+import { formatExtension } from "./settings";
 import { getNonce } from './util';
 class CustomParquetDocument extends Disposable implements vscode.CustomDocument {
   uri: vscode.Uri;
@@ -11,7 +11,7 @@ class CustomParquetDocument extends Disposable implements vscode.CustomDocument 
   constructor(uri: vscode.Uri) {
     super();
     this.uri = uri;
-    this.path = `${uri.fsPath}.as.${format()}`;
+    this.path = `${uri.fsPath}.as.${formatExtension()}`;
   }
 
   public async open() {

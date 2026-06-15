@@ -7,6 +7,7 @@ export const workspace = {
     jsonAsArray: mock.fn(() => undefined) as Mock<() => boolean | undefined>,
     csvSeparator: mock.fn(() => undefined) as Mock<() => string | undefined>,
     backendName: mock.fn(() => undefined) as Mock<() => BackendName | undefined>,
+    jsonExtension: mock.fn(() => undefined) as Mock<() => string | undefined>,
   },
   getConfiguration: () => ({
     get: (name: string, defaultValue?: string) => {
@@ -19,6 +20,8 @@ export const workspace = {
           return workspace.mocks.csvSeparator() ?? defaultValue;
         case 'backend':
           return workspace.mocks.backendName() ?? defaultValue;
+        case 'json.extension':
+          return workspace.mocks.jsonExtension() ?? defaultValue;
         default:
           return defaultValue;
       }

@@ -108,6 +108,11 @@
           "markdownDescription": "CSV field separator",
           "type": "string",
           "default": ", "
+        },
+        "parquet-viewer.json.extension": {
+          "markdownDescription": "Extension of JSON formatted output",
+          "type": "string",
+          "default": "json"
         }
       }
     },

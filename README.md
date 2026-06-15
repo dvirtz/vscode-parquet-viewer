@@ -60,6 +60,7 @@ The following setting options are available:
 |`parquet-viewer.logging.level`|info|Diagnostic log level. Choose between: `off`, `fatal`, `error`, `warn`, `info`, `debug` or `trace`|
 |`parquet-viewer.json.space`|0|JSON indentation space, passed to `JSON.stringify` as is, see [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters) for details|
 |`parquet-viewer.json.asArray`|`false`|Whether to format output JSON as one big array|
+|`parquet-vierer.json.extension`|`json`|File extension for the output JSON file|
 |`parquet-viewer.csv.separator`|`', '`|CSV separator|
 
 ## Notes
@@ -73,3 +74,11 @@ See https://github.com/microsoft/vscode/issues/31078 for details.
 ## What's new
 
 See [CHANGELOG.md](CHANGELOG.md)
+
+## Development
+
+When running integration tests in a Linux dev container, use a virtual display:
+
+```sh
+npm run integration:headless
+```
