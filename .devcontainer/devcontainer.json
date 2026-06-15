@@ -1,6 +1,8 @@
 {
 	"name": "VS Code Parquet Viewer Development",
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
 
 	"features": {
 		"ghcr.io/devcontainers/features/python:1": {
@@ -15,11 +17,7 @@
 		}
 	},
 
-	"postCreateCommand": {
-		"install-deps": "sudo apt-get update && sudo apt-get install -y build-essential ninja-build pkg-config",
-		"install-uv": "curl -LsSf https://astral.sh/uv/install.sh | sh",
-		"npm-install": "npm install"
-	},
+	"postCreateCommand": "npm install",
 
 	"customizations": {
 		"vscode": {
