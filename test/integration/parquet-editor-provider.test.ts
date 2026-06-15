@@ -62,7 +62,7 @@ export async function runTest() {
       expectedContent: string | RegExp,
       context: TestContext): Promise<Mock<(document: vscode.TextDocument) => void>> {
       const listener = context.mock.fn((document: vscode.TextDocument) => {
-        assert.equal(document.fileName, `${file.fsPath}.as.${settings.format()}`);
+        assert.equal(document.fileName, `${file.fsPath}.as.${settings.formatExtension()}`);
         const actual = document.getText();
         const message = [`${document.fileName} content mismatch`, 'expected', expectedContent, 'actual', actual].join('\n');
         if (typeof expectedContent === 'string') {
@@ -170,6 +170,17 @@ export async function runTest() {
       context.mock.method(settings, 'jsonAsArray', () => true);
       listener({ affectsConfiguration: (section: string) => section === `${name}.json.asArray` });
       checkMockCalled(await onDocumentChanged, 'onDidChangeTextDocument not called');
+    });
+
+    await context.test('respects json extension', async function (context) {
+      context.mock.method(settings, 'formatExtension', () => 'jsonl');
+      const small = await getUri('small.parquet');
+
+      disposables.push(workspace.onDidOpenTextDocument(document => {
+        assert.equal(document.fileName, `${small.fsPath}.as.jsonl`);
+      }, undefined, disposables));
+
+      await openDocument(small);
     });
   });
 }

@@ -48,6 +48,15 @@ export function format(): FormatterName {
   return settings().get('format', propertiesMeta['parquet-viewer.format']['default'] as FormatterName);
 }
 
+export function formatExtension(): string {
+  switch (format()) {
+    case 'json':
+      return settings().get('json.extension', propertiesMeta['parquet-viewer.json.extension']['default']);
+    case 'csv':
+      return 'csv';
+  }
+}
+
 export function csvSeparator(): string {
   return settings().get('csv.separator', propertiesMeta['parquet-viewer.csv.separator']['default']);
 }
