@@ -1,0 +1,42 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable-automerge:
+    if: github.actor == 'dependabot[bot]' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check changed files are package manifests only
+        id: file-check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+
+          invalid_count=$(gh api "repos/$REPO/pulls/$PR_NUMBER/files" --paginate --jq '.[] | select((.filename | test("(^|.*/)package(-lock)?\\.json$")) | not) | .filename' | wc -l)
+
+          if [ "$invalid_count" -eq 0 ]; then
+            echo "manifest_only=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "manifest_only=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: steps.file-check.outputs.manifest_only == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR_URL"
