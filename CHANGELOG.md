@@ -1,3 +1,25 @@
+## [3.1.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.0.2...v3.1.0) (2026-06-17)
+
+
+### Features
+
+* customize json extension ([f6511ba](https://github.com/dvirtz/vscode-parquet-viewer/commit/f6511baf905c9880104efebac011bc84976a1ace)), closes [#188](https://github.com/dvirtz/vscode-parquet-viewer/issues/188)
+
+
+### Build and continuous integration
+
+* **deps-dev:** bump axios from 1.12.2 to 1.16.1 ([326a475](https://github.com/dvirtz/vscode-parquet-viewer/commit/326a475cba80d7e462217780ff623be1f30c7d47))
+* **deps-dev:** bump minimatch from 9.0.3 to 10.2.5 ([afdc0a4](https://github.com/dvirtz/vscode-parquet-viewer/commit/afdc0a4193b151280900c5d018417796f9306752))
+* **deps-dev:** bump qs from 6.14.2 to 6.15.2 ([fa33c44](https://github.com/dvirtz/vscode-parquet-viewer/commit/fa33c44fb4001ba3a3de1f3c886832184cfc3bb7))
+* **deps-dev:** bump shell-quote from 1.8.1 to 1.8.4 ([b2d29bf](https://github.com/dvirtz/vscode-parquet-viewer/commit/b2d29bf1ce1a4d53cbda3698f76e361d421fc9ce))
+* **deps-dev:** bump tmp from 0.2.4 to 0.2.7 ([99f636c](https://github.com/dvirtz/vscode-parquet-viewer/commit/99f636c2c79082b3967da8804e64284a8f2d2e4a))
+* **deps:** bump idna from 3.10 to 3.15 in /packages/parquet-reader ([9916d66](https://github.com/dvirtz/vscode-parquet-viewer/commit/9916d66de4f583e2f9435af5707335b0c592a49d))
+
+
+### General maintenance
+
+* run integration tests headless ([cdfd342](https://github.com/dvirtz/vscode-parquet-viewer/commit/cdfd3426e2193b2778440cc494d5b36075870d77))
+
 ## [3.0.2](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.0.1...v3.0.2) (2026-04-14)
 
 
