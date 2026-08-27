@@ -132,8 +132,7 @@
     "untrustedWorkspaces": {
       "supported": "limited",
       "restrictedConfigurations": [
-        "parquet-viewer.useParquetTools",
-        "parquet-viewer.parquetToolsPath"
+        "parquet-viewer.logging.folder"
       ]
     }
   },
