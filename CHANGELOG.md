@@ -1,3 +1,23 @@
+## [3.1.1](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.1.0...v3.1.1) (2026-08-29)
+
+
+### Bug Fixes
+
+* restrict logging.folder ([29a4e80](https://github.com/dvirtz/vscode-parquet-viewer/commit/29a4e80801baf5293bce560a84e926ce0d87f418)), closes [#199](https://github.com/dvirtz/vscode-parquet-viewer/issues/199)
+
+
+### Build and continuous integration
+
+* auto-merge dependabot PRs ([1f236fe](https://github.com/dvirtz/vscode-parquet-viewer/commit/1f236fe7ea34ab23cec55f8ac76e8c1c18169b14))
+* **deps-dev:** bump axios from 1.16.1 to 1.18.1 ([#195](https://github.com/dvirtz/vscode-parquet-viewer/issues/195)) ([b070d90](https://github.com/dvirtz/vscode-parquet-viewer/commit/b070d901d8a51a2493713d867d0ffd6cdd95e699))
+* **deps-dev:** bump form-data from 4.0.5 to 4.0.6 ([#192](https://github.com/dvirtz/vscode-parquet-viewer/issues/192)) ([3bd7618](https://github.com/dvirtz/vscode-parquet-viewer/commit/3bd76181fdef8788d7d62ccfe29d862f7d22b9e5))
+* **deps-dev:** bump js-yaml from 4.1.1 to 4.2.0 ([0b64698](https://github.com/dvirtz/vscode-parquet-viewer/commit/0b64698fecfcd125219d38ba5498da7dfffbcc41))
+* **deps-dev:** bump js-yaml from 4.2.0 to 4.3.0 ([#197](https://github.com/dvirtz/vscode-parquet-viewer/issues/197)) ([8b7184b](https://github.com/dvirtz/vscode-parquet-viewer/commit/8b7184bc87e6a5199eba9b8ad23781bef5006783))
+* **deps-dev:** bump js-yaml from 4.3.0 to 4.3.1 ([#198](https://github.com/dvirtz/vscode-parquet-viewer/issues/198)) ([1d13e8e](https://github.com/dvirtz/vscode-parquet-viewer/commit/1d13e8eafdcaffaa3522c1804ea5fbedcd5058e9))
+* **deps-dev:** bump shell-quote from 1.8.4 to 1.10.0 ([#196](https://github.com/dvirtz/vscode-parquet-viewer/issues/196)) ([13fdb31](https://github.com/dvirtz/vscode-parquet-viewer/commit/13fdb317548b5f28921c85454afaa97cbfb99b83))
+* **deps:** bump ws from 5.2.4 to 5.2.5 ([8623566](https://github.com/dvirtz/vscode-parquet-viewer/commit/86235667d72fba00444cd90e8ed8e5f8c79a8c63))
+* update bison recipe ([b3440c7](https://github.com/dvirtz/vscode-parquet-viewer/commit/b3440c7e111a95633f1dac210b6ca25d4167dcec))
+
 ## [3.1.0](https://github.com/dvirtz/vscode-parquet-viewer/compare/v3.0.2...v3.1.0) (2026-06-17)
 
 
